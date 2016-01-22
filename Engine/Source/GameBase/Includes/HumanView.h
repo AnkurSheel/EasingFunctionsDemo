@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  HumanView   version:  1.0   Ankur Sheel  date: 2011/05/02
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef HumanView_h__
 #define HumanView_h__
@@ -30,16 +30,16 @@ namespace Sound
 
 namespace GameBase
 {
-	//typedef std::list<shared_ptr<Graphics::IScreenElement> > ScreenElementList;
+	// typedef std::list<shared_ptr<Graphics::IScreenElement> > ScreenElementList;
 
-	class cHumanView 
+	class cHumanView
 		: public IGameView
 	{
 	public:
 		GAMEBASE_API cHumanView();
 		GAMEBASE_API virtual ~cHumanView();
 		GAMEBASE_API virtual void VOnCreateDevice(IBaseApp* pBaseApp);
-		GAMEBASE_API virtual bool VOnMsgProc( const Base::AppMsg & msg );	
+		GAMEBASE_API virtual bool VOnMsgProc(const Base::AppMsg & msg);
 		GAMEBASE_API virtual void VOnRender(const TICK tickCurrent, const float fElapsedTime);
 		GAMEBASE_API virtual void VOnUpdate(const TICK tickCurrent, const float fElapsedTime);
 		GAMEBASE_API virtual void VOnDestroyDevice();
@@ -64,22 +64,22 @@ namespace GameBase
 		GAMEBASE_API void CreateFPSLabel(const Graphics::cLabelControlDef & def);
 
 	protected:
-		Graphics::ICamera *					m_pCamera;
-		shared_ptr<Graphics::IBaseControl>	m_pFpsLabel;
-		GameBase::IBaseApp	*			m_pGame;
+		Graphics::ICamera * m_pCamera;
+		shared_ptr<Graphics::IBaseControl> m_pFpsLabel;
+		GameBase::IBaseApp * m_pGame;
 
 	private:
-		GameViewId						m_idView;
-		TICK							m_tickCurrent;
-		TICK							m_tickLastDraw;
-		bool							m_bRunFullSpeed;
-		//shared_ptr<Graphics::ISprite>	m_pCursorSprite;		// the sprite for the cursor
-		bool							m_bDisplayFPS;
-		const Base::cHashedString		m_hashSFXChannel;
-		const Base::cHashedString		m_hashMusicChannel;
+		GameViewId m_idView;
+		TICK m_tickCurrent;
+		TICK m_tickLastDraw;
+		bool m_bRunFullSpeed;
+		// shared_ptr<Graphics::ISprite>	m_pCursorSprite;		// the sprite for the cursor
+		bool m_bDisplayFPS;
+		const Base::cHashedString m_hashSFXChannel;
+		const Base::cHashedString m_hashMusicChannel;
 
 	public:
-		Graphics::IBaseControl *		m_pAppWindowControl;
+		Graphics::IBaseControl * m_pAppWindowControl;
 	};
-}
-#endif // HumanView_h__
+}  // namespace GameBase
+#endif  // HumanView_h__

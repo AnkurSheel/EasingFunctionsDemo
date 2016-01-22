@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  GameDirectories   version:  1.0   Ankur Sheel  date: 2013/01/22
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef GameDirectories_h__
 #define GameDirectories_h__
@@ -40,5 +40,5 @@ namespace Utilities
 		static Base::cString	DesignDirectory;
 		static Base::cString	UiDirectory;
 	};
-}
-#endif // GameDirectories_h__
+}  // namespace Utilities
+#endif  // GameDirectories_h__

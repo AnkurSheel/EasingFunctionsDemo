@@ -1,13 +1,24 @@
 //  *******************************************************************************************************************
 //  Utilities   version:  1.0   Ankur Sheel  date: 2013/03/16
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef BaseUtilities_h__
 #define BaseUtilities_h__
 
-const int KILOBYTE = 1024;
-const int MEGABYTE = KILOBYTE * KILOBYTE;
+#include "typedef.h"
+
+#define Kilobytes(Value) ((Value) * 1024)
+#define Megabytes(Value) (Kilobytes(Value) * 1024)
+#define Gigabytes(Value) (Megabytes(Value) * 1024)
+
+#define BytesToKilobytes(Value) ((Value) / 1024)
+#define BytesToMegabytes(Value) (BytesToKilobytes(Value) / 1024)
+#define BytesToGigabytes(Value) (BytesToMegabytes(Value) / 1024)
+
+const uint32 KILOBYTE = 1024;
+const uint32 MEGABYTE = KILOBYTE * KILOBYTE;
+const uint64 GIGABYTE = static_cast<uint64>(MEGABYTE) * MEGABYTE;
 
 const int MAX_FILENAME_WIDTH = 256;
 const int MAX_PATH_WIDTH = 260;
@@ -51,8 +62,8 @@ namespace Base
 	class ArrayDeleter
 	{
 	public:
-		void operator () (T* d) const
-		{ 
+		void operator() (T* d) const
+		{
 			SAFE_DELETE_ARRAY(d);
 		}
 	};
@@ -82,13 +93,13 @@ namespace Base
 	template <class T>
 	inline T DereferenceToType(void* p)
 	{
-		return *(T*)(p);
+		return *(reinterpret_cast<T*>)(p);
 	}
 
 	template <class T>
 	inline T DereferenceToType(std::tr1::shared_ptr<void> p)
 	{
-		return *(T*)(p).get();
+		return *(reinterpret_cast<T*>(p).get());
 	}
 
 	template <class Type>
@@ -107,6 +118,5 @@ namespace Base
 		minutes = time / 60;
 		seconds = time % 60;
 	}
-}
-
-#endif // Utilities_h__
+}  // namespace Base
+#endif  // BaseUtilities_h__

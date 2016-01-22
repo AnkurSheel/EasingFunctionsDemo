@@ -63,4 +63,4 @@ namespace Utilities
 		UTILITIES_API static void Destroy();
 	};
 }
-#endif // ResourceManager_hxx__
+#endif  // ResourceManager_hxx__

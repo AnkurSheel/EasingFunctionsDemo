@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  SpAssertError   version:  1.0   Ankur Sheel  date: 2014/11/18
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __SPASSERTERROR_H__
 #define __SPASSERTERROR_H__
@@ -9,7 +9,7 @@
 namespace Base
 {
 	struct cSpAssertException
-	: public std::exception 
+	: public std::exception
 	{
 		cSpAssertException(const ISpAssertContext * const pContext);
 		~cSpAssertException();
@@ -18,5 +18,5 @@ namespace Base
 	private:
 		const ISpAssertContext * const m_pContext;
 	};
-}
+}  // namespace Base
 #endif  // __SPASSERTERROR_H__

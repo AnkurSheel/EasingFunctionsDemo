@@ -1,9 +1,8 @@
-// ne Entertainment, Ltd.
-// http://www.neGames.com
-// Copyright (c) 2007.  All Rights Reserved
+//  *******************************************************************************************************************
+//  FuzzyRule   version:  1.0   Ankur Sheel  date: 2015/05/19
+//  *******************************************************************************************************************
 //
-// FuzzyRule: Ankur Sheel
-
+//  *******************************************************************************************************************
 #ifndef FUZZYRULE_H
 #define FUZZYRULE_H
 
@@ -16,6 +15,11 @@ public:
 	virtual ~cFuzzyRule();
 	cFuzzyRule(cFuzzyTerm* ante, cFuzzyTerm* conse);
 	void SetConfidenceOfConsequenceToZero();
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Updates the DOM of the consequent with the DOM of the Antecedent
+	///
+	///
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	void Calculate();
 
 protected:
@@ -24,4 +28,4 @@ protected:
 	cFuzzyRule(const cFuzzyRule& instance);
 	cFuzzyRule& operator=(const cFuzzyRule& instance);
 };
-#endif
+#endif  // FUZZYRULE_H

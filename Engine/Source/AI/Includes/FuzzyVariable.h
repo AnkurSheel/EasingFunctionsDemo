@@ -1,12 +1,8 @@
-// ***************************************************************
+//  *******************************************************************************************************************
 //  FuzzyVariable   version:  1.0   Ankur Sheel  date: 04/05/2009
-//  -------------------------------------------------------------
-//  
-//  -------------------------------------------------------------
-//  Copyright (C) 2009 - All Rights Reserved
-// ***************************************************************
-// 
-// ***************************************************************
+//  *******************************************************************************************************************
+//
+//  *******************************************************************************************************************
 #ifndef FUZZYVARIABLE_H
 #define FUZZYVARIABLE_H
 
@@ -31,11 +27,8 @@ public:
 	virtual ~cFuzzyVariable();
 	cFuzzyVariable& operator=(const cFuzzyVariable& var);
 	cFuzzySetProxy* AddLeftShoulderSet(const Base::cString & name , const float minBound, const float peak , const float maxBound);
-	cFuzzySetProxy* AddRightShoulderSet(const Base::cString & name
-									, const float minBound, const float peak
-									, const float maxBound);
-	cFuzzySetProxy* AddangleSet(const Base::cString & name, const float minBound
-									, const float peak, const float maxBound);
+	cFuzzySetProxy* AddRightShoulderSet(const Base::cString & name , const float minBound, const float peak, const float maxBound);
+	cFuzzySetProxy* AddangleSet(const Base::cString & name, const float minBound, const float peak, const float maxBound);
 	void Fuzzify(const float val);
 	float DeFuzzifyMaxAv();
 	float DeFuzzifyCentroid(const int iNumSamples);
@@ -50,4 +43,4 @@ protected:
 	float m_fMinRange;
 	float m_fMaxRange;
 };
-#endif
+#endif  // FUZZYVARIABLE_H

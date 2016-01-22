@@ -51,4 +51,4 @@ namespace GameBase
 		GAMEBASE_API static IHighScoreTable * CreateHighScoreTable(const stHighScoreTableDef & HighScoreTableDef);
 	};
 }
-#endif // HighScoreTable_hxx__
+#endif  // HighScoreTable_hxx__

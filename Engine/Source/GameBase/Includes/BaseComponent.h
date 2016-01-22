@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  BaseComponent version:  1.0   Ankur Sheel  date: 2013/04/02
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 #ifndef BaseComponent_h__
 #define BaseComponent_h__
 
@@ -24,14 +24,19 @@ namespace GameBase
 		cBaseComponent & operator =(const cBaseComponent & other);
 		GAMEBASE_API virtual ~cBaseComponent();
 
-		unsigned long VGetID() const OVERRIDE { return VGetHashedID(); }
-		void VOnAttached(IBaseEntity * const pOwner) OVERRIDE;
+		UINT64 VGetID() const OVERRIDE { return VGetHashedID(); }
+		void VOnAttached(shared_ptr<IBaseEntity> const pOwner) OVERRIDE;
 
 	protected:
-		virtual unsigned long VGetHashedID() const = 0;
-		
+		virtual UINT64 VGetHashedID() const = 0;
+		virtual void VSetActive(const bool active) OVERRIDE { m_Active = active; }
+		virtual bool VIsActive() const OVERRIDE { return m_Active; }
+
 	protected:
-		IBaseEntity *		m_pOwner;
+		weak_ptr<IBaseEntity> m_pOwner;
+
+	private:
+		bool m_Active;
 	};
-}
-#endif //Component_hxx__
+}  // namespace GameBase
+#endif  // BaseComponent_h__

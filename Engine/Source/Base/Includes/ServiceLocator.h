@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  ServiceLocator   version:  1.0   Ankur Sheel  date: 2014/11/17
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __SERVICELOCATOR_H__
 #define __SERVICELOCATOR_H__
@@ -12,18 +12,18 @@ namespace Base
 {
 	class cServiceLocator
 	{
-		typedef std::map<cString, shared_ptr<void> > ServiceMap; 
+		typedef std::map<cString, shared_ptr<void> > ServiceMap;
 
 	public:
 		~cServiceLocator();
 
-		template<class T> 
+		template<class T>
 		void Register(const shared_ptr<T> pObject);
 
-		template<class T> 
+		template<class T>
 		weak_ptr<T> GetService();
 
-		template<class T> 
+		template<class T>
 		bool IsServiceRegistered();
 
 		BASE_API static cServiceLocator * const GetInstance();
@@ -37,12 +37,12 @@ namespace Base
 		static cServiceLocator * m_pInstance;
 	};
 
-	//  *****************************************************************************************************************
-	template<class T> 
-	void cServiceLocator::Register(const shared_ptr<T> pObject) 
+	//  ***************************************************************************************************************
+	template<class T>
+	void cServiceLocator::Register(const shared_ptr<T> pObject)
 	{
 		cString name = typeid(T).name();
-		if(!IsServiceRegistered<T>())
+		if (!IsServiceRegistered<T>())
 		{
 			m_RegisteredTypes[name] = static_pointer_cast<void>(pObject);
 		}
@@ -52,9 +52,9 @@ namespace Base
 		}
 	}
 
-	//  *****************************************************************************************************************
+	//  ***************************************************************************************************************
 	template<class T>
-	weak_ptr<T> cServiceLocator::GetService() 
+	weak_ptr<T> cServiceLocator::GetService()
 	{
 		cString name = typeid(T).name();
 		if (IsServiceRegistered<T>())
@@ -64,7 +64,7 @@ namespace Base
 		return std::weak_ptr<T>();;
 	}
 
-	//  *****************************************************************************************************************
+	//  ***************************************************************************************************************
 	template<class T>
 	bool cServiceLocator::IsServiceRegistered()
 	{
@@ -72,6 +72,5 @@ namespace Base
 		auto findIt = m_RegisteredTypes.find(name);
 		return (findIt != m_RegisteredTypes.end());
 	}
-};
-
+}  // namespace Base
 #endif  // __SERVICELOCATOR_H__

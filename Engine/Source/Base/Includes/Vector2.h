@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Vector2D   version:  1.0   Ankur Sheel  date: 2012/08/28
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef Vector2_h__
 #define Vector2_h__
@@ -48,7 +48,7 @@ namespace Base
 		BASE_API cVector2(POINT pt);
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Returns true if the vector is 0
-		/// 
+		///
 		/// @return True if the vector is 0
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ namespace Base
 		/// @return True if the 2 vectors are equal. False otherwise.
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		bool operator == (const cVector2 & inVec) const { return (isEqual(x, inVec.x) && isEqual(y,inVec.y)); }
+		bool operator == (const cVector2 & inVec) const { return (isEqual(x, inVec.x) && isEqual(y, inVec.y)); }
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Checks if the passed in vector is not equal to the current vector
 		///
@@ -89,7 +89,7 @@ namespace Base
 		/// @return True if the 2 vectors are not equal. False otherwise.
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		bool operator!=(const cVector2 & inVec) const { return (!isEqual(x, inVec.x) || !isEqual(y,inVec.y)); }
+		bool operator!=(const cVector2 & inVec) const { return (!isEqual(x, inVec.x) || !isEqual(y, inVec.y)); }
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Gets the length of the vector
 		///
@@ -100,7 +100,7 @@ namespace Base
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Gets the squared length of the vector
 		///
-		/// @return Squared length of the vector 
+		/// @return Squared length of the vector
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		BASE_API float LengthSquared() const;
@@ -112,17 +112,25 @@ namespace Base
 		BASE_API void Normalize();
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Calculates and returns the dot product
-		/// 
+		///
 		/// @param[in] inVec The vector with which the dot product needs to be calculated
 		/// @return The dot product between this vector and the one passed as a parameter
-		/// 
+		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		BASE_API float Dot(const cVector2 & inVec) const;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Calculates and returns the cross product
+		///
+		/// @param[in] inVec The vector with which the cross product needs to be calculated
+		/// @return The dot product between this vector and the one passed as a parameter.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		BASE_API float Cross(const cVector2 & inVec) const;
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Gets the distance between this and the passed in vector
 		///
 		/// @param[in] inVec The vector with which the distance needs to be calculated
-		/// @return Euclidean distance 
+		/// @return Euclidean distance
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		BASE_API float Distance(const cVector2 & inVec) const;
@@ -130,7 +138,7 @@ namespace Base
 		/// Gets the squared distance between this and the passed in vector
 		///
 		/// @param[in] inVec The vector with which the squared distance needs to be calculated
-		/// @return Squared Euclidean distance 
+		/// @return Squared Euclidean distance
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		BASE_API float DistanceSquared(const cVector2 & inVec) const;
@@ -241,15 +249,17 @@ namespace Base
 		///
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		BASE_API static cVector2 Lerp(const cVector2 & start, const cVector2 & end, float lerpFactor);
+
+		BASE_API static cVector2 Rotate(const cVector2 & vec, const float angleInRad);
 		friend BASE_API std::ostream & operator<< (std::ostream &out, const cVector2& str);
 
 	public:
 		union
 		{
-			struct 
-			{ 
-				float x;	///< X component of Vector2
-				float y;	///< Y component of Vector2
+			struct
+			{
+				float x;  ///< X component of Vector2
+				float y;  ///< Y component of Vector2
 			};
 			float v[2];
 		};
@@ -286,7 +296,7 @@ namespace Base
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	inline cVector2 operator * (const cVector2 & inVec1, const float Val);
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// Returns a vector which is the result of Multiplication of of each component of the passed in vector with the 
+	/// Returns a vector which is the result of Multiplication of of each component of the passed in vector with the
 	/// scalar value
 	///
 	/// @param[in] Val The scalar value that is to be multiplied.
@@ -296,7 +306,7 @@ namespace Base
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	inline cVector2 operator * (const float Val, const cVector2 & inVec1);
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// Returns a vector which is the result of Multiplication of of each component of the passed in vector with the 
+	/// Returns a vector which is the result of Multiplication of of each component of the passed in vector with the
 	/// scalar value
 	///
 	/// @param[in] inVec1 The first vector that is to be multiplied
@@ -316,5 +326,5 @@ namespace Base
 	inline cVector2 operator / (const cVector2 & inVec1, const float Val);
 	BASE_API std::ostream & operator <<(std::ostream &out, const cVector2 & v);
 #include "Vector2.inl"
-}
-#endif // Vector2_h__
+}  // namespace Base
+#endif  // Vector2_h__

@@ -47,4 +47,4 @@ namespace Utilities
 }
 
 
-#endif // ZipFile_hxx__
+#endif  // ZipFile_hxx__

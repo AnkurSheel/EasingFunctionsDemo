@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  InputSystem version:  1.0   Ankur Sheel  date: 2013/05/16
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef InputSystem_h__
 #define InputSystem_h__
@@ -28,5 +28,5 @@ namespace GameBase
 	public:
 		GAMEBASE_API static const Base::cHashedString	m_Type;
 	};
-}
-#endif // InputSystem_h__
+}  // namespace GameBase
+#endif  // InputSystem_h__

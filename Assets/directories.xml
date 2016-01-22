@@ -1,0 +1,9 @@
+<Directories>
+	<FontDirectory>Fonts\</FontDirectory>
+	<ShaderDirectory>Shaders\</ShaderDirectory>
+	<SpriteDirectory>Sprites\</SpriteDirectory>
+	<SoundDirectory Music="Music\" SFX="SFX\">Sounds\</SoundDirectory>
+	<ModelDirectory>Models\</ModelDirectory>
+	<DesignDirectory>Design\</DesignDirectory>
+	<UiDirectory>Ui\</UiDirectory>
+</Directories>

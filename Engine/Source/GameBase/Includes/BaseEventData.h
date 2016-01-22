@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  BaseEventData version:  1.0   Ankur Sheel  date: 2013/07/25
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 #ifndef BaseEventData_h__
 #define BaseEventData_h__
 
@@ -15,12 +15,12 @@ namespace GameBase
 		: public IEventData
 	{
 	public:
-		cBaseEventData(){};
-		virtual ~cBaseEventData(){};
-		unsigned long VGetEventID() const { return VGetHashedID(); }
+		cBaseEventData(){}
+		virtual ~cBaseEventData(){}
+		UINT64 VGetEventID() const { return VGetHashedID(); }
 		virtual Base::cString VGetEventName() const { return VGetName(); }
-		virtual unsigned long VGetHashedID() const = 0;
+		virtual UINT64 VGetHashedID() const = 0;
 		virtual Base::cString VGetName() const = 0;
 	};
-}
-#endif //BaseEventData_h__
+}  // namespace GameBase
+#endif  // BaseEventData_h__

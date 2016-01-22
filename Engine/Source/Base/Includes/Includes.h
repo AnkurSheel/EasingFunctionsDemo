@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Includes   version:  1.0   Ankur Sheel  date: 2011/12/13
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef Includes_h__
 #define Includes_h__
@@ -27,7 +27,6 @@ using namespace std::tr1::placeholders;
 #include "SpAssert.h"
 #include "SpAssertException.h"
 #include "SpAssertContext.hxx"
-#include "BaseUtilities.h"
 #include "typedef.h"
 #include "MathIncludes.h"
 #include "myString.h"
@@ -36,4 +35,4 @@ using namespace std::tr1::placeholders;
 #include "HashedString.h"
 #include "ServiceLocator.h"
 
-#endif // Includes_h__
+#endif  // Includes_h__

@@ -27,7 +27,7 @@ inline cStateMachine<entity_type>::~cStateMachine()
 	{
 		cState<entity_type> * pState = (*it);
 		pState->VOnExit();
-		it++;
+		++it;
 	}
 	m_PushedStates.clear();
 }

@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  BaseControl   version:  1.0   Ankur Sheel  date: 2011/11/22
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef BaseControl_hxx__
 #define BaseControl_hxx__
@@ -9,7 +9,7 @@
 #include "GraphicEngineDefines.h"
 #include "MouseHandler.hxx"
 #include "KeyboardHandler.hxx"
-#include "ControlStructures.h"
+#include "GraphicStructures.h"
 
 namespace Base
 {
@@ -48,129 +48,180 @@ namespace Graphics
 		virtual ~IBaseControl(){}
 		virtual void VInitialize(const shared_ptr<Utilities::IXMLNode const> pXMLNode) = 0;
 		virtual shared_ptr<IBaseControl> VDuplicate() = 0;
-		/********************************************//**
- 		 * @param[in] msg The window message that needs to be processed
-		 * return True if the message is handled by this control or one of its children
-		 *
-		 * Checks if any of the child controls can handle the message. If no child
-		 * controls can handle the message it tries to handle the message itself.
-		 * Returns true if the message is handled. False otherwise
-		 ***********************************************/
-		virtual bool VPostMsg(const Base::AppMsg & msg) = 0;
-		/********************************************//**
- 		 * @param[in] pChildControl The control that needs to be added
-		 *
-		 * Adds a child control
-		 ***********************************************/
-		virtual void VAddChildControl(shared_ptr<IBaseControl> pChildControl) = 0;
-		/********************************************//**
-		 *
-		 * Removes and deletes all the child controls.
-		 ***********************************************/
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Checks if any of the child controls can handle the message. If no child controls can handle the message, it 
+	  /// tries to handle the message itself.
+	  /// Returns true if the message is handled. False otherwise
+		///
+	  /// @param[in] msg The window message that needs to be processed.
+	  /// @return True if the message is handled by this control or one of its children
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual bool VPostMsg(const Base::AppMsg& msg) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Adds a child control
+		///
+	  /// @param[in] pChildControl The control that needs to be added.
+	  /// @param[in] pUiRootWindowControl The main window control of the ui to which this control belongs.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VAddChildControl(shared_ptr<IBaseControl> pChildControl, weak_ptr<IBaseControl> pUiRootWindowControl) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Removes and deletes all the child controls.
+		///
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		virtual void VRemoveAllChildren() = 0;
-		/********************************************//**
- 		 * @param[in] strControlName The name of the control that needs to be removed
-		 *
-		 * Removes and deletes the child control
-		 ***********************************************/
-		virtual void VRemoveChildControl(const Base::cString & strControlName) = 0;
-		/********************************************//**
- 		 * @param[in] strControlName The name of the control that needs to be found
-		 * @return The child control with name equal to strControlName
-		 *
-		 * Returns the child control
-		 ***********************************************/
-		virtual const shared_ptr<Graphics::IBaseControl> VFindChildControl(const Base::cString & strControlName) = 0;
-		/********************************************//**
- 		 * @param[in] pCamera The camera which contains the current view matrix
-		 *
-		 * Draws the control
-		 ***********************************************/
-		virtual void VRender(const ICamera * const pCamera) = 0;
-		/********************************************//**
- 		 * @param[in] bIsVisible True if the control should be visible, false otherwise
-		 *
-		 * Sets the visibility of the 2D element
-		 ***********************************************/
-		virtual void VSetVisible(bool bIsVisible) = 0;
-		/********************************************//**
- 		 * @param[in] vPosition The position of the control
-		 *
-		 * Sets the position of the control
-		 ***********************************************/
-		virtual void VSetPosition(const Base::cVector2 & vPosition) = 0;
-		/********************************************//**
- 		 * @return vSize The size of the control
-		 *
-		 * Returns the size of the control
-		 ***********************************************/
-		virtual const Base::cVector2 VGetSize() const = 0;
-		/********************************************//**
- 		 * @param[in] vSize The new size of the control
-		 *
-		 * Sets the size of the control
-		 ***********************************************/
-		virtual void VSetSize(const Base::cVector2 & vSize) = 0;
-		/********************************************//**
-		 * @param[in] eventType The type of the event for the call back.
- 		 * @param[in] fnCallback Function pointer to the callback funtion. The function takes in a stUIEventCallbackParam and returns void
-		 *
-		 * Sets the callback function to invoke when the eventType event occurs
-		 ***********************************************/
-		virtual void VRegisterCallBack(const UIEVENTTYPE::ENUM eventType,
-			UIEventCallBackFn fnCallback) = 0;
-		/********************************************//**
-		 * @param[in] eventType The type of the event for the call back.
-		 *
-		 * Unregisters the callback function for the eventtype event
-		 ***********************************************/
-		virtual void VUnregisterCallBack(const UIEVENTTYPE::ENUM eventType) = 0;
-		virtual void VUnRegisterAllCallBacks() = 0;
-		/********************************************//**
-		 * @param[in] pControl The control to be moved to the front
-		 *
-		 * Moves the child control to the front.
-		 ***********************************************/
-		virtual void VMoveToFront(const IBaseControl * const pControl) = 0;
-		/********************************************//**
- 		 * @return The width of the control
-		 *
-		 * Returns the width of the control
-		 ***********************************************/
-		virtual float VGetWidth() const = 0;
-		/********************************************//**
- 		 * @return The width of the control
-		 *
-		 * Returns the height of the control
-		 ***********************************************/
-		virtual float VGetHeight() const = 0;
-		/********************************************//**
- 		 * @param[in] strText The text to be displayed on the control
-		 *
-		 * Sets the text to be displayed on the control
-		 ***********************************************/
-		virtual void VSetText(const Base::cString & strText) = 0;
-		/********************************************//**
- 		 * @return The name of the control
-		 *
-		 * Returns the name of the control
-		 ***********************************************/
-		virtual Base::cString VGetControlName() const = 0;
-		virtual void VSetControlName(const Base::cString & inControlName) = 0;
-		/********************************************//**
-		 * @param[in] def The params to create the window control  
-		 * @return Pointer to a window control object
-		 *
-		 * Returns a pointer to a window control object
-		 ***********************************************/
-		GRAPHIC_API static IBaseControl * CreateWindowControl(const cWindowControlDef & def);
-		/********************************************//**
-		 * @param[in] def The params to create the label control  
-		 * @return Pointer to a label control object
-		 *
-		 * Returns a pointer to a label control object
-		 ***********************************************/
-		GRAPHIC_API static IBaseControl * CreateLabelControl(const cLabelControlDef & def);
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Removes and deletes the child control
+		///
+	  /// @param[in] controlName The name of the control that needs to be removed
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VRemoveChildControl(const Base::cString& controlName) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the child control
+		///
+	  /// @param[in] controlName The name of the control that needs to be found.
+	  /// @return The child control with name equal to controlName. Null otherwise
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual const shared_ptr<IBaseControl> VFindChildControl(const Base::cString& controlName) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the child control
+		///
+	  /// @param[in] hashedID The hashedID of the control that needs to be found.
+	  /// @return The child control with name hash equal to hashedID. Null otherwise
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual const shared_ptr<IBaseControl> VFindChildControl(const UINT64 hashedID) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the child control at index
+		///
+	  /// @param[in] index The index of the child control.
+	  /// @return The child control at index index.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual const shared_ptr<IBaseControl> VGetChildControlAtIndex(const int index) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Draws the control
+		///
+	  /// @param[in] pCamera The camera which contains the current view matrix.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VRender(const ICamera* const pCamera) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the visibility of the 2D element.
+		///
+	  /// @param[in] visible True if the control should be visible, false otherwise.
+	  /// @return 
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VSetVisible(bool visible) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the position of the control.
+		///
+	  /// @param[in] position The position of the control.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VSetPosition(const Base::cVector2& position) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the size of the control.
+		///
+	  /// @return The size of the control
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual const Base::cVector2& VGetSize() const = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the size of the control.
+		///
+	  /// @param[in] size The size of the control.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VSetSize(const Base::cVector2& size) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the callback function to invoke when the eventType event occurs.
+		///
+	  /// @param[in] eventType The type of the event for the call back.
+	  /// @param[in] fnCallback Function pointer to the callback funtion. The function takes in a stUIEventCallbackParam
+	  /// and returns void
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VRegisterCallBack(const UIEVENTTYPE::ENUM eventType, UIEventCallBackFn fnCallback) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Deregisters the callback function for the eventtype event.
+		///
+	  /// @param[in] eventType The type of the event for the call back.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VDeregisterCallBack(const UIEVENTTYPE::ENUM eventType) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Deregisters all the callback functions.
+		///
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VDeRegisterAllCallBacks() = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Moves the child control to the front.
+		///
+	  /// @param[in] pControl The control to be moved to the front.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VMoveToFront(const IBaseControl* const pControl) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the text to be displayed on the control
+		///
+	  /// @param[in] text The text to be displayed on the control
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VSetText(const Base::cString& text) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the name of the control.
+		///
+	  /// @return The name of the control.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual const Base::cString& VGetControlName() const = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the checksum of the control id
+		///
+	  /// @return The checksum of the control id
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual UINT64 VGetControlNameHash() const = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Sets the name of the control.
+		///
+	  /// @param[in] controlName The name of the control.
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual void VSetControlName(const Base::cString & controlName) = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns the number of children.
+		///
+	  /// @param[in] recursive If true recursively gets the number of children. Else returns the immediate children of 
+		// this control
+	  /// @return The number of child controls
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		virtual int VGetNumberOfChildControls(bool recursive) const = 0;
+		virtual Base::cString VToXml() const = 0;
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns a pointer to a window control object
+		///
+	  /// @param[in] def The params to create the window control.
+	  /// @return Pointer to a window control object
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		GRAPHIC_API static IBaseControl * CreateWindowControl(const cWindowControlDef& def);
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  /// Returns a pointer to a label control object
+		///
+	  /// @param[in] def The params to create the label control 
+	  /// @return Pointer to a label control object
+		///
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		GRAPHIC_API static IBaseControl * CreateLabelControl(const cLabelControlDef& def);
 	};
 }
-#endif // BaseControl_hxx__
+#endif  // BaseControl_hxx__

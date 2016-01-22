@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  PhysicsSystem version:  1.0   Ankur Sheel  date: 2013/05/16
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef PhysicsSystem_h__
 #define PhysicsSystem_h__
@@ -42,11 +42,11 @@ namespace GameBase
 	private:
 		void ActorInitializedListener(IEventDataPtr pEventData);
 		void ActorScaledListener(IEventDataPtr pEventData);
-		cPhysicsComponent * const CastToPhysicsComponent(const IBaseEntity * const pEntity);
+		shared_ptr<cPhysicsComponent> const CastToPhysicsComponent(shared_ptr<IBaseEntity> const pEntity);
 
 	private:
 		shared_ptr<Physics::IPhysics> m_pPhysics;
 		weak_ptr<IEntityManager> m_pEntityManager;
 	};
-}
-#endif // PhysicsSystem_h__
+}  // namespace GameBase
+#endif  // PhysicsSystem_h__

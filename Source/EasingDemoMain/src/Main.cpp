@@ -36,6 +36,8 @@ int WINAPI WinMain(const HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpC
 	pGame->VOnInitialization(hInstance, nCmdShow, "Options.ini");
 	pGame->VRun();
 	Cleanup() ;
+
+	cServiceLocator::Destroy();
 	//_CrtDumpMemoryLeaks()
 	return 0;
 }

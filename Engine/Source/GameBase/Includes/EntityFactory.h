@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  EntityFactory   version:  1.0   Ankur Sheel  date: 2013/05/06
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 
 #ifndef EntityFactory_h__
 #define EntityFactory_h__
@@ -24,14 +24,13 @@ namespace GameBase
 	public:
 		GAMEBASE_API cEntityFactory();
 		GAMEBASE_API virtual ~cEntityFactory();
-		GAMEBASE_API virtual void VRegisterEntities()= 0 ;
-		GAMEBASE_API virtual IBaseEntity * VCreateEntity(const Base::cHashedString & Type);
+		GAMEBASE_API virtual void VRegisterEntities()= 0;
+		GAMEBASE_API virtual shared_ptr<IBaseEntity> VCreateEntity(const Base::cHashedString & Type);
 		GAMEBASE_API static cEntityFactory * Instance() { return m_pInstance; }
 
 	protected:
-		Base::GenericObjectFactory<IBaseEntity, unsigned long>	m_RegisteredEntities;
+		Base::GenericObjectFactory<IBaseEntity, UINT64>	m_RegisteredEntities;
 		GAMEBASE_API static cEntityFactory *				m_pInstance;
 	};
-
-}
-#endif // EntityFactory_h__
+}  // namespace GameBase
+#endif  // EntityFactory_h__

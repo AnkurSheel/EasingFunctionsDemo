@@ -20,9 +20,8 @@ namespace Base
 
 	protected:
 		virtual AssertAction::AssertAction VDisplayMessageAndGetAction(const ISpAssertContext * const pContext) { return AssertAction::None; }
-
 	};
-}
+}  // namespace Base
 
 #endif  // __SPASSERTHANDLER_H__
 

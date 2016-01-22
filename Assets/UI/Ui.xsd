@@ -1,0 +1,92 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="urn:guiwindow-schema"
+	elementFormDefault="qualified"
+	targetNamespace="urn:guiwindow-schema">
+
+	<xsd:element name="Ui" type="GuiWindowType"/>
+
+	<xsd:complexType name="GuiWindowType">
+		<xsd:all>
+			<xsd:element name="Name" type="xsd:string"/>
+			<xsd:element name="ScaleInPixels" type="Vector2DType"/>
+			<xsd:element name="ConstrainInParent" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Controls" type="ControlType" minOccurs="0" maxOccurs="1"/>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="ControlType">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="LabelControl" type="LabelControlType" />
+			<xsd:element name="ButtonControl" type="ButtonControlType" />
+			<xsd:element name="TextBoxControl" type="TextboxControlType" />
+		</xsd:choice>
+	</xsd:complexType>
+	
+	<xsd:group name="BaseControlType">
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string"/>
+			<xsd:element name="BackGroundImage" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ConstrainInParent" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Visible" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Position" type="Vector2DType"/>
+			<xsd:element name="ScaleInPixels" type="Vector2DType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:group>
+	
+	<xsd:complexType name="LabelControlChildType">
+		<xsd:sequence>
+			<xsd:group ref="LabelControlChildType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:group name="LabelControlChildType">
+		<xsd:sequence>
+			<xsd:element name="Font" type="xsd:string" />
+			<xsd:element name="Text" type="xsd:string" />
+			<xsd:element name="Height" type="xsd:integer" />
+			<xsd:element name="AutoSize" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="TextColor" type="ColorType" />
+		</xsd:sequence>
+	</xsd:group>
+
+	<xsd:complexType name="LabelControlType">
+		<xsd:sequence>
+			<xsd:group ref="BaseControlType" />
+			<xsd:group ref="LabelControlChildType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ButtonControlType">
+		<xsd:sequence>
+			<xsd:group ref="BaseControlType" />
+			<xsd:element name="DefaultImage" type="xsd:string" />
+			<xsd:element name="PressedImage" type="xsd:string" />
+			<xsd:element name="AutoSize" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="LabelControl" type="LabelControlChildType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		<xsd:complexType name="TextboxControlType">
+		<xsd:sequence>
+			<xsd:group ref="BaseControlType" />
+			<xsd:group ref="LabelControlChildType" />
+			<xsd:element name="CaretImage" type="xsd:string" />
+			<xsd:element name="CaretWidth" type="xsd:integer" />
+			<xsd:element name="CaretUpdateTime" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Vector2DType">
+		<xsd:attribute name="x" type="xsd:integer" use="required" />
+		<xsd:attribute name="y" type="xsd:integer" use="required" />
+	</xsd:complexType>
+
+	<xsd:complexType name="ColorType">
+		<xsd:attribute name="r" type="xsd:integer" use="required" />
+		<xsd:attribute name="g" type="xsd:integer" use="required" />
+		<xsd:attribute name="b" type="xsd:integer" use="required" />
+		<xsd:attribute name="a" type="xsd:integer" use="required" />
+	</xsd:complexType>
+
+
+</xsd:schema>

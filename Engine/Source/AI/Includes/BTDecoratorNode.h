@@ -1,34 +1,33 @@
 //  *******************************************************************************************************************
 //  BTDecoratorNode   version:  1.0   Ankur Sheel  date: 2014/12/09
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __BTDECORATORNODE_H__
 #define __BTDECORATORNODE_H__
 
-#include "BTBehavior.h"
+#include "BTBehaviorNode.h"
 
 namespace AI
 {
 	class cBTDecoratorNode
-		: public cBTBehavior
+		: public cBTBehaviorNode
 	{
 	public:
 		~cBTDecoratorNode();
-
 		AI::BTNodeStrongPtr GetChild() const { return m_pChild; }
-		void VOnInitialize(void * pOwner);
-		BT_STATUS::Enum VOnUpdate(void * pOwner);
 
 		template<class PARENT>
 		shared_ptr<PARENT> SetChild(BTNodeWeakPtr pChild);
 
 	protected:
 		AI_API cBTDecoratorNode();
+		void VOnInitialize(void * pOwner) OVERRIDE;
+		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
+		void VReset() OVERRIDE;
 
 	protected:
 		BTNodeStrongPtr m_pChild;
-		bool m_Initialized;
 	};
 
 	//  ********************************************************************************************************************
@@ -45,5 +44,5 @@ namespace AI
 		return dynamic_pointer_cast<PARENT>(pThisPtr);
 	}
 
-}
+}  // namespace AI
 #endif  // __BTDECORATORNODE_H__

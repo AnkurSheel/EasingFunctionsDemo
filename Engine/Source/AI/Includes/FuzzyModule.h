@@ -1,12 +1,8 @@
-// ***************************************************************
+//  *******************************************************************************************************************
 //  FuzzyModule   version:  1.0   Ankur Sheel  date: 04/05/2009
-//  -------------------------------------------------------------
-//  
-//  -------------------------------------------------------------
-//  Copyright (C) 2009 - All Rights Reserved
-// ***************************************************************
-// 
-// ***************************************************************
+//  *******************************************************************************************************************
+//
+//  *******************************************************************************************************************
 #ifndef FUZZYMODULE_H
 #define FUZZYMODULE_H
 
@@ -23,9 +19,9 @@ class cFuzzyModule
 protected:
 	struct compstr
 	{
-		bool operator () (const Base::cString & str1, const Base::cString & str2) const
+		bool operator()(const Base::cString & str1, const Base::cString & str2) const
 		{
-			return str1.CompareInsensitive(str2);	
+			return str1.CompareInsensitive(str2);
 		}
 	};
 
@@ -34,8 +30,8 @@ protected:
 public:
 	enum DeFuzzifyMethod
 	{
-		Max_average
-		,Centroid
+		Max_average,
+		Centroid
 	};
 public:
 	AI_API cFuzzyModule();
@@ -53,4 +49,4 @@ private:
 	VarMap m_Variables;
 	std::vector<cFuzzyRule* > m_Rules;
 };
-#endif
+#endif  // FUZZYMODULE_H

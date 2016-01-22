@@ -43,4 +43,4 @@ namespace Graphics
 	};
 }
 
-#endif // KeyboardHandler_h__
+#endif  // KeyboardHandler_h__

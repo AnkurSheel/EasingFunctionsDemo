@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Config   version:  1.0   Ankur Sheel  date: 2013/05/06
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 
 #ifndef Config_h__
@@ -40,9 +40,9 @@ namespace GameBase
 		shared_ptr<Utilities::IXMLNode>	m_pRoot;
 
 	private:
-		typedef std::map<unsigned long, const cEntityDef *> EnitityDefMap;
+		typedef std::map<UINT64, const cEntityDef *> EnitityDefMap;
 		EnitityDefMap	m_EntityDefs;
 		static cConfig *	m_pInstance;
 	};
-}
-#endif // Config_h__
+}  // namespace GameBase
+#endif  // Config_h__

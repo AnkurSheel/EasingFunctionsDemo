@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  BTParallelNode   version:  1.0   Ankur Sheel  date: 2014/12/10
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __BTPARALLELNODE_H__
 #define __BTPARALLELNODE_H__
@@ -19,13 +19,14 @@ namespace AI
 	public:
 		AI_API cBTParallelNode();
 		~cBTParallelNode();
-		void VOnInitialize(void * pOwner);
-		BT_STATUS::Enum VOnUpdate(void * pOwner);
-		void VOnTerminate(const BT_STATUS::Enum status);
 
 	private:
-		bool  m_Initialized;
+		void VOnInitialize(void * pOwner) OVERRIDE;
+		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
+		void VOnTerminate(const BT_STATUS::Enum status) OVERRIDE;
+
+	private:
 		std::vector<BT_STATUS::Enum> m_ChildrenStatus;
 	};
-}
+}  // namespace AI
 #endif  // __BTPARALLELNODE_H__

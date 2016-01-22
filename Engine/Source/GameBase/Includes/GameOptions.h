@@ -20,15 +20,14 @@ namespace GameBase
 		GAMEBASE_API static void SaveGameOptions(const Base::cString & strPlayerOptionsFile);
 
 	public:
-		bool	bFullScreen;	///< True if in fullscreen mode
-		int		iWidth;			///< Screen width
-		int		iHeight;		///< Screen height
+		bool	bFullScreen;  ///< True if in fullscreen mode
+		int		iWidth;		  ///< Screen width
+		int		iHeight;	  ///< Screen height
 
 		bool	bPlaySfx;
 		bool	bPlayMusic;
 		int		iSFXVolume;
 		int		iMusicVolume;
-
 	};
-}
-#endif GameOptions_h__
+}  // namespace GameBase
+#endif  // GameOptions_h__

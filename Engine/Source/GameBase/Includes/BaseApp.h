@@ -1,8 +1,8 @@
-// ********************************************************************************************************************
+//  **********************************************************************************************************************************************************
 //  BaseApp   version:  1.0   Ankur Sheel  date: 2011/10/19
-// ********************************************************************************************************************
-// 
-// ********************************************************************************************************************
+//  **********************************************************************************************************************************************************
+//
+//  **********************************************************************************************************************************************************
 #ifndef BaseApp_h__
 #define BaseApp_h__
 
@@ -11,7 +11,7 @@
 
 namespace Utilities
 {
-	class ITimer;
+	class cTimer;
 	class IParamLoader;
 	class IProcessManager;
 	class ILogger;
@@ -27,8 +27,8 @@ namespace GameBase
 
 namespace GameBase
 {
-	class cBaseApp 
-	: public IBaseApp
+	class cBaseApp
+		: public IBaseApp
 	{
 	public:
 		GAMEBASE_API virtual ~cBaseApp();
@@ -36,7 +36,7 @@ namespace GameBase
 		GAMEBASE_API Utilities::IProcessManager * VGetProcessManager() const {return m_pProcessManager; }
 		GAMEBASE_API float GetRunningTime() const;
 		GAMEBASE_API cGameControls * VGetGameControls() const { return m_pGameControls; }
-		GAMEBASE_API virtual void VOnInitialization(const HINSTANCE & inhInstance, const int inCmdShow, const Base::cString & inOptionsFile);
+		GAMEBASE_API virtual void VOnInitialization(const HINSTANCE& hInstance, const int inCmdShow, const Base::cString & inOptionsFile);
 		GAMEBASE_API virtual void VRender(TICK inCurrentTick, float inElapsedTime);
 		GAMEBASE_API virtual void VOnUpdate();
 
@@ -44,11 +44,11 @@ namespace GameBase
 		void RegisterServices();
 
 	protected:
-		GAMEBASE_API cBaseApp(const Base::cString & Name);
+		explicit GAMEBASE_API cBaseApp(const Base::cString & Name);
 		GAMEBASE_API virtual void VCreateHumanView();
-		GAMEBASE_API virtual void VCreateEntityFactory() = 0;
-		GAMEBASE_API virtual void VCreateComponentFactory();
-		GAMEBASE_API virtual void VCreateEventFactory();
+		GAMEBASE_API virtual void VCreateAndSetEntityFactory() = 0;
+		GAMEBASE_API virtual void VCreateAndSetComponentFactory();
+		GAMEBASE_API virtual void VCreateAndSetEventFactory();
 		GAMEBASE_API virtual HWND VInitializeApplicationWindow(const HINSTANCE & hInstance, const int cmdShow);
 		GAMEBASE_API virtual bool VInitializeGraphics(const HWND & hwnd);
 		GAMEBASE_API virtual void VInitializeGameOptions();
@@ -62,26 +62,26 @@ namespace GameBase
 		Base::cString VGetName() const { return m_Title; }
 
 		bool MeetsMinimumSystemRequirements();
-		void SetLoggerOptions(const shared_ptr<Utilities::ILogger> pLogger);
+		void SetLoggerOptions(const std::unique_ptr<Utilities::ILogger>& pLogger);
 		void OnInitializationError();
 		bool InitializeResourceManager(const Base::cString & assetsPath, const Base::cString& resourceFile);
 
 	protected:
-		Utilities::ITimer *	m_pGameTimer;
-		cHumanView *	m_pHumanView;
-		Utilities::IParamLoader *	m_pParamLoader;
-		cHighScoreTable *	m_pHighScoreTable;
-		cGameControls *	m_pGameControls;
-		Utilities::IProcessManager *	m_pProcessManager;
-		cConfig*	m_pConfig;
-		Base::cString	m_Title;
-		bool	m_Quitting;
-		bool	m_IsEditorRunning;
-		static IBaseApp *	m_spInstance;
+		static IBaseApp* m_spInstance;
+
+		std::unique_ptr<Utilities::cTimer> m_pGameTimer;
+		cHumanView* m_pHumanView;
+		Utilities::IParamLoader* m_pParamLoader;
+		cHighScoreTable* m_pHighScoreTable;
+		cGameControls* m_pGameControls;
+		Utilities::IProcessManager* m_pProcessManager;
+		cConfig* m_pConfig;
+		Base::cString m_Title;
+		bool m_Quitting;
+		bool m_IsEditorRunning;
 
 	private:
-		friend static const IBaseApp * const IBaseApp::GetInstance();
+		friend static const IBaseApp* const IBaseApp::GetInstance();
 	};
-}
-
-#endif // BaseApp_h__
+}  // namespace GameBase
+#endif  // BaseApp_h__

@@ -41,7 +41,7 @@ namespace AI
 		cState<entity_type> *	m_pCurrentState;
 		cState<entity_type> *	m_pNextState;
 		std::deque<cState<entity_type> *>	m_PushedStates;
-	
+
 	private:
 		bool	m_RequestedStateChange;
 		bool	m_RequestedPushState;
@@ -49,5 +49,5 @@ namespace AI
 	};
 
 #include "Statemachine.inl"
-}
-#endif // StateMachine_h__
+}  // namespace AI
+#endif  // StateMachine_h__

@@ -28,7 +28,7 @@ namespace Base
 	public:
 		virtual ~ISpAssertContext() {}
 		virtual void VAddContextValue(const cString & key, const cString & value) = 0;
-		//BASE_API const cString & GetContextValue(const cString & key) const;
+		// BASE_API const cString & GetContextValue(const cString & key) const;
 		virtual const cString & VGetFileName() const = 0;
 		virtual int VGetLineNumber() const = 0;
 		virtual const cString & VGetFunctionName() const = 0;

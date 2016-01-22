@@ -16,7 +16,7 @@ namespace Base
 	class ISpAssertLogger
 	{
 	public:
-		~ISpAssertLogger(){}
+		virtual ~ISpAssertLogger() {}
 		virtual void VInitialize() = 0;
 		virtual void VLog(const ISpAssertContext * const pContext) = 0;
 	};

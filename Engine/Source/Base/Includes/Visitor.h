@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Visitor   version:  1.0   Ankur Sheel  date: 2014/12/10
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __VISITOR_H__
 #define __VISITOR_H__
@@ -14,7 +14,7 @@ namespace Base
 	class BaseVisitor
 	{
 	public:
-		virtual ~BaseVisitor() {};
+		virtual ~BaseVisitor() {}
 	};
 
 	template <class ParamType, typename ReturnType = void>
@@ -31,7 +31,7 @@ namespace Base
 	{
 	public:
 		typedef R ReturnType;
-		virtual ~BaseVisitable() {};
+		virtual ~BaseVisitable() {}
 		virtual ReturnType accept(BaseVisitor & )
 		{
 			return ReturnType(0);
@@ -49,8 +49,8 @@ namespace Base
 		}
 
 #define VISITABLE() \
-			virtual ReturnType accept(BaseVisitor &v) \
-			{ return acceptVisitor(*this, v); }
+	virtual ReturnType accept(BaseVisitor &v) \
+		{ return acceptVisitor(*this, v); }
 	};
-}
+}  // namespace Base
 #endif  // __VISITOR_H__

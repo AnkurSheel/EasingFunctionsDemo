@@ -25,10 +25,5 @@ public:
 	void VOnUpdate(const TICK tickCurrent, const float fElapsedTime) OVERRIDE;
 	void VRenderPrivate() OVERRIDE;
 	bool VOnMsgProc(const Base::AppMsg & msg ) OVERRIDE;
-
-private:
-	shared_ptr<Graphics::IBaseControl>	m_pTimerLabel;
-	bool m_FirstUpdate;
-
 };
 #endif // BreakoutView_h__

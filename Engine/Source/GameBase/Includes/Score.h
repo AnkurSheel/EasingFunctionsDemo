@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Score   version:  1.0   Ankur Sheel  date: 2013/03/14
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef Score_h__
 #define Score_h__
@@ -76,8 +76,8 @@ namespace GameBase
 		GAMEBASE_API bool operator< (cScore const &s) const;
 
 	protected:
-		Base::cString	m_PlayerName;	///< The name of the player
-		int				m_Score;	///< The score of the player
+		Base::cString	m_PlayerName;  ///< The name of the player
+		int				m_Score;  ///< The score of the player
 	};
-}
-#endif
+}  // namespace GameBase
+#endif  // Score_h__

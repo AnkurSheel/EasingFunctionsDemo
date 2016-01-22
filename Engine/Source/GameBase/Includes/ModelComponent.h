@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  ModelComponent version:  1.0   Ankur Sheel  date: 2013/04/02
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 #ifndef ModelComponent_h__
 #define ModelComponent_h__
 
@@ -13,8 +13,8 @@
 
 namespace Base
 {
-	template<class BaseType, class SubType> 
-	BaseType * GenericObjectCreationFunction();
+	template<class BaseType, class SubType>
+	shared_ptr<BaseType> GenericObjectCreationFunction();
 }
 
 namespace Utilities
@@ -46,15 +46,15 @@ namespace GameBase
 	private :
 		cModelComponent();
 		~cModelComponent();
-		unsigned long VGetHashedID() const { return m_Name.GetHash(); }
+		UINT64 VGetHashedID() const { return m_Name.GetHash(); }
 
 	private:
-		Graphics::IModel *			m_pModel;	///< The 3D model
-		static Base::cHashedString	m_Name;	///< The component name
+		Graphics::IModel *			m_pModel;  ///< The 3D model
+		static Base::cHashedString	m_Name;  ///< The component name
 
 	private:
-		template<class BaseType, class SubType> 
-		friend BaseType * Base::GenericObjectCreationFunction();
+		template<class BaseType, class SubType>
+		friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
 	};
-}
-#endif // ModelComponent_h__
+}  // namespace GameBase
+#endif  // ModelComponent_h__

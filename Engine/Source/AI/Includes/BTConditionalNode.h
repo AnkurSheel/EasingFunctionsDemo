@@ -1,12 +1,12 @@
 //  *******************************************************************************************************************
 //  BTConditional   version:  1.0   Ankur Sheel  date: 2014/12/29
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __BTCONDITIONAL_H__
 #define __BTCONDITIONAL_H__
 
-#include "BTBehavior.h"
+#include "BTBehaviorNode.h"
 
 namespace AI
 {
@@ -21,11 +21,11 @@ namespace AI
 			Equal,
 			NotEqual
 		};
-	}
+	}  // namespace ConditionalOperators
 
 	template <class DATA, class CLASS>
 	class cBTConditionalNode
-		: public cBTBehavior
+		: public cBTBehaviorNode
 	{
 	public:
 		typedef DATA (CLASS::* Getter)() const;
@@ -36,8 +36,9 @@ namespace AI
 		DEFINE_NODE_PROPERTY(cBTConditionalNode, ConditionalOperators::Enum, TestType);
 
 	public:
-		~cBTConditionalNode(){};
-		BT_STATUS::Enum VOnUpdate(void * pOwner);
+		~cBTConditionalNode()
+		{
+		};
 
 	private:
 		cBTConditionalNode()
@@ -45,14 +46,22 @@ namespace AI
 		{
 		}
 
+		void VOnInitialize(void * pOwner) OVERRIDE;
+		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
+
 	private:
 		friend class cBTNodeFactory;
-
 	};
+
+	//  *******************************************************************************************************************
+	template <class DATA, class CLASS>
+	void cBTConditionalNode<DATA, CLASS>::VOnInitialize(void * pOwner)
+	{
+	}
 
 	//  ********************************************************************************************************************
 	template <class DATA, class CLASS>
-	BT_STATUS::Enum cBTConditionalNode<DATA, CLASS>::VOnUpdate(void * pOwner)
+	BT_STATUS::Enum cBTConditionalNode<DATA, CLASS>::VOnUpdate(void * pOwner, float deltaTime)
 	{
 		if (m_Holder.expired())
 		{
@@ -95,19 +104,19 @@ namespace AI
 
 	template <class CLASS>
 	class cBTConditionalNode<float, CLASS>
-		: public cBTBehavior
+		: public cBTBehaviorNode
 	{
 	public:
 		typedef float (CLASS::* Getter)() const;
 
 		DEFINE_NODE_PROPERTY(cBTConditionalNode, weak_ptr<CLASS>, Holder)
-			DEFINE_NODE_PROPERTY(cBTConditionalNode, Getter, Function)
-			DEFINE_NODE_PROPERTY(cBTConditionalNode, float, Value)
-			DEFINE_NODE_PROPERTY(cBTConditionalNode, ConditionalOperators::Enum, TestType)
+		DEFINE_NODE_PROPERTY(cBTConditionalNode, Getter, Function)
+		DEFINE_NODE_PROPERTY(cBTConditionalNode, float, Value)
+		DEFINE_NODE_PROPERTY(cBTConditionalNode, ConditionalOperators::Enum, TestType)
 
 	public:
-		~cBTConditionalNode(){};
-		BT_STATUS::Enum VOnUpdate(void * pOwner);
+		~cBTConditionalNode(){}
+		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime);
 
 	private:
 		cBTConditionalNode()
@@ -117,12 +126,11 @@ namespace AI
 
 	private:
 		friend class cBTNodeFactory;
-
 	};
 
 	//  ********************************************************************************************************************
 	template <class CLASS>
-	BT_STATUS::Enum cBTConditionalNode<float, CLASS>::VOnUpdate(void * pOwner)
+	BT_STATUS::Enum cBTConditionalNode<float, CLASS>::VOnUpdate(void * pOwner, float deltaTime)
 	{
 		if (m_Holder.expired())
 		{
@@ -165,5 +173,5 @@ namespace AI
 			return BT_STATUS::Failure;
 		}
 	}
-}
+}  // namespace AI
 #endif  // __BTCONDITIONAL_H__

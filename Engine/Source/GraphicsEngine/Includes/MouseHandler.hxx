@@ -46,4 +46,4 @@ namespace Graphics
 	};
 }
 
-#endif // MouseHandler_h__
+#endif  // MouseHandler_h__

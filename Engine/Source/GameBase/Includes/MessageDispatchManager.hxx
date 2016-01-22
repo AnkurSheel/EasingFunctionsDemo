@@ -19,4 +19,4 @@ namespace GameBase
 		static void CreateAsService();
 	};
 }
-#endif // MessageDispatchManager_hxx__
+#endif  // MessageDispatchManager_hxx__

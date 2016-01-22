@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  KeyboardHandlerComponent version:  1.0   Ankur Sheel  date: 2013/05/16
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 #ifndef KeyboardHandlerComponent_h__
 #define KeyboardHandlerComponent_h__
 
@@ -11,8 +11,8 @@
 
 namespace Base
 {
-	template<class BaseType, class SubType> 
-	BaseType * GenericObjectCreationFunction();
+	template<class BaseType, class SubType>
+	shared_ptr<BaseType> GenericObjectCreationFunction();
 }
 
 namespace GameBase
@@ -21,6 +21,7 @@ namespace GameBase
 		: public cBaseComponent
 	{
 	public:
+		~cKeyboardHandlerComponent();
 		GAMEBASE_API void VInitialize(const Utilities::IXMLNode * const pXMLNode) OVERRIDE;
 		GAMEBASE_API void VCleanup() OVERRIDE;
 		shared_ptr<Utilities::IXMLNode> VGenerateXml() const OVERRIDE;
@@ -28,17 +29,15 @@ namespace GameBase
 		void Update(const float deltaTime);
 
 	private:
-		unsigned long VGetHashedID() const { return m_Name.GetHash(); }
+		UINT64 VGetHashedID() const { return m_Name.GetHash(); }
 		cKeyboardHandlerComponent();
-		~cKeyboardHandlerComponent();
 
 	private:
-		static Base::cHashedString	m_Name;	///< The component name
+		static Base::cHashedString	m_Name;  ///< The component name
 
 	private:
-		template<class BaseType, class SubType> 
-		friend BaseType * Base::GenericObjectCreationFunction();
-
+		template<class BaseType, class SubType>
+		friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
 	};
-}
-#endif // KeyboardHandlerComponent_h__
+}  // namespace GameBase
+#endif  // KeyboardHandlerComponent_h__

@@ -1,12 +1,8 @@
-// ne Entertainment, Ltd.
-// http://www.neGames.com
-// Copyright (c) 2007.  All Rights Reserved
+//  *******************************************************************************************************************
+//  FuzzyOperators   version:  1.0   Ankur Sheel  date: 2015/05/19
+//  *******************************************************************************************************************
 //
-// FuzzyOperatorVery: Ankur Sheel
-// FuzzyOperatorFairly: Ankur Sheel
-// FuzzyOperatorAnd: Ankur Sheel
-// FuzzyOperatorOr: Ankur Sheel
-
+//  *******************************************************************************************************************
 #ifndef FUZZYOPERATORS_H
 #define FUZZYOPERATORS_H
 
@@ -21,8 +17,14 @@ class cFuzzyOperatorVery :
 {
 public:
 	virtual ~cFuzzyOperatorVery();
-	cFuzzyOperatorVery(cFuzzySetProxy& set);
+	cFuzzyOperatorVery(const cFuzzySetProxy& set);
 	cFuzzyTerm* Clone();
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Returns the DOM of the term
+	///
+  /// @return DOM of the term
+	///
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	float GetDOM();
 	void ClearDOM();
 	void ORwithDOM(const float val);
@@ -33,7 +35,6 @@ protected:
 
 protected:
 	cFuzzySet* m_Set;
-	
 };
 
 class cFuzzyOperatorFairly :
@@ -95,7 +96,8 @@ public:
 
 protected:
 	cFuzzyOperatorOr& operator=(const cFuzzyOperatorOr& instance);
+
 protected:
 	std::vector<cFuzzyTerm *> m_Terms;
 };
-#endif
+#endif  // FUZZYOPERATORS_H

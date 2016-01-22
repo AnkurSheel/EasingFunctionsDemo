@@ -25,4 +25,4 @@ namespace Graphics
 	};
 }
 
-#endif // UiManager_hxx__
+#endif  // UiManager_hxx__

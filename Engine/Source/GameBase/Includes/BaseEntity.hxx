@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  BaseEntity   version:  1.0   Ankur Sheel  date: 2012/07/31
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef BaseEntity_hxx__
 #define BaseEntity_hxx__
@@ -23,7 +23,7 @@ namespace GameBase
 	class IBaseEntity
 	{
 	public:
-		typedef std::list<IBaseComponent *> ComponentList;
+		typedef std::list<shared_ptr<IBaseComponent> > ComponentList;
 
 	public:
 		virtual ~IBaseEntity(){}
@@ -34,11 +34,15 @@ namespace GameBase
 		virtual bool VOnHandleMessage(const AI::Telegram & telegram) = 0;
 		virtual void VHandleInput(const float inDeltaTime) = 0;
 		virtual Base::cHashedString VGetEntityType() const = 0;
-		virtual unsigned long VGetHashedID() const = 0;
+		virtual UINT64 VGetHashedID() const = 0;
 		virtual int VGetEntityID() const = 0;
-		virtual void VOnCollided(IBaseEntity * const pEntityCollider) = 0;
-		virtual void VOnEnteredTrigger(IBaseEntity * const pTrigger) = 0;
+		virtual void VOnCollided(shared_ptr<IBaseEntity>const pEntityCollider) = 0;
+		virtual void VOnEnteredTrigger(shared_ptr<IBaseEntity>const pTrigger) = 0;
+    virtual void VOnTriggered(shared_ptr<IBaseEntity>const pEntityCollider) = 0;
 		virtual Base::cString VToXml() = 0;
+		virtual void VSetActive(const bool active) = 0;
+		virtual bool VIsActive() const = 0;
+
 	};
 }
-#endif // BaseEntity_hxx__
+#endif  // BaseEntity_hxx__

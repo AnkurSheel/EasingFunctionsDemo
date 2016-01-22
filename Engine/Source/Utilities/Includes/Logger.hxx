@@ -28,9 +28,9 @@ namespace Utilities
 	};
 
 	///////////////////////////////////////////////////////////////////////////
-	/// @brief Interface for Logging
+  /// @brief Interface for Logging
 	///
-	/// 
+  /// 
 	///////////////////////////////////////////////////////////////////////////
 	class ILogger
 	: public Base::ISpAssertLogger
@@ -38,24 +38,24 @@ namespace Utilities
 	public:
 		virtual ~ILogger(){}
 		////////////////////////////////////////////////////////////////////////
-		/// Initializes the logger. XML Log file is always created.
+	  /// Initializes the logger. XML Log file is always created.
 		///
 		///
 		////////////////////////////////////////////////////////////////////////
 		UTILITIES_API virtual void VInitialize() = 0;
 		////////////////////////////////////////////////////////////////////////
-		/// Sets the log options
+	  /// Sets the log options
 		///
-		/// @param[in] bShowConsole True if we want to log to a console window. 
-		/// @param[in] bLogToText True if we want to log to a text file. 
-		/// @param[in] bLogToXML True if we want to log to a XML file. 
-		/// @param[in] uiPriorityLevel The minimum level that must be logged
+	  /// @param[in] bShowConsole True if we want to log to a console window. 
+	  /// @param[in] bLogToText True if we want to log to a text file. 
+	  /// @param[in] bLogToXML True if we want to log to a XML file. 
+	  /// @param[in] uiPriorityLevel The minimum level that must be logged
 		///
 		////////////////////////////////////////////////////////////////////////
 		UTILITIES_API virtual void VSetLogOptions(const bool bShowConsole, const bool bLogToText, const bool bLogToXML,
 		const unsigned int uiPriorityLevel) = 0;
 
-		UTILITIES_API static std::tr1::shared_ptr<ILogger> CreateLogger();
+		UTILITIES_API static std::unique_ptr<ILogger> CreateLogger();
 	};
 }
 #endif  // __LOGGER_HXX__

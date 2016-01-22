@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  RigidBody version:  1.0   Ankur Sheel  date: 2013/05/23
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 
 #ifndef RigidBody_hxx
@@ -56,13 +56,16 @@ namespace Physics
 		virtual ~IRigidBody() {}
 		virtual void VInitialize(const Base::cVector3 & position) = 0;
 		virtual void VApplyForce(const Base::cVector3 & direction, const float newtons) = 0;
+		virtual void VApplyImpulse(const Base::cVector3 & force) = 0;
 		virtual void VUpdateCollisionShape(const Base::cVector3 & minBound, const Base::cVector3 & maxBound) = 0;
 		virtual Base::cVector3 VGetRenderPosition() const = 0;
 		virtual int VGetID() const = 0;
 		virtual void VSetAsTrigger(bool isTrigger) = 0;
 		virtual bool VIsTrigger() const = 0;
 		virtual void VGetBounds(Base::cVector3 & minBound, Base::cVector3 & maxBound) = 0;
+		virtual void VStop() = 0;
+		virtual void VSetActive(bool active) = 0;
 		static IRigidBody * Create(shared_ptr<const stRigidBodyDef> pDef, const int ID);
 	};
 }
-#endif //RigidBody_hxx
+#endif // rigidBody_hxx

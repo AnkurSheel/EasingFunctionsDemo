@@ -22,8 +22,8 @@
 #define SP_LOG_CUSTOM(level, priority, message) SP_LOG_(level, priority, message)
 
 #define SP_ASSERT_1(level, expr) \
-	if ((expr)); \
-	else \
+	if ((expr));  /* NOLINT whitespace/newline */ \
+	else   /* NOLINT whitespace/newline */ \
 	Base::cSpAssert::Make(level, TOSTRING(expr), false).AddContext("file", SP_FILE)\
 	.AddContext("line", TOSTRING(SP_LINE))\
 	.AddContext("function", SP_FUNCTION_NAME)\
@@ -32,19 +32,19 @@
 #define SP_ASSERT_(level, expr) SP_ASSERT_1(level, expr)
 
 #ifdef SPASSERT_DEBUG_MODE
-	#define SP_ASSERT(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, expr)
-	#define SP_ASSERT_WARNING(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_WARNING, expr)
-	#define SP_ASSERT_DEBUG(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, expr)
-	#define SP_ASSERT_ERROR(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_ERROR, expr)
-	#define SP_ASSERT_FATAL(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_FATAL, expr)
-	#define SP_ASSERT_CUSTOM(level, expr) SP_ASSERT_(level, expr)
+#define SP_ASSERT(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, expr)
+#define SP_ASSERT_WARNING(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_WARNING, expr)
+#define SP_ASSERT_DEBUG(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, expr)
+#define SP_ASSERT_ERROR(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_ERROR, expr)
+#define SP_ASSERT_FATAL(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_FATAL, expr)
+#define SP_ASSERT_CUSTOM(level, expr) SP_ASSERT_(level, expr)
 #else
-	#define SP_ASSERT(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, true)
-	#define SP_ASSERT_WARNING(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_WARNING, true)
-	#define SP_ASSERT_DEBUG(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, true)
-	#define SP_ASSERT_ERROR(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_ERROR, expr)
-	#define SP_ASSERT_FATAL(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_FATAL, expr)
-	#define SP_ASSERT_CUSTOM(level, expr) SP_ASSERT_(level, true)
+#define SP_ASSERT(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, true)
+#define SP_ASSERT_WARNING(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_WARNING, true)
+#define SP_ASSERT_DEBUG(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_DEBUG, true)
+#define SP_ASSERT_ERROR(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_ERROR, expr)
+#define SP_ASSERT_FATAL(expr) SP_ASSERT_(Base::AssertLevels::LEVEL_FATAL, expr)
+#define SP_ASSERT_CUSTOM(level, expr) SP_ASSERT_(level, true)
 #endif
 
 #define SMART_ASSERT_A(x) SMART_ASSERT_OP(x, B)
@@ -98,7 +98,7 @@ namespace Base
 		if (m_pContext != NULL)
 		{
 			std::stringstream my_stream;
-			if (value  == 0)
+			if (value == 0)
 			{
 				my_stream << "null";
 			}
@@ -113,5 +113,5 @@ namespace Base
 		}
 		return *this;
 	}
-}
+}  // namespace Base
 #endif  // __SP_ASSERT_H__

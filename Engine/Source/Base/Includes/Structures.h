@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  Structures   version:  1.0   Ankur Sheel  date: 2011/11/21
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef Structures_h__
 #define Structures_h__
@@ -10,11 +10,10 @@ namespace Base
 {
 	struct AppMsg
 	{
-		HWND			m_hWnd;
-		UINT			m_uMsg;
-		unsigned int	m_wParam;
-		unsigned long	m_lParam;
+		HWND windowHandle;
+		uint32 message;
+		uint32 m_wParam;
+		uint32 m_lParam;
 	};
 }
-
-#endif // Structures_h__
+#endif  // Structures_h__

@@ -17,13 +17,13 @@ namespace AI
 namespace AI
 {
 	template <class entity_type>
-	class cState 
+	class cState
 		: public Base::cNonCopyable
 	{
 	public:
 		cState();
-		virtual ~cState(){};
-		virtual void VOnEnter(entity_type *);
+		virtual ~cState(){}
+		virtual void VOnEnter(entity_type * pType);
 		virtual void VOnUpdate(const TICK currentTick, const float deltaTime) = 0;
 		virtual void VOnExit() = 0;
 		virtual bool VOnMessage(const AI::Telegram & msg) = 0;
@@ -31,7 +31,7 @@ namespace AI
 		virtual void VOnResume();
 		Base::cString GetName() const;
 		bool IsPaused() const;
-	
+
 	protected:
 		bool	m_IsPaused;
 		entity_type *	m_pOwner;
@@ -39,5 +39,5 @@ namespace AI
 
 #include "State.inl"
 
-}
-#endif // State_h__
+}  // namespace AI
+#endif  // State_h__

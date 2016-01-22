@@ -32,4 +32,4 @@ namespace Utilities
 		UTILITIES_API static IProcessManager * CreateProcessManager();
 	};
 }
-#endif // ProcessManager_h__
+#endif  // ProcessManager_h__

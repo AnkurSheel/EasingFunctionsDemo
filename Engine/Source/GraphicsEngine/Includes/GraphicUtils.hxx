@@ -7,6 +7,7 @@
 #define GRAPHICUTILS_HXX__
 
 #include "GraphicEngineDefines.h"
+#include "Vector3.h"
 
 namespace Graphics
 {
@@ -51,4 +52,4 @@ namespace Graphics
 		virtual ~IGraphicUtils(){}
 	};
 }
-#endif // GRAPHICUTILS_HXX__
+#endif  // GRAPHICUTILS_HXX__

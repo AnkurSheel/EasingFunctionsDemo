@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  EventFactory   version:  1.0   Ankur Sheel  date: 2013/07/25
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 
 #ifndef EventFactory_h__
 #define EventFactory_h__
@@ -23,8 +23,8 @@ namespace GameBase
 		static cEventFactory * Instance() { return m_pInstance; }
 
 	private:
-		Base::GenericObjectFactory<IEventData, unsigned long>	m_RegisteredEvents;
+		Base::GenericObjectFactory<IEventData, UINT64>	m_RegisteredEvents;
 		GAMEBASE_API static cEventFactory *				m_pInstance;
 	};
-}
-#endif // EventFactory_h__
+}  // namespace GameBase
+#endif  // EventFactory_h__

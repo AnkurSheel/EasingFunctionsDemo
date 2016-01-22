@@ -46,4 +46,4 @@ namespace Graphics
 		virtual void VSetVisible(bool bIsVisible) = 0;
 	};
 }
-#endif // ScreenElement_hxx__
+#endif  // ScreenElement_hxx__

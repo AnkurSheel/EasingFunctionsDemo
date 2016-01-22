@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  GenericObjectCreation version:  1.0   Ankur Sheel  date: 2013/05/07
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef GenericObjectCreation_h__
 #define GenericObjectCreation_h__
@@ -9,18 +9,18 @@
 namespace Base
 {
 	template <class BaseType, class SubType>
-	BaseType * GenericObjectCreationFunction() 
-	{ 
-		return DEBUG_NEW SubType; 
+	shared_ptr<BaseType> GenericObjectCreationFunction()
+	{
+		return shared_ptr<BaseType>(DEBUG_NEW SubType);
 	}
 
 	template <class BaseType, class SubType>
-	BaseType * GenericObjectDuplicationFunction(const BaseType * const pObject) 
-	{ 
-		const SubType * const pSubObject = dynamic_cast<const SubType * const>(pObject);
-		if(pSubObject != NULL)
+	shared_ptr<BaseType> GenericObjectDuplicationFunction(shared_ptr<BaseType> const pObject)
+	{
+		shared_ptr<SubType> pSubObject = dynamic_pointer_cast<SubType>(pObject);
+		if (pSubObject != NULL)
 		{
-			return DEBUG_NEW SubType(*pSubObject); 
+			return shared_ptr<BaseType>(std::make_shared<SubType>(*pSubObject));
 		}
 		return NULL;
 	}
@@ -28,10 +28,10 @@ namespace Base
 	template <class BaseClass, class IdType>
 	class GenericObjectFactory
 	{
-		typedef BaseClass* (*ObjectCreationFunction)(void);
+		typedef shared_ptr<BaseClass> (*ObjectCreationFunction)(void);
 		std::map<IdType, ObjectCreationFunction> m_creationFunctions;
 
-		typedef BaseClass* (*ObjectDuplicationFunction)(const BaseClass * const);
+		typedef shared_ptr<BaseClass> (*ObjectDuplicationFunction)(shared_ptr<BaseClass> const);
 		std::map<IdType, ObjectDuplicationFunction> m_DuplicationFunctions;
 
 	public:
@@ -42,13 +42,13 @@ namespace Base
 			if (findIt == m_creationFunctions.end())
 			{
 				m_creationFunctions[id] = &GenericObjectCreationFunction<BaseClass, SubClass>;
-				m_DuplicationFunctions[id] = &GenericObjectDuplicationFunction<BaseClass, SubClass>; 
+				m_DuplicationFunctions[id] = &GenericObjectDuplicationFunction<BaseClass, SubClass>;
 				return true;
 			}
 			return false;
 		}
 
-		BaseClass * Create(IdType id)
+		shared_ptr<BaseClass> Create(IdType id)
 		{
 			auto findIt = m_creationFunctions.find(id);
 			if (findIt != m_creationFunctions.end())
@@ -60,7 +60,7 @@ namespace Base
 			return NULL;
 		}
 
-		BaseClass * Duplicate(IdType id, const BaseClass * const pObject)
+		shared_ptr<BaseClass> Duplicate(IdType id, shared_ptr<BaseClass> const pObject)
 		{
 			auto findIt = m_DuplicationFunctions.find(id);
 			if (findIt != m_DuplicationFunctions.end())
@@ -71,5 +71,5 @@ namespace Base
 			return NULL;
 		}
 	};
-}
-#endif // GenericObjectCreation
+}  // namespace Base
+#endif  // GenericObjectCreation_h__

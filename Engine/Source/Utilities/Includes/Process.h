@@ -36,17 +36,17 @@ namespace Utilities
 		void SetNext(shared_ptr<cProcess> pNext);
 
 	protected:
-		bool					m_bKill;
-		bool					m_bActive;
-		bool					m_bPaused;
-		bool					m_bInitialUpdate;
-		shared_ptr<cProcess>	m_pNext;
-	
+		bool m_bKill;
+		bool m_Active;
+		bool m_bPaused;
+		bool m_bInitialUpdate;
+		shared_ptr<cProcess> m_pNext;
+
 	private:
-		unsigned int				m_uProcessFlags;
+		unsigned int m_uProcessFlags;
 
 	private:
 		friend class cProcessManager;
 	};
-}
-#endif // Process_h__
+}  // namespace Utilities
+#endif  // Process_h__

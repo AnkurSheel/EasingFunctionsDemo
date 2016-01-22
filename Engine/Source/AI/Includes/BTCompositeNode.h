@@ -1,17 +1,17 @@
 //  *******************************************************************************************************************
 //  BTCompositeNode   version:  1.0   Ankur Sheel  date: 2014/12/09
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __BTCOMPOSITENODE_H__
 #define __BTCOMPOSITENODE_H__
 
-#include "BTBehavior.h"
+#include "BTBehaviorNode.h"
 
 namespace AI
 {
 	class cBTCompositeNode
-		: public cBTBehavior
+		: public cBTBehaviorNode
 	{
 	public:
 		virtual ~cBTCompositeNode();
@@ -44,5 +44,5 @@ namespace AI
 		}
 		return dynamic_pointer_cast<PARENT>(pThisPtr);
 	}
-}
+}  // namespace AI
 #endif  // __BTCOMPOSITENODE_H__

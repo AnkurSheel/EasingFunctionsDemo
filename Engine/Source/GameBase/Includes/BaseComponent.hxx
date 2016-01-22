@@ -1,8 +1,8 @@
-// *****************************************************************************
+//  *******************************************************************************************************************
 //  BaseComponent version:  1.0   Ankur Sheel  date: 2013/04/02
-// *****************************************************************************
-//  purpose:	
-// *****************************************************************************
+//  *******************************************************************************************************************
+//  purpose:
+//  *******************************************************************************************************************
 #ifndef BaseComponent_hxx__
 #define BaseComponent_hxx__
 
@@ -25,10 +25,12 @@ namespace GameBase
 	public:
 		virtual ~IBaseComponent(){};
 		virtual void VInitialize(const Utilities::IXMLNode * const pXMLNode) = 0;
-		virtual void VOnAttached(IBaseEntity * const pOwner) = 0;
+		virtual void VOnAttached(shared_ptr<IBaseEntity> const pOwner) = 0;
 		virtual void VCleanup() = 0;
-		virtual unsigned long VGetID() const = 0;
+		virtual UINT64 VGetID() const = 0;
 		virtual shared_ptr<Utilities::IXMLNode> VGenerateXml() const = 0;
+		virtual void VSetActive(const bool active) = 0;
+		virtual bool VIsActive() const = 0;
 	};
 }
-#endif //BaseComponent_hxx__
+#endif // BaseComponent_hxx__

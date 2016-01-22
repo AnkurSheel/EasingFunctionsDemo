@@ -1,11 +1,8 @@
-// ne Entertainment, Ltd.
-// http://www.neGames.com
-// Copyright (c) 2007.  All Rights Reserved
+//  *******************************************************************************************************************
+//  FuzzySetTypes   version:  1.0   Ankur Sheel  date: 2015/05/19
+//  *******************************************************************************************************************
 //
-// FuzzySetangle: Ankur Sheel
-// FuzzySetLtShoulder: Ankur Sheel
-// FuzzySetRtShoulder: Ankur Sheel
-
+//  *******************************************************************************************************************
 #ifndef FUZZYSETTYPES_H
 #define FUZZYSETTYPES_H
 
@@ -18,10 +15,10 @@ public:
 	cFuzzySetangle();
 	virtual ~cFuzzySetangle();
 	void CreateangleSet(const float fMid, const float fLeft
-							, const float fRight);
+		, const float fRight);
 	float CalculateDOM(const float val);
 	cFuzzySetangle(const float fPeak, const float fLeftOffset
-					 , const float fRightOffset);
+		, const float fRightOffset);
 protected:
 	float m_fPeakPoint;
 	float m_fLeftOffset;
@@ -34,11 +31,9 @@ class cFuzzySetLtShoulder :
 public:
 	cFuzzySetLtShoulder();
 	virtual ~cFuzzySetLtShoulder();
-	void CreateLtShoulderSet(const float fMid, const float fLeft
-							, const float fRight);
+	void CreateLtShoulderSet(const float fMid, const float fLeft, const float fRight);
 	float CalculateDOM(const float val);
-	cFuzzySetLtShoulder(const float fPeak, const float fLeftOffset
-					   , const float fRightOffset);
+	cFuzzySetLtShoulder(const float fPeak, const float fLeftOffset, const float fRightOffset);
 
 protected:
 	float m_fPeakPoint;
@@ -52,15 +47,13 @@ class cFuzzySetRtShoulder :
 public:
 	cFuzzySetRtShoulder();
 	virtual ~cFuzzySetRtShoulder();
-	void CreateRtShoulderSet(const float fMid, const float fLeft
-							, const float fRight);
+	void CreateRtShoulderSet(const float fMid, const float fLeft, const float fRight);
 	float CalculateDOM(const float val);
-	cFuzzySetRtShoulder(const float fPeak, const float fLeftOffset
-					   , const float fRightOffset);
+	cFuzzySetRtShoulder(const float fPeak, const float fLeftOffset, const float fRightOffset);
 
 protected:
 	float m_fPeakPoint;
 	float m_fLeftOffset;
 	float m_fRightOffset;
 };
-#endif
+#endif  // FUZZYSETTYPES_H

@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  BTFwd   version:  1.0   Ankur Sheel  date: 2014/12/09
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef __BTFWD_H__
 #define __BTFWD_H__
@@ -18,8 +18,9 @@ namespace AI
 			Failure,
 			Aborted
 		};
-	}
-	namespace BT_POLICY 
+	}  // namespace BT_STATUS
+
+	namespace BT_POLICY
 	{
 		enum Enum
 		{
@@ -28,10 +29,14 @@ namespace AI
 		};
 	}
 
-	class cBTBehavior;
-	typedef shared_ptr<cBTBehavior> BTNodeStrongPtr;
-	typedef weak_ptr<cBTBehavior> BTNodeWeakPtr;
+	class cBTBehaviorNode;
+	class cBTBehaviorTree;
+
+	typedef shared_ptr<cBTBehaviorNode> BTNodeStrongPtr;
+	typedef weak_ptr<cBTBehaviorNode> BTNodeWeakPtr;
 	typedef std::vector<BTNodeStrongPtr> BTNodes;
+	typedef shared_ptr<cBTBehaviorTree> BTTreeStrongPtr;
+	typedef weak_ptr<cBTBehaviorTree> BTTreeWeakPtr;
 
 #define DEFINE_NODE_PROPERTY(CLASS, TYPE, NAME) \
 public: \
@@ -43,5 +48,5 @@ public: \
 	const TYPE& Get##NAME() const { return m_##NAME; } \
 private: \
 	TYPE m_##NAME;
-}
+}  // namespace AI
 #endif  // __BTFWD_H__

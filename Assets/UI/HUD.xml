@@ -1,0 +1,130 @@
+<Ui xmlns="urn:guiwindow-schema">
+	<Name>HUD</Name>
+	<ScaleInPixels x="800" y="600" />
+	<ConstrainInParent>true</ConstrainInParent>
+	<Controls>
+		<LabelControl>
+			<Name>TransitionXLabel</Name>
+			<Position x="0" y ="0" />
+			<ScaleInPixels x="150" y="30"/>
+			<Font>arial</Font>
+			<Text>0</Text>
+			<Height>30</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="0" g="255" b="0" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>EaseTypeXLabel</Name>
+			<Position x="0" y ="30" />
+			<ScaleInPixels x="150" y="30"/>
+			<Font>arial</Font>
+			<Text>0</Text>
+			<Height>30</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="0" g="128" b="0" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>TransitionYLabel</Name>
+			<Position x="0" y ="60" />
+			<ScaleInPixels x="150" y="30"/>
+			<Font>arial</Font>
+			<Text>0</Text>
+			<Height>30</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="0" g="0" b="255" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>EaseTypeYLabel</Name>
+			<Position x="0" y ="90" />
+			<ScaleInPixels x="150" y="30"/>
+			<Font>arial</Font>
+			<Text>0</Text>
+			<Height>30</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="0" g="0" b="128" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>StartLabel</Name>
+			<Position x="220" y ="200" />
+			<ScaleInPixels x="150" y="20"/>
+			<Font>arial</Font>
+			<Text>Start</Text>
+			<Height>20</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="0" g="255" b="0" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>EndLabel</Name>
+			<Position x="420" y ="400" />
+			<ScaleInPixels x="150" y="20"/>
+			<Font>arial</Font>
+			<Text>End</Text>
+			<Height>20</Height>
+			<AutoSize>false</AutoSize>
+			<TextColor r="255" g="0" b="0" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>HelpLabel1</Name>
+			<ConstrainInParent>false</ConstrainInParent>
+			<Position x="450" y="100" />
+			<Font>arial</Font>
+			<Text>
+				Help
+			</Text>
+			<Height>20</Height>
+			<AutoSize>true</AutoSize>
+			<TextColor r="128" g="128" b="255" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>HelpLabel2</Name>
+			<ConstrainInParent>false</ConstrainInParent>
+			<Position x="450" y="120" />
+			<Font>arial</Font>
+			<Text>
+				Press 'q' To modify x Transition.
+				Press 'w' To modify x Easing Type.
+			</Text>
+			<Height>20</Height>
+			<AutoSize>true</AutoSize>
+			<TextColor r="255" g="255" b="0" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>HelpLabel3</Name>
+			<ConstrainInParent>false</ConstrainInParent>
+			<Position x="450" y="160" />
+			<Font>arial</Font>
+			<Text>
+				Press 'a' To modify y Transition.
+				Press 's' To modify y Easing Type.
+			</Text>
+			<Height>20</Height>
+			<AutoSize>true</AutoSize>
+			<TextColor r="255" g="0" b="255" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>HelpLabel4</Name>
+			<ConstrainInParent>false</ConstrainInParent>
+			<Position x="450" y="200" />
+			<Font>arial</Font>
+			<Text>
+				Press 'z' To modify both Transitions.
+				Press 'x' To modify both Easing Types.
+			</Text>
+			<Height>20</Height>
+			<AutoSize>true</AutoSize>
+			<TextColor r="0" g="255" b="255" a="255"/>
+		</LabelControl>
+		<LabelControl>
+			<Name>HelpLabel5</Name>
+			<ConstrainInParent>false</ConstrainInParent>
+			<Position x="450" y="240" />
+			<Font>arial</Font>
+			<Text>
+				Press 'r' To reset to initial state.
+			</Text>
+			<Height>20</Height>
+			<AutoSize>true</AutoSize>
+			<TextColor r="255" g="128" b="0" a="255"/>
+		</LabelControl>
+	</Controls>
+</Ui>
