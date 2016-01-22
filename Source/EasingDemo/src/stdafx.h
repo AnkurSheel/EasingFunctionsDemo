@@ -9,3 +9,4 @@
 #include "Logger.hxx"
 #include "Messages.h"
 
+#define AUTOMATIC

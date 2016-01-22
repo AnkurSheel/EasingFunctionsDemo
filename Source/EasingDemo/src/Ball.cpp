@@ -14,8 +14,6 @@
 #include "TweenManager.h"
 #include "KeyboardController.hxx"
 
-#define AUTOMATIC
-
 using namespace Base;
 using namespace GameBase;
 using namespace Utilities;
@@ -90,6 +88,11 @@ cBall* cBall::CastToBall()
 //  *******************************************************************************************************************
 void cBall::VOnUpdate(const float deltaTime)
 {
+  if (m_bTweenCompleted)
+  {
+    m_bTweenCompleted = false;
+    VOnRestart();
+  }
   if (m_pTransformComponentStrongPtr != nullptr)
   {
     m_pTransformComponentStrongPtr->SetPosition(m_Position);
@@ -244,9 +247,7 @@ bool cBall::IncrementYEasingType()
 //  *******************************************************************************************************************
 void cBall::OnTweenCompleted(const cTweenParameters& params)
 {
-#ifdef AUTOMATIC
-  VOnRestart();
-#endif
+  m_bTweenCompleted = true;
 }
 
 //  *******************************************************************************************************************

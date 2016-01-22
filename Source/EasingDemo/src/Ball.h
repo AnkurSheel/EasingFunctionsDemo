@@ -70,6 +70,7 @@ private:
   Base::cVector3 m_FinalPosition;
   Base::cVector3 m_InitialScale;
   Base::cVector3 m_FinalScale;
+  bool m_bTweenCompleted;
 
 private:
   template <class BaseType, class SubType>
