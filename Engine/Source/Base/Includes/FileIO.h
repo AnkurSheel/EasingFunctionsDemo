@@ -3,8 +3,8 @@
 //  *******************************************************************************************************************
 //
 //  *******************************************************************************************************************
-#ifndef __FILEIO_HXX__
-#define __FILEIO_HXX__
+#ifndef FILEIO_H__
+#define FILEIO_H__
 
 #include "BaseDefines.h"
 
@@ -121,4 +121,4 @@ namespace Base
     std::unique_ptr<cFileIOImpl> m_pImpl;
   };
 }  // namespace Base
-#endif  // __FILEIO_HXX__
+#endif  // FILEIO_H__

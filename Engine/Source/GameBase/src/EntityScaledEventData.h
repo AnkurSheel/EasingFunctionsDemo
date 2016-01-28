@@ -11,24 +11,22 @@
 
 namespace GameBase
 {
-	class cEntityScaledEventData
-		: public cBaseEventData
-	{
-	public:
-		cEntityScaledEventData();
-		cEntityScaledEventData(const Base::cVector3 & size, const int actorID);
-		~cEntityScaledEventData();
-		UINT64 VGetHashedID() const { return m_Name.GetHash(); }
-		virtual Base::cString VGetName() const { return m_Name.GetString(); }
-		int GetActorID() const { return m_ActorID; }
-		Base::cVector3 GetSize() const { return m_Size; }
+  class cEntityScaledEventData : public cBaseEventData
+  {
+  public:
+    cEntityScaledEventData();
+    cEntityScaledEventData(const Base::cVector3& size, const int actorID);
+    ~cEntityScaledEventData();
+    UINT64 VGetHashedID() const { return m_Name.GetHash(); }
+    virtual Base::cString VGetName() const { return m_Name.GetString(); }
+    int GetActorID() const { return m_ActorID; }
+    Base::cVector3 GetSize() const { return m_Size; }
+  public:
+    static Base::cHashedString m_Name;
 
-	public:
-		static Base::cHashedString m_Name;
-
-	private:
-		Base::cVector3	m_Size;
-		int				m_ActorID;
-	};
+  private:
+    Base::cVector3 m_Size;
+    int m_ActorID;
+  };
 }  // namespace GameBase
 #endif  // EntityScaledEventData_h__

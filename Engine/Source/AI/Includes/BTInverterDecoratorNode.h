@@ -10,18 +10,16 @@
 
 namespace AI
 {
-	class cBTInverterDecoratorNode
-	: public cBTDecoratorNode
-	{
-	public:
-		~cBTInverterDecoratorNode();
-		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
+  class cBTInverterDecoratorNode : public cBTDecoratorNode
+  {
+  public:
+    ~cBTInverterDecoratorNode();
+    BT_STATUS::Enum VOnUpdate(void* pOwner, float deltaTime) OVERRIDE;
 
-	private:
-		AI_API cBTInverterDecoratorNode();
+  private:
+    AI_API cBTInverterDecoratorNode();
 
-		friend class cBTNodeFactory;
-	};
+    friend class cBTNodeFactory;
+  };
 }  // namespace AI
 #endif  // __BTINVERTERDECORATORNODE_H__
-

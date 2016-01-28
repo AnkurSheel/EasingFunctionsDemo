@@ -109,5 +109,5 @@ namespace Base
   {
     return m_typeID == TypeRegistar::TypeRegistar<T>::Id;
   }
-}
+}  // namespace Base
 #endif  // ANY_H__

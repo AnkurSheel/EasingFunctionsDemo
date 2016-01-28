@@ -11,16 +11,15 @@
 
 namespace AI
 {
-	class cBTBehaviorTree
-	{
-	public:
-		AI_API cBTBehaviorTree(BTNodeStrongPtr pRoot);
-		AI_API ~cBTBehaviorTree();
-		AI_API BT_STATUS::Enum Tick(void * pOwner, float deltaTime);
-		void SetRoot(BTNodeStrongPtr pRoot) { m_pRoot = pRoot; }
-
-	private:
-		BTNodeStrongPtr m_pRoot;
-	};
+  class cBTBehaviorTree
+  {
+  public:
+    AI_API cBTBehaviorTree(BTNodeStrongPtr pRoot);
+    AI_API ~cBTBehaviorTree();
+    AI_API BT_STATUS::Enum Tick(void* pOwner, float deltaTime);
+    void SetRoot(BTNodeStrongPtr pRoot) { m_pRoot = pRoot; }
+  private:
+    BTNodeStrongPtr m_pRoot;
+  };
 }  // namespace AI
 #endif  // BTBEHAVIORTREE_H__

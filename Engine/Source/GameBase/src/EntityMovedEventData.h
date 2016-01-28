@@ -11,24 +11,22 @@
 
 namespace GameBase
 {
-	class cEntityMovedEventData
-		: public cBaseEventData
-	{
-	public:
-		cEntityMovedEventData();
-		cEntityMovedEventData(const Base::cVector3 & position, const int actorID);
-		~cEntityMovedEventData();
-		UINT64 VGetHashedID() const { return m_Name.GetHash(); }
-		virtual Base::cString VGetName() const { return m_Name.GetString(); }
-		int GetActorID() const { return m_ActorID; }
-		Base::cVector3 GetPosition() const { return m_Position; }
+  class cEntityMovedEventData : public cBaseEventData
+  {
+  public:
+    cEntityMovedEventData();
+    cEntityMovedEventData(const Base::cVector3& position, const int actorID);
+    ~cEntityMovedEventData();
+    UINT64 VGetHashedID() const { return m_Name.GetHash(); }
+    virtual Base::cString VGetName() const { return m_Name.GetString(); }
+    int GetActorID() const { return m_ActorID; }
+    Base::cVector3 GetPosition() const { return m_Position; }
+  public:
+    static Base::cHashedString m_Name;
 
-	public:
-		static Base::cHashedString m_Name;
-
-	private:
-		Base::cVector3	m_Position;
-		int				m_ActorID;
-	};
+  private:
+    Base::cVector3 m_Position;
+    int m_ActorID;
+  };
 }  // namespace GameBase
 #endif  // EntityMovedEventData_h__

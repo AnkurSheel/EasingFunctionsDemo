@@ -31,7 +31,7 @@ cMyFont::~cMyFont()
 bool cMyFont::VInitialize(const Base::cString & strFontDescFilename)
 {
 	ParseFontDesc(strFontDescFilename);
-	SP_LOG_CUSTOM(LogType::EVENT, 3, "Loading Sprite : " + m_strFontTexPath);
+	SP_LOG(3, "Loading Sprite : " + m_strFontTexPath);
 
 	if (m_pTexture == NULL)
 	{
@@ -72,7 +72,7 @@ IMyFont::stVertexData cMyFont::VGetCharVertexData(const int iCharAsciiValue)
 	}
 	else
 	{
-		SP_ASSERT(false)(iCharAsciiValue).SetCustomMessage("Could not find char descriptor");
+		SP_ASSERT_WARNING(false)(iCharAsciiValue).SetCustomMessage("Could not find char descriptor");
 	}
 	return vertexData;
 }

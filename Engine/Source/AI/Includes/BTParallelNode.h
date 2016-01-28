@@ -10,23 +10,22 @@
 
 namespace AI
 {
-	class cBTParallelNode
-		: public cBTCompositeNode
-	{
-		DEFINE_NODE_PROPERTY(cBTParallelNode, BT_POLICY::Enum, SuccessPolicy)
-		DEFINE_NODE_PROPERTY(cBTParallelNode, BT_POLICY::Enum, FailurePolicy)
+  class cBTParallelNode : public cBTCompositeNode
+  {
+    DEFINE_NODE_PROPERTY(cBTParallelNode, BT_POLICY::Enum, SuccessPolicy)
+    DEFINE_NODE_PROPERTY(cBTParallelNode, BT_POLICY::Enum, FailurePolicy)
 
-	public:
-		AI_API cBTParallelNode();
-		~cBTParallelNode();
+  public:
+    AI_API cBTParallelNode();
+    ~cBTParallelNode();
 
-	private:
-		void VOnInitialize(void * pOwner) OVERRIDE;
-		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
-		void VOnTerminate(const BT_STATUS::Enum status) OVERRIDE;
+  private:
+    void VOnInitialize(void* pOwner) OVERRIDE;
+    BT_STATUS::Enum VOnUpdate(void* pOwner, float deltaTime) OVERRIDE;
+    void VOnTerminate(const BT_STATUS::Enum status) OVERRIDE;
 
-	private:
-		std::vector<BT_STATUS::Enum> m_ChildrenStatus;
-	};
+  private:
+    std::vector<BT_STATUS::Enum> m_ChildrenStatus;
+  };
 }  // namespace AI
 #endif  // __BTPARALLELNODE_H__

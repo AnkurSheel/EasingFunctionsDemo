@@ -10,27 +10,27 @@
 
 namespace GameBase
 {
-	class IBaseEntity;
+  class IBaseEntity;
 }
 
 namespace Utilities
 {
-	class IXMLNode;
+  class IXMLNode;
 }
 
 namespace GameBase
 {
-	class IBaseComponent
-	{
-	public:
-		virtual ~IBaseComponent(){};
-		virtual void VInitialize(const Utilities::IXMLNode * const pXMLNode) = 0;
-		virtual void VOnAttached(shared_ptr<IBaseEntity> const pOwner) = 0;
-		virtual void VCleanup() = 0;
-		virtual UINT64 VGetID() const = 0;
-		virtual shared_ptr<Utilities::IXMLNode> VGenerateXml() const = 0;
-		virtual void VSetActive(const bool active) = 0;
-		virtual bool VIsActive() const = 0;
-	};
-}
-#endif // BaseComponent_hxx__
+  class IBaseComponent
+  {
+  public:
+    virtual ~IBaseComponent() {}
+    virtual void VInitialize(const Utilities::IXMLNode* const pXMLNode) = 0;
+    virtual void VOnAttached(shared_ptr<IBaseEntity> const pOwner) = 0;
+    virtual void VCleanup() = 0;
+    virtual UINT64 VGetID() const = 0;
+    virtual shared_ptr<Utilities::IXMLNode> VGenerateXml() const = 0;
+    virtual void VSetActive(const bool active) = 0;
+    virtual bool VIsActive() const = 0;
+  };
+}  // namespace GameBase
+#endif  // BaseComponent_hxx__

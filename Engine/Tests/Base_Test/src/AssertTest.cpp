@@ -76,9 +76,7 @@ public:
   {
   }
 
-  ~cTestLogger() 
-  {
-  }
+  ~cTestLogger() {}
 private:
   void VInitialize()
   {
@@ -116,7 +114,16 @@ private:
 class AssertTest : public ::testing::Test
 {
 protected:
-  void SetUp() { ISpAssertSettings::CreateAsService(); }
+  void SetUp()
+  {
+    ISpAssertSettings::CreateAsService();
+
+    const shared_ptr<ISpAssertSettings> pAssertSettings(
+        MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
+
+    unique_ptr<cTestHandler> pTestHandler(new cTestHandler());
+    pAssertSettings->VSetHandler(std::move(pTestHandler));
+  }
   void TearDown() { cServiceLocator::Destroy(); }
 };
 
@@ -129,17 +136,14 @@ TEST_F(AssertTest, TestTrueConditions)
 
 TEST_F(AssertTest, TestFile)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
-
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
 
   int a = 5;
   int b = 6;
   SP_ASSERT(a == b);
 
-  cString fileName = pTestHandler->m_pContext->VGetFileName();
+  cString fileName = dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get())->m_pContext->VGetFileName();
   tOptional<int> index = fileName.FindLastOfAny("\\", fileName.GetLength());
   if (index.IsValid())
   {
@@ -151,39 +155,35 @@ TEST_F(AssertTest, TestFile)
 
 TEST_F(AssertTest, TestLine)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
-
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
 
   int a = 5;
   int b = 6;
   SP_ASSERT(a == b);
-  EXPECT_EQ(SP_LINE - 1, pTestHandler->m_pContext->VGetLineNumber());
+  EXPECT_EQ(SP_LINE - 1, dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get())->m_pContext->VGetLineNumber());
 }
 
 TEST_F(AssertTest, TestFunction)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
-
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
 
   int a = 5;
   int b = 6;
   SP_ASSERT(a == b);
-  EXPECT_STREQ("AssertTest_TestFunction_Test::TestBody", pTestHandler->m_pContext->VGetFunctionName().GetData());
+  EXPECT_STREQ("AssertTest_TestFunction_Test::TestBody",
+               dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get())
+                   ->m_pContext->VGetFunctionName()
+                   .GetData());
 }
 
 TEST_F(AssertTest, TestExpression)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   int a = 5;
   int b = 6;
@@ -210,11 +210,10 @@ TEST_F(AssertTest, TestExpression)
 
 TEST_F(AssertTest, TestStateInformation)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   int a = 5;
   int b = 6;
@@ -256,11 +255,10 @@ TEST_F(AssertTest, TestStateInformation)
 
 TEST_F(AssertTest, TestUserFriendlyMessage)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   int a = 5;
   int b = 6;
@@ -291,11 +289,10 @@ TEST_F(AssertTest, TestUserFriendlyMessage)
 
 TEST_F(AssertTest, TestIgnoreAll)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   pTestHandler->m_Action = AssertAction::IgnoreAll;
 
@@ -316,21 +313,20 @@ TEST_F(AssertTest, TestIgnoreAll)
 
 TEST_F(AssertTest, TestIgnoreForever)
 {
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
-  const shared_ptr<ISpAssertSettings> pAssertSettings(
-      MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
-
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
-
   struct Local
   {
     static void f() { SP_ASSERT(false); }
   };
 
+  const shared_ptr<ISpAssertSettings> pAssertSettings(
+    MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
+
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
+
   pTestHandler->m_Action = AssertAction::IgnoreForever;
 
   Local::f();
-  EXPECT_EQ(SP_LINE - 6, pTestHandler->m_pContext->VGetLineNumber());
+  EXPECT_EQ(SP_LINE - 11, pTestHandler->m_pContext->VGetLineNumber());
 
   pTestHandler->Reset();
   Local::f();  // should be ignored the second time
@@ -345,8 +341,7 @@ TEST_F(AssertTest, DefaultLogger)
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   // cppcheck-suppress unreadVariable
   int* p = NULL;
@@ -362,8 +357,7 @@ TEST_F(AssertTest, CustomLogger)
   const shared_ptr<ISpAssertSettings> pAssertSettings(
       MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>()));
 
-  shared_ptr<cTestHandler> pTestHandler(new cTestHandler());
-  pAssertSettings->VSetHandler(AssertLevels::LEVEL_DEBUG, pTestHandler);
+  cTestHandler* pTestHandler = const_cast<cTestHandler*>(dynamic_cast<const cTestHandler*>(pAssertSettings->VGetHandler().get()));
 
   unique_ptr<ISpAssertLogger> pLogger(new cTestLogger());
   pLogger->VInitialize();

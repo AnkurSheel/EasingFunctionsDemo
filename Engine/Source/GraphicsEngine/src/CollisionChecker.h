@@ -8,26 +8,24 @@
 
 #include "CollisionChecker.hxx"
 
-
 namespace Graphics
 {
-	class cCollisionChecker
-		: public ICollisionChecker
-		, public Base::cNonCopyable
-	{
-	public:
-		static void CreateCollisionChecker();
-		static void Destroy();
+  class cCollisionChecker : public ICollisionChecker, public Base::cNonCopyable
+  {
+  public:
+    static void CreateCollisionChecker();
+    static void Destroy();
 
-	private:
-		cCollisionChecker();
-		~cCollisionChecker();
-		// bool CheckFor2DCollisions(const IPolygon * pPolygon1, const IPolygon * pPolygon2);
-		bool VCheckForCollisions(const IAABB * const pAABB1, const IAABB * pAABB2, cContact & contact);
-		// bool NoOverlap(const D3DXVECTOR2 & axis, const cPolygon & polygon1, const cPolygon & polygon2, float & fLengthSquared);
+  private:
+    cCollisionChecker();
+    ~cCollisionChecker();
+    // bool CheckFor2DCollisions(const IPolygon * pPolygon1, const IPolygon * pPolygon2);
+    bool VCheckForCollisions(const IAABB* const pAABB1, const IAABB* pAABB2, cContact& contact);
+    // bool NoOverlap(const D3DXVECTOR2 & axis, const cPolygon & polygon1, const cPolygon & polygon2, float &
+    // fLengthSquared);
 
-	public:
-		static ICollisionChecker * s_pCollisionChecker;
-	};
+  public:
+    static ICollisionChecker* s_pCollisionChecker;
+  };
 }  // namespace Graphics
 #endif  // CollisionChecker_h__

@@ -7,8 +7,8 @@
 #define Ball_h__
 
 #include "BaseEntity.h"
+#include "TweenManager.h"
 #include "Vector3.h"
-#include "TweenParameters.h"
 
 namespace Base
 {
@@ -16,12 +16,10 @@ namespace Base
 
   template <class BaseType, class SubType>
   shared_ptr<BaseType> GenericObjectCreationFunction();
+
+  struct EasingTransitions;
 }
 
-namespace Utilities
-{
-  class cTweenParameters;
-}
 namespace GameBase
 {
   class cPhysicsComponent;
@@ -54,23 +52,15 @@ private:
   bool IncrementYTransition();
   bool IncrementXEasingType();
   bool IncrementXTransition();
-  void RemoveExistingTweens();
   void ReInit();
-  void OnTweenCompleted(const Utilities::cTweenParameters& params);
 
   cBall* CastToBall();
 
 private:
   shared_ptr<GameBase::cTransformComponent> m_pTransformComponentStrongPtr;
-  Utilities::cTweenParameters m_XTweenParams;
-  Utilities::cTweenParameters m_YTweenParams;
-  Base::cVector3 m_Position;
-  Base::cVector3 m_Scale;
-  Base::cVector3 m_InitialPosition;
-  Base::cVector3 m_FinalPosition;
-  Base::cVector3 m_InitialScale;
-  Base::cVector3 m_FinalScale;
-  bool m_bTweenCompleted;
+  float m_ElapsedTime;
+  Base::cTweenParameters<float> m_XMovementParams;
+  Base::cTweenParameters<float> m_YMovementParams;
 
 private:
   template <class BaseType, class SubType>

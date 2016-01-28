@@ -10,60 +10,59 @@
 
 namespace Base
 {
-	template<class BaseType, class SubType>
-	shared_ptr<BaseType> GenericObjectCreationFunction();
+  template <class BaseType, class SubType>
+  shared_ptr<BaseType> GenericObjectCreationFunction();
 
-	template <class BaseType, class SubType>
-	shared_ptr<BaseType> GenericObjectDuplicationFunction(shared_ptr<BaseType> const pObject);
+  template <class BaseType, class SubType>
+  shared_ptr<BaseType> GenericObjectDuplicationFunction(shared_ptr<BaseType> const pObject);
 }
 
 namespace Graphics
 {
-	class IMyFont;
-	class cLabelControl;
-	class ITexture;
+  class IMyFont;
+  class cLabelControl;
+  class ITexture;
 }
 
 namespace Graphics
 {
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// @brief Class Declaration for \c Button UI Control
-	///
-	///
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	class cButtonControl
-		: public cBaseControl
-	{
-	public:
-		static Base::cHashedString	GetName()  {return m_Name; }
-		cButtonControl(const cButtonControl & other);
-		~cButtonControl();
+  ///
+  ///
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  class cButtonControl : public cBaseControl
+  {
+  public:
+    static Base::cHashedString GetName() { return m_Name; }
+    cButtonControl(const cButtonControl& other);
+    ~cButtonControl();
 
-	private:
-		cButtonControl();
-		void VInitialize(const shared_ptr<Utilities::IXMLNode const> pXMLNode);
-		shared_ptr<IBaseControl> VDuplicate();
-		void VRender(const ICamera * const pCamera);
-		bool VOnLeftMouseButtonUp(const int X, const int Y);
-		bool VOnLeftMouseButtonDown(const int X, const int Y);
-		void VSetAbsolutePosition();
-		void VSetText(const Base::cString & strText);
+  private:
+    cButtonControl();
+    void VInitialize(const shared_ptr<Utilities::IXMLNode const> pXMLNode);
+    shared_ptr<IBaseControl> VDuplicate();
+    void VRender(const ICamera* const pCamera);
+    bool VOnLeftMouseButtonUp(const int X, const int Y);
+    bool VOnLeftMouseButtonDown(const int X, const int Y);
+    void VSetAbsolutePosition();
+    void VSetText(const Base::cString& strText);
 
-	private:
-		shared_ptr<ITexture> m_pDefaultTexture;  /// The texture to be used when the button is in default state.
-		shared_ptr<ITexture> m_pPressedTexture;  /// The texture to be used when the button is in pressed state.
-		shared_ptr<IBaseControl> m_pLabel;  /// The label/text associated with this button.
-		bool m_Pressed;  /// True if the button is in pressed state. False otherwise.
-		static Base::cHashedString m_Name;  ///< The control name
+  private:
+    shared_ptr<ITexture> m_pDefaultTexture;  /// The texture to be used when the button is in default state.
+    shared_ptr<ITexture> m_pPressedTexture;  /// The texture to be used when the button is in pressed state.
+    shared_ptr<IBaseControl> m_pLabel;       /// The label/text associated with this button.
+    bool m_Pressed;                          /// True if the button is in pressed state. False otherwise.
+    static Base::cHashedString m_Name;       ///< The control name
 
-	private:
-		template<class BaseType, class SubType>
-		friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
+  private:
+    template <class BaseType, class SubType>
+    friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
 
-		template <class BaseType, class SubType>
-		friend shared_ptr<BaseType> Base::GenericObjectDuplicationFunction(shared_ptr<BaseType> const pObject);
+    template <class BaseType, class SubType>
+    friend shared_ptr<BaseType> Base::GenericObjectDuplicationFunction(shared_ptr<BaseType> const pObject);
 
-		friend class IBaseControl;
-	};
+    friend class IBaseControl;
+  };
 }  // namespace Graphics
 #endif  // ButtonControl_h__

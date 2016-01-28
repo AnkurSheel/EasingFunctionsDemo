@@ -10,18 +10,16 @@
 
 namespace Physics
 {
-	class cCircleShape
-		: public cShape
-	{
-	public:
-		cCircleShape();
-		~cCircleShape();
-		void VInitialize(const Base::cVector3 & minBound, const Base::cVector3 & maxBound) OVERRIDE;
-		IShape * VDuplicate() OVERRIDE;
-		const Base::cHashedString& VGetShapeName() const OVERRIDE { return m_Name; }
-
-	public:
-		static Base::cHashedString m_Name;  ///< The shape name
-	};
+  class cCircleShape : public cShape
+  {
+  public:
+    cCircleShape();
+    ~cCircleShape();
+    void VInitialize(const Base::cVector3& minBound, const Base::cVector3& maxBound) OVERRIDE;
+    IShape* VDuplicate() OVERRIDE;
+    const Base::cHashedString& VGetShapeName() const OVERRIDE { return m_Name; }
+  public:
+    static Base::cHashedString m_Name;  ///< The shape name
+  };
 }  // namespace Physics
 #endif  // CIRCLESHAPE_H__

@@ -7,22 +7,22 @@
 using namespace GameBase;
 using namespace Base;
 
-static IBaseApp * pGame = NULL;
+static IBaseApp* pGame = NULL;
 
 //// ***************************************************************
 //-// Checks for memory leaks
 //  -// ***************************************************************
-//  -void CheckForMemoryLeaks() 
+//  -void CheckForMemoryLeaks()
 //  -{
 //    -#ifdef	_DEBUG
 //      -	// Get Current flag
-//      -	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) ; 
+//      -	int flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) ;
 //    -
 //      -	// Turn on leak-checking bit
-//      -	flag |= (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF) ; 
+//      -	flag |= (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF) ;
 //    -
 //      -	// Set flag to the new value
-//      -	_CrtSetDbgFlag(flag) ; 
+//      -	_CrtSetDbgFlag(flag) ;
 //    -#endif	_DEBUG
 //      -}
 
@@ -31,19 +31,19 @@ static IBaseApp * pGame = NULL;
 // ***************************************************************
 int WINAPI WinMain(const HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	pGame = IGame::CreateGame("Game");
+  pGame = IGame::CreateGame("Game");
 
-	pGame->VOnInitialization(hInstance, nCmdShow, "Options.ini");
-	pGame->VRun();
-	Cleanup() ;
+  pGame->VOnInitialization(hInstance, nCmdShow, "Options.ini");
+  pGame->VRun();
+  Cleanup();
 
-	cServiceLocator::Destroy();
-	//_CrtDumpMemoryLeaks()
-	return 0;
+  cServiceLocator::Destroy();
+  // _CrtDumpMemoryLeaks()
+  return 0;
 }
 
 // ***************************************************************
-void Cleanup() 
+void Cleanup()
 {
-	SafeDelete(&pGame);
+  SafeDelete(&pGame);
 }

@@ -10,26 +10,25 @@
 
 namespace Graphics
 {
-	class IAABB;
-	class cAABB;
+  class IAABB;
+  class cAABB;
 }
 
 namespace Graphics
 {
-	class cBoundingBox
-		: public IBoundingBox
-	{
-	public:
-		cBoundingBox(const Base::cVector3 & vMinBound, const Base::cVector3 & vMaxBound);
-		~cBoundingBox();
-		const Graphics::IAABB * const VGetAABB() const;
-		void VTransform(const XMFLOAT4X4 & matWorld);
-		void RecalculateAABBFromOBB();
+  class cBoundingBox : public IBoundingBox
+  {
+  public:
+    cBoundingBox(const Base::cVector3& vMinBound, const Base::cVector3& vMaxBound);
+    ~cBoundingBox();
+    const Graphics::IAABB* const VGetAABB() const;
+    void VTransform(const XMFLOAT4X4& matWorld);
+    void RecalculateAABBFromOBB();
 
-	public:
-		Base::cVector3	m_avObjectBounds[8];
-		Base::cVector3	m_avOBBBounds[8];
-		cAABB *			m_pAABB;
-	};
+  public:
+    Base::cVector3 m_avObjectBounds[8];
+    Base::cVector3 m_avOBBBounds[8];
+    cAABB* m_pAABB;
+  };
 }  // namespace Graphics
 #endif  // BoundingBox_h__

@@ -16,7 +16,7 @@ class cFuzzySetProxy :
 public:
 	cFuzzySetProxy();
 	virtual ~cFuzzySetProxy();
-	cFuzzySetProxy(cFuzzySet& fs);
+	explicit cFuzzySetProxy(cFuzzySet& fs);
 	cFuzzyTerm* Clone();
 	float GetDOM();
 	void ClearDOM();

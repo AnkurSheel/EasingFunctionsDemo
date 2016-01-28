@@ -10,33 +10,31 @@
 
 namespace GameBase
 {
-	class IBaseEntity;
+  class IBaseEntity;
 }
 
 namespace GameBase
 {
-	class cBaseComponent
-		: public IBaseComponent
-	{
-	public:
-		cBaseComponent();
-		cBaseComponent(const cBaseComponent & other);
-		cBaseComponent & operator =(const cBaseComponent & other);
-		GAMEBASE_API virtual ~cBaseComponent();
+  class cBaseComponent : public IBaseComponent
+  {
+  public:
+    cBaseComponent();
+    cBaseComponent(const cBaseComponent& other);
+    cBaseComponent& operator=(const cBaseComponent& other);
+    GAMEBASE_API virtual ~cBaseComponent();
 
-		UINT64 VGetID() const OVERRIDE { return VGetHashedID(); }
-		void VOnAttached(shared_ptr<IBaseEntity> const pOwner) OVERRIDE;
+    UINT64 VGetID() const OVERRIDE { return VGetHashedID(); }
+    void VOnAttached(shared_ptr<IBaseEntity> const pOwner) OVERRIDE;
 
-	protected:
-		virtual UINT64 VGetHashedID() const = 0;
-		virtual void VSetActive(const bool active) OVERRIDE { m_Active = active; }
-		virtual bool VIsActive() const OVERRIDE { return m_Active; }
+  protected:
+    virtual UINT64 VGetHashedID() const = 0;
+    virtual void VSetActive(const bool active) OVERRIDE { m_Active = active; }
+    virtual bool VIsActive() const OVERRIDE { return m_Active; }
+  protected:
+    weak_ptr<IBaseEntity> m_pOwner;
 
-	protected:
-		weak_ptr<IBaseEntity> m_pOwner;
-
-	private:
-		bool m_Active;
-	};
+  private:
+    bool m_Active;
+  };
 }  // namespace GameBase
 #endif  // BaseComponent_h__

@@ -10,27 +10,25 @@
 
 namespace Graphics
 {
-	class cUiControlFactory;
-	class IBaseControl;
+  class cUiControlFactory;
+  class IBaseControl;
 }
 
 namespace Graphics
 {
-	class cUiManager
-		: public IUiManager
-		, public Base::cNonCopyable
-	{
-	public:
-		~cUiManager();
+  class cUiManager : public IUiManager, public Base::cNonCopyable
+  {
+  public:
+    ~cUiManager();
 
-	private:
-		cUiManager();
-		const shared_ptr<IBaseControl> VCreateUI(const Base::cString& fileName) OVERRIDE;
+  private:
+    cUiManager();
+    const shared_ptr<IBaseControl> VCreateUI(const Base::cString& fileName) OVERRIDE;
 
-		void Initialize();
+    void Initialize();
 
-	private:
-		friend void IUiManager::CreateAsService();
-	};
+  private:
+    friend void IUiManager::CreateAsService();
+  };
 }  // namespace Graphics
 #endif  // UiManager_h__

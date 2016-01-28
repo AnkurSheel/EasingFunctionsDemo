@@ -8,18 +8,18 @@
 
 namespace GameBase
 {
-	class IActor;
-	struct ActorParams;
+  class IActor;
+  struct ActorParams;
 
-	typedef unsigned int ActorId;
+  typedef unsigned int ActorId;
 
-	class IGameLogic
-	{
-	public:
-		virtual shared_ptr<IActor> VGetActor(const ActorId id) = 0;
-		virtual void AddActor(shared_ptr<IActor> actor, struct ActorParams * p) = 0;
-		virtual void RemoveActor(ActorId id) = 0;
-		virtual void OnUpdate(float time, float elapsedTime) = 0;
-	};
+  class IGameLogic
+  {
+  public:
+    virtual shared_ptr<IActor> VGetActor(const ActorId id) = 0;
+    virtual void AddActor(shared_ptr<IActor> actor, struct ActorParams* p) = 0;
+    virtual void RemoveActor(ActorId id) = 0;
+    virtual void OnUpdate(float time, float elapsedTime) = 0;
+  };
 }  // namespace GameBase
 #endif  // GameLogic_h__

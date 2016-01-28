@@ -8,14 +8,14 @@
 
 namespace GameBase
 {
-	typedef Base::cHashedString EventType;
+  typedef Base::cHashedString EventType;
 
-	class IEventData
-	{
-	public:
-		virtual ~IEventData(){};
-		virtual UINT64 VGetEventID() const = 0;
-		virtual Base::cString VGetEventName() const = 0;
-	};
-}
-#endif //EventData_hxx__
+  class IEventData
+  {
+  public:
+    virtual ~IEventData() {}
+    virtual UINT64 VGetEventID() const = 0;
+    virtual Base::cString VGetEventName() const = 0;
+  };
+}  // namespace GameBase
+#endif  // EventData_hxx__

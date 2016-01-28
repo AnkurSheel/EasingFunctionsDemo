@@ -1,7 +1,7 @@
 // *****************************************************************************
 //  GameDefines   version:  1.0   Ankur Sheel  date: 2013/04/02
 // *****************************************************************************
-//  purpose:	
+//  purpose:
 // *****************************************************************************
 #ifndef GameDefines_h__
 #define GameDefines_h__
@@ -12,4 +12,4 @@
 #define BREAKOUT_API __declspec(dllimport)
 #endif
 
-#endif // GameDefines_h__
+#endif  // GameDefines_h__

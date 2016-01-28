@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  MessageDispatchManager   version:  1.0   Ankur Sheel  date: 2012/07/31
 //  *******************************************************************************************************************
-// 
+//
 //  *******************************************************************************************************************
 #ifndef MESSAGEDISPATCHMANAGER_HXX__
 #define MESSAGEDISPATCHMANAGER_HXX__
@@ -10,13 +10,14 @@
 
 namespace GameBase
 {
-	class IMessageDispatchManager
-	{
-	public:
-		virtual ~IMessageDispatchManager(){}
-		virtual void VDispatchMessage(const double delay, const int senderID, const int recieverID, const unsigned msgId, shared_ptr<void> pExtraInfo) = 0;
-		virtual void VOnUpdate() = 0;
-		static void CreateAsService();
-	};
-}
+  class IMessageDispatchManager
+  {
+  public:
+    virtual ~IMessageDispatchManager() {}
+    virtual void VDispatchMessage(const double delay, const int senderID, const int recieverID, const unsigned msgId,
+                                  shared_ptr<void> pExtraInfo) = 0;
+    virtual void VOnUpdate() = 0;
+    static void CreateAsService();
+  };
+}  // namespace GameBase
 #endif  // MessageDispatchManager_hxx__

@@ -26,6 +26,7 @@
 #include "RandomGenerator.hxx"
 #include "GraphicStructures.h"
 #include "Audio.hxx"
+#include "SpAssertHandler_Win32.h"
 
 using namespace GameBase;
 using namespace Base;
@@ -84,10 +85,16 @@ void cBaseApp::VOnInitialization(const HINSTANCE& hInstance, const int inCmdShow
 	pLogger->VInitialize();
 	SetLoggerOptions(pLogger);
 	const shared_ptr<ISpAssertSettings> pAssertSettings = MakeStrongPtr<ISpAssertSettings>(cServiceLocator::GetInstance()->GetService<ISpAssertSettings>());
-	if (pAssertSettings != NULL)
+	if (pAssertSettings != nullptr)
 	{
 		pAssertSettings->VSetLogger(std::move(pLogger));
 	}
+
+  unique_ptr<cSpAssertHandler> pHandler(DEBUG_NEW cSpAssertHandler_Win32());
+  if (pAssertSettings != nullptr)
+  {
+    pAssertSettings->VSetHandler(std::move(pHandler));
+  }
 
 	m_Title = m_pParamLoader->VGetParameterValueAsString("-title", "Game");
 

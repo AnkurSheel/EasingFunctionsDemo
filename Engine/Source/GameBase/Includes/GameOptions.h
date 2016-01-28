@@ -5,29 +5,29 @@
 
 namespace Utilities
 {
-	class IParamLoader;
+  class IParamLoader;
 }
 
 namespace GameBase
 {
-	class cGameOptions
-	{
-	public:
-		cGameOptions();
-		~cGameOptions();
-		GAMEBASE_API static cGameOptions & GameOptions();
-		static void InitializeGameOptions(const Base::cString & strPlayerOptionsFile);
-		GAMEBASE_API static void SaveGameOptions(const Base::cString & strPlayerOptionsFile);
+  class cGameOptions
+  {
+  public:
+    cGameOptions();
+    ~cGameOptions();
+    GAMEBASE_API static cGameOptions& GameOptions();
+    static void InitializeGameOptions(const Base::cString& strPlayerOptionsFile);
+    GAMEBASE_API static void SaveGameOptions(const Base::cString& strPlayerOptionsFile);
 
-	public:
-		bool	bFullScreen;  ///< True if in fullscreen mode
-		int		iWidth;		  ///< Screen width
-		int		iHeight;	  ///< Screen height
+  public:
+    bool bFullScreen;  ///< True if in fullscreen mode
+    int iWidth;        ///< Screen width
+    int iHeight;       ///< Screen height
 
-		bool	bPlaySfx;
-		bool	bPlayMusic;
-		int		iSFXVolume;
-		int		iMusicVolume;
-	};
+    bool bPlaySfx;
+    bool bPlayMusic;
+    int iSFXVolume;
+    int iMusicVolume;
+  };
 }  // namespace GameBase
 #endif  // GameOptions_h__

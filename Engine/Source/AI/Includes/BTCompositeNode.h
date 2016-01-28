@@ -10,39 +10,38 @@
 
 namespace AI
 {
-	class cBTCompositeNode
-		: public cBTBehaviorNode
-	{
-	public:
-		virtual ~cBTCompositeNode();
-		virtual void VRemoveChild(BTNodeWeakPtr pChild);
-		virtual void VRemoveChildren();
-		int GetChildCount() const { return m_Children.size(); }
-		AI_API BTNodeWeakPtr GetChildAt(int index);
-		void VReset() OVERRIDE;
+  class cBTCompositeNode : public cBTBehaviorNode
+  {
+  public:
+    virtual ~cBTCompositeNode();
+    virtual void VRemoveChild(BTNodeWeakPtr pChild);
+    virtual void VRemoveChildren();
+    int GetChildCount() const { return m_Children.size(); }
+    AI_API BTNodeWeakPtr GetChildAt(int index);
+    void VReset() OVERRIDE;
 
-		template<class T>
-		shared_ptr<T> AddChild(BTNodeWeakPtr pChild);
+    template <class T>
+    shared_ptr<T> AddChild(BTNodeWeakPtr pChild);
 
-	protected:
-		cBTCompositeNode();
+  protected:
+    cBTCompositeNode();
 
-	protected:
-		BTNodes m_Children;
-	};
+  protected:
+    BTNodes m_Children;
+  };
 
-	//  ***************************************************************************************************************
-	template<class PARENT>
-	shared_ptr<PARENT> cBTCompositeNode::AddChild(BTNodeWeakPtr pChild)
-	{
-		BTNodeStrongPtr pChildStrongPtr = MakeStrongPtr(pChild);
-		BTNodeStrongPtr pThisPtr = shared_from_this();
-		if (pChildStrongPtr)
-		{
-			m_Children.push_back(pChildStrongPtr);
-			pChildStrongPtr->SetParent(pThisPtr);
-		}
-		return dynamic_pointer_cast<PARENT>(pThisPtr);
-	}
+  //  ***************************************************************************************************************
+  template <class PARENT>
+  shared_ptr<PARENT> cBTCompositeNode::AddChild(BTNodeWeakPtr pChild)
+  {
+    BTNodeStrongPtr pChildStrongPtr = MakeStrongPtr(pChild);
+    BTNodeStrongPtr pThisPtr = shared_from_this();
+    if (pChildStrongPtr)
+    {
+      m_Children.push_back(pChildStrongPtr);
+      pChildStrongPtr->SetParent(pThisPtr);
+    }
+    return dynamic_pointer_cast<PARENT>(pThisPtr);
+  }
 }  // namespace AI
 #endif  // __BTCOMPOSITENODE_H__

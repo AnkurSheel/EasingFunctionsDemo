@@ -8,23 +8,23 @@
 
 namespace AI
 {
-	class cBTBehaviorNode;
+  class cBTBehaviorNode;
 }
 
 namespace AI
 {
-	class cBTNodeFactory
-	{
-	public:
-		template<class NODE>
-		static shared_ptr<NODE> Create()
-		{
-			return shared_ptr<NODE>(DEBUG_NEW NODE());
-		}
+  class cBTNodeFactory
+  {
+  public:
+    template <class NODE>
+    static shared_ptr<NODE> Create()
+    {
+      return shared_ptr<NODE>(DEBUG_NEW NODE());
+    }
 
-	private:
-		cBTNodeFactory(){}
-		~cBTNodeFactory(){}
-	};
+  private:
+    cBTNodeFactory() {}
+    ~cBTNodeFactory() {}
+  };
 }  // namespace AI
 #endif  // __BTNODEFACTORY_H__

@@ -8,15 +8,14 @@
 
 namespace Base
 {
-	struct cSpAssertException
-	: public std::exception
-	{
-		cSpAssertException(const ISpAssertContext * const pContext);
-		~cSpAssertException();
-		const char * what() const;
+  struct cSpAssertException : public std::exception
+  {
+    cSpAssertException(const ISpAssertContext* const pContext);
+    ~cSpAssertException();
+    const char* what() const;
 
-	private:
-		const ISpAssertContext * const m_pContext;
-	};
+  private:
+    const ISpAssertContext* const m_pContext;
+  };
 }  // namespace Base
 #endif  // __SPASSERTERROR_H__

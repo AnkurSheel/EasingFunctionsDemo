@@ -112,7 +112,7 @@ bool cResCache::MakeRoom(unsigned int iSize)
 
   while (iSize > (m_iCacheSize - m_iTotalMemoryAllocated))
   {
-    SP_LOG_CUSTOM(AssertLevels::LEVEL_DEBUG, 2, "Cache needs to be freed to make space")(iSize)(m_iCacheSize)(m_iTotalMemoryAllocated);
+    SP_LOG(2, "Cache needs to be freed to make space")(iSize)(m_iCacheSize)(m_iTotalMemoryAllocated);
     if (m_lru.empty())
     {
       return false;
@@ -133,7 +133,7 @@ char* cResCache::Allocate(unsigned int iSize)
   if (pBuffer)
   {
     m_iTotalMemoryAllocated += iSize;
-    SP_LOG_CUSTOM(AssertLevels::LEVEL_DEBUG, 2,
+    SP_LOG_CUSTOM(AssertLevels::LEVEL_WARNING, 2,
                   cStringUtilities::MakeFormatted(
                       "Allocating Memory. File Size : %u KB. Currently using %u KB (%0.2f MB) out of %u MB in cache",
                       Kilobytes(iSize), Kilobytes(m_iTotalMemoryAllocated),
@@ -151,7 +151,7 @@ void cResCache::FreeOneResource()
   shared_ptr<IResHandle> handle = *itr;
   m_lru.pop_back();
   m_Resources.erase(handle->GetResource()->VGetFileName());
-  SP_LOG_CUSTOM(AssertLevels::LEVEL_DEBUG, 3, "Removed file from cache")(handle->GetResource()->VGetFileName());
+  SP_LOG(3, "Removed file from cache")(handle->GetResource()->VGetFileName());
 }
 
 //  *******************************************************************************************************************

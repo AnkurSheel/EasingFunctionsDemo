@@ -11,42 +11,40 @@
 
 namespace Physics
 {
-	class IPhysics;
+  class IPhysics;
 }
 
 namespace GameBase
 {
-	class IEventData;
-	typedef shared_ptr<IEventData> IEventDataPtr;
-	class IEntityManager;
-	class cPhysicsComponent;
-	class IBaseEntity;
+  class IEventData;
+  typedef shared_ptr<IEventData> IEventDataPtr;
+  class IEntityManager;
+  class cPhysicsComponent;
+  class IBaseEntity;
 }
 
 namespace GameBase
 {
-	class cPhysicsSystem
-		: public Utilities::cProcess
-	{
-	public:
-		GAMEBASE_API cPhysicsSystem();
-		GAMEBASE_API ~cPhysicsSystem();
-		void VInitialize() OVERRIDE;
-		void VUpdate(const float deltaTime) OVERRIDE;
+  class cPhysicsSystem : public Utilities::cProcess
+  {
+  public:
+    GAMEBASE_API cPhysicsSystem();
+    GAMEBASE_API ~cPhysicsSystem();
+    void VInitialize() OVERRIDE;
+    void VUpdate(const float deltaTime) OVERRIDE;
 
-		const Base::cHashedString & VGetType() const OVERRIDE { return m_Type; }
+    const Base::cHashedString& VGetType() const OVERRIDE { return m_Type; }
+  public:
+    GAMEBASE_API static const Base::cHashedString m_Type;
 
-	public:
-		GAMEBASE_API static const Base::cHashedString m_Type;
+  private:
+    void ActorInitializedListener(IEventDataPtr pEventData);
+    void ActorScaledListener(IEventDataPtr pEventData);
+    shared_ptr<cPhysicsComponent> const CastToPhysicsComponent(shared_ptr<IBaseEntity> const pEntity);
 
-	private:
-		void ActorInitializedListener(IEventDataPtr pEventData);
-		void ActorScaledListener(IEventDataPtr pEventData);
-		shared_ptr<cPhysicsComponent> const CastToPhysicsComponent(shared_ptr<IBaseEntity> const pEntity);
-
-	private:
-		shared_ptr<Physics::IPhysics> m_pPhysics;
-		weak_ptr<IEntityManager> m_pEntityManager;
-	};
+  private:
+    shared_ptr<Physics::IPhysics> m_pPhysics;
+    weak_ptr<IEntityManager> m_pEntityManager;
+  };
 }  // namespace GameBase
 #endif  // PhysicsSystem_h__

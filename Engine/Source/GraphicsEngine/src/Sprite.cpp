@@ -15,314 +15,318 @@ using namespace Base;
 
 //  *******************************************************************************************************************
 cSprite::cSprite()
-	: m_pVertexBuffer(NULL)
-	, m_pIndexBuffer(NULL)
-	, m_vScale(1.0f, 1.0f)
-	, m_bIsDirty(true)
-	, m_iIndexCount(0)
-	, m_iVertexCount(0)
-	, m_Rotation(0.0f)
+  : m_pVertexBuffer(NULL)
+  , m_pIndexBuffer(NULL)
+  , m_vScale(1.0f, 1.0f)
+  , m_bIsDirty(true)
+  , m_iIndexCount(0)
+  , m_iVertexCount(0)
+  , m_Rotation(0.0f)
 {
 }
 
 //  *******************************************************************************************************************
 cSprite::~cSprite()
 {
-	VCleanup();
+  VCleanup();
 }
 
 //  *******************************************************************************************************************
 bool cSprite::VInitialize(shared_ptr<ITexture> const pTexture)
 {
-	m_pTexture = pTexture;
-	m_iVertexCount = 4;
-	if (!CreateVertexBuffer())
-		return false;
+  m_pTexture = pTexture;
+  m_iVertexCount = 4;
+  if (!CreateVertexBuffer())
+    return false;
 
-	if (!CreateIndexBuffer())
-		return false;
+  if (!CreateIndexBuffer())
+    return false;
 
-	if (!InitializeShader())
-		return false;
+  if (!InitializeShader())
+    return false;
 
-	m_vPosition = cVector2(-1.0f, -1.0f);
+  m_vPosition = cVector2(-1.0f, -1.0f);
 
-	ID3D11Resource* resource;
-	D3D11_TEXTURE2D_DESC desc;
-	m_pTexture->VGetTexture()->GetResource(&resource);
-	ID3D11Texture2D * texResource = reinterpret_cast<ID3D11Texture2D*>(resource);
-	texResource->GetDesc(&desc);
+  ID3D11Resource* resource;
+  D3D11_TEXTURE2D_DESC desc;
+  m_pTexture->VGetTexture()->GetResource(&resource);
+  ID3D11Texture2D* texResource = reinterpret_cast<ID3D11Texture2D*>(resource);
+  texResource->GetDesc(&desc);
 
-	m_vSize.x = static_cast<float>(desc.Width);
-	m_vSize.y = static_cast<float>(desc.Height);
-	m_vScaledSize = m_vSize;
-	m_bIsDirty = true;
-	SetDebugObjectName(texResource, "SpriteTextureResource");
-	SafeRelease(&texResource);
-	return true;
+  m_vSize.x = static_cast<float>(desc.Width);
+  m_vSize.y = static_cast<float>(desc.Height);
+  m_vScaledSize = m_vSize;
+  m_bIsDirty = true;
+  SetDebugObjectName(texResource, "SpriteTextureResource");
+  SafeRelease(&texResource);
+  return true;
 }
 
 //  *******************************************************************************************************************
-bool cSprite::VInitialize(const cString & strTextureFilename)
+bool cSprite::VInitialize(const cString& strTextureFilename)
 {
-	SP_LOG_CUSTOM(LogType::EVENT, 2, "Loading Sprite : " + strTextureFilename);
+  SP_LOG_CUSTOM(LogType::EVENT, 2, "Loading Sprite : " + strTextureFilename);
 
-	m_pTexture = ITextureManager::GetInstance()->VGetTexture(cGameDirectories::GetSpriteDirectory() + strTextureFilename);
+  m_pTexture = ITextureManager::GetInstance()->VGetTexture(cGameDirectories::GetSpriteDirectory() + strTextureFilename);
 
-	if (m_pTexture != NULL)
-	{
-		return VInitialize(m_pTexture);
-	}
-	return false;
+  if (m_pTexture != NULL)
+  {
+    return VInitialize(m_pTexture);
+  }
+  return false;
 }
 
 //  *******************************************************************************************************************
-void cSprite::VRender(const ICamera * const pCamera)
+void cSprite::VRender(const ICamera* const pCamera)
 {
-	if (!m_pTexture || m_vScaledSize == cVector2::Zero)
-	{
-		return;
-	}
-	if (m_bIsDirty)
-	{
-		RecalculateVertexData(pCamera);
-		m_bIsDirty = false;
-	}
+  if (!m_pTexture || m_vScaledSize == cVector2::Zero)
+  {
+    return;
+  }
+  if (m_bIsDirty)
+  {
+    RecalculateVertexData(pCamera);
+    m_bIsDirty = false;
+  }
 
-	unsigned int stride = sizeof(stTexVertex);
-	unsigned int offset = 0;
+  unsigned int stride = sizeof(stTexVertex);
+  unsigned int offset = 0;
 
-	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	IDXBase::GetInstance()->VGetDeviceContext()->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+  // Set the vertex buffer to active in the input assembler so it can be rendered.
+  IDXBase::GetInstance()->VGetDeviceContext()->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 
-	IDXBase::GetInstance()->VGetDeviceContext()->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+  IDXBase::GetInstance()->VGetDeviceContext()->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	IDXBase::GetInstance()->VGetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	IDXBase::GetInstance()->VTurnZBufferOff();
-	if (m_pShader)
-	{
-		XMFLOAT4X4 matView;
-		XMStoreFloat4x4(&matView, XMMatrixIdentity());
+  IDXBase::GetInstance()->VGetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+  IDXBase::GetInstance()->VTurnZBufferOff();
+  if (m_pShader)
+  {
+    XMFLOAT4X4 matView;
+    XMStoreFloat4x4(&matView, XMMatrixIdentity());
 
-		m_pShader->VSetTexture(m_pTexture);
-		m_pShader->VRender(IDXBase::GetInstance()->VGetWorldMatrix(), matView, IDXBase::GetInstance()->VGetOrthoMatrix());
-	}
-	IDXBase::GetInstance()->VGetDeviceContext()->DrawIndexed(m_iIndexCount, 0, 0);
+    m_pShader->VSetTexture(m_pTexture);
+    m_pShader->VRender(IDXBase::GetInstance()->VGetWorldMatrix(), matView, IDXBase::GetInstance()->VGetOrthoMatrix());
+  }
+  IDXBase::GetInstance()->VGetDeviceContext()->DrawIndexed(m_iIndexCount, 0, 0);
 }
 
 //  *******************************************************************************************************************
-void cSprite::VSetPosition(const cVector2 & vPosition)
+void cSprite::VSetPosition(const cVector2& vPosition)
 {
-	if (m_vPosition != vPosition)
-	{
-		m_vPosition = vPosition;
-		m_bIsDirty = true;
-	}
+  if (m_vPosition != vPosition)
+  {
+    m_vPosition = vPosition;
+    m_bIsDirty = true;
+  }
 }
 
 //  *******************************************************************************************************************
 void cSprite::VSetRotation(const float angle)
 {
-	if (m_Rotation != angle)
-	{
-		m_Rotation = angle;
-		m_bIsDirty = true;
-	}
+  if (m_Rotation != angle)
+  {
+    m_Rotation = angle;
+    m_bIsDirty = true;
+  }
 }
 
 //  *******************************************************************************************************************
-void cSprite::VSetSize(const cVector2 & vSize)
+void cSprite::VSetSize(const cVector2& vSize)
 {
-	if (m_vScaledSize != vSize)
-	{
-		SP_ASSERT(vSize.x > 0 && vSize.y > 0)(vSize.x)(vSize.y).SetCustomMessage("Setting sprite size to 0");
-		m_vScaledSize = vSize;
-		m_vScale.x = m_vScaledSize.x / vSize.x;
-		m_vScale.y = m_vScaledSize.y / vSize.y;
-		m_bIsDirty = true;
-	}
+  if (m_vScaledSize != vSize)
+  {
+    SP_ASSERT(vSize.x > 0 && vSize.y > 0)(vSize.x)(vSize.y).SetCustomMessage("Setting sprite size to 0");
+    m_vScaledSize = vSize;
+    m_vScale.x = m_vScaledSize.x / vSize.x;
+    m_vScale.y = m_vScaledSize.y / vSize.y;
+    m_bIsDirty = true;
+  }
 }
 
 //  *******************************************************************************************************************
 cVector2 cSprite::VGetScaledSize() const
 {
-	return m_vScaledSize;
+  return m_vScaledSize;
 }
 
 //  *******************************************************************************************************************
-void cSprite::VSetScale(const cVector2 & vScale)
+void cSprite::VSetScale(const cVector2& vScale)
 {
-	if (m_vScale != vScale)
-	{
-		m_vScale = vScale;
-		m_vScaledSize = m_vSize * m_vScale;
-		m_bIsDirty = true;
-	}
+  if (m_vScale != vScale)
+  {
+    m_vScale = vScale;
+    m_vScaledSize = m_vSize * m_vScale;
+    m_bIsDirty = true;
+  }
 }
 
 //  *******************************************************************************************************************
 void cSprite::VCleanup()
 {
-	m_pShader = NULL;
-	m_pTexture = NULL;
-	SafeRelease(&m_pVertexBuffer);
-	SafeRelease(&m_pIndexBuffer);
+  m_pShader = NULL;
+  m_pTexture = NULL;
+  SafeRelease(&m_pVertexBuffer);
+  SafeRelease(&m_pIndexBuffer);
 }
 
 //  *******************************************************************************************************************
 bool cSprite::CreateVertexBuffer()
 {
-	stTexVertex * pVertices = DEBUG_NEW stTexVertex[m_iVertexCount];
+  stTexVertex* pVertices = DEBUG_NEW stTexVertex[m_iVertexCount];
 
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
+  D3D11_BUFFER_DESC vertexBufferDesc;
+  ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
 
-	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	vertexBufferDesc.ByteWidth = sizeof(stTexVertex) * m_iVertexCount;
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+  vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+  vertexBufferDesc.ByteWidth = sizeof(stTexVertex) * m_iVertexCount;
+  vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+  vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-	D3D11_SUBRESOURCE_DATA vertexData;
-	ZeroMemory(&vertexData, sizeof(vertexData));
-	vertexData.pSysMem = pVertices;
+  D3D11_SUBRESOURCE_DATA vertexData;
+  ZeroMemory(&vertexData, sizeof(vertexData));
+  vertexData.pSysMem = pVertices;
 
-	// Now create the vertex buffer.
-	HRESULT result = IDXBase::GetInstance()->VGetDevice()->CreateBuffer(&vertexBufferDesc, &vertexData, &m_pVertexBuffer);
+  // Now create the vertex buffer.
+  HRESULT result = IDXBase::GetInstance()->VGetDevice()->CreateBuffer(&vertexBufferDesc, &vertexData, &m_pVertexBuffer);
 
-	SafeDeleteArray(&pVertices);
+  SafeDeleteArray(&pVertices);
 
-	if (FAILED(result))
-	{
-		SP_ASSERT_ERROR(false)(DXGetErrorString(result))(DXGetErrorDescription(result)).SetCustomMessage("Could not create Vertex Buffer");
-		return false;
-	}
-	return true;
+  if (FAILED(result))
+  {
+    SP_ASSERT_ERROR(false)
+    (DXGetErrorString(result))(DXGetErrorDescription(result)).SetCustomMessage("Could not create Vertex Buffer");
+    return false;
+  }
+  return true;
 }
 
 //  *******************************************************************************************************************
 bool cSprite::CreateIndexBuffer()
 {
-	unsigned long aIndices[] = {0,1,2,
-		1,3,2};
-	m_iIndexCount = 6;
-	D3D11_BUFFER_DESC indexBufferDesc;
-	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_iIndexCount;
-	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-	indexBufferDesc.StructureByteStride = 0;
+  unsigned long aIndices[] = {0, 1, 2, 1, 3, 2};
+  m_iIndexCount = 6;
+  D3D11_BUFFER_DESC indexBufferDesc;
+  indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+  indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_iIndexCount;
+  indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+  indexBufferDesc.CPUAccessFlags = 0;
+  indexBufferDesc.MiscFlags = 0;
+  indexBufferDesc.StructureByteStride = 0;
 
-	D3D11_SUBRESOURCE_DATA indexData;
-	indexData.pSysMem = aIndices;
-	indexData.SysMemPitch = 0;
-	indexData.SysMemSlicePitch = 0;
+  D3D11_SUBRESOURCE_DATA indexData;
+  indexData.pSysMem = aIndices;
+  indexData.SysMemPitch = 0;
+  indexData.SysMemSlicePitch = 0;
 
-	// Create the index buffer.
-	HRESULT result = IDXBase::GetInstance()->VGetDevice()->CreateBuffer(&indexBufferDesc, &indexData, &m_pIndexBuffer);
+  // Create the index buffer.
+  HRESULT result = IDXBase::GetInstance()->VGetDevice()->CreateBuffer(&indexBufferDesc, &indexData, &m_pIndexBuffer);
 
-	if (FAILED(result))
-	{
-		SP_ASSERT_ERROR(false)(DXGetErrorString(result))(DXGetErrorDescription(result)).SetCustomMessage("Could not create Index Buffer");
-		return false;
-	}
-	return true;
+  if (FAILED(result))
+  {
+    SP_ASSERT_ERROR(false)
+    (DXGetErrorString(result))(DXGetErrorDescription(result)).SetCustomMessage("Could not create Index Buffer");
+    return false;
+  }
+  return true;
 }
 
 //  *******************************************************************************************************************
-bool cSprite::RecalculateVertexData(const ICamera * const pCamera)
+bool cSprite::RecalculateVertexData(const ICamera* const pCamera)
 {
-	// center of the screen is 0,0
-	float destLeft = -IDXBase::GetInstance()->VGetScreenWidth() / 2.0f + m_vPosition.x;
-	float destRight = destLeft + m_vScaledSize.x;
-	float destTop = IDXBase::GetInstance()->VGetScreenHeight() / 2.0f - m_vPosition.y;
-	float destBottom = destTop - m_vScaledSize.y;
+  // center of the screen is 0,0
+  float destLeft = -IDXBase::GetInstance()->VGetScreenWidth() / 2.0f + m_vPosition.x;
+  float destRight = destLeft + m_vScaledSize.x;
+  float destTop = IDXBase::GetInstance()->VGetScreenHeight() / 2.0f - m_vPosition.y;
+  float destBottom = destTop - m_vScaledSize.y;
 
-	// cVector2 point(m_vPosition.x/IDXBase::GetInstance()->VGetScreenWidth(), m_vPosition.y/IDXBase::GetInstance()->VGetScreenHeight());
-	// cVector2 screenSpace = 2 * point;
-	// screenSpace.x -= 1;
-	// screenSpace.y -= 1;
+  // cVector2 point(m_vPosition.x/IDXBase::GetInstance()->VGetScreenWidth(),
+  // m_vPosition.y/IDXBase::GetInstance()->VGetScreenHeight());
+  // cVector2 screenSpace = 2 * point;
+  // screenSpace.x -= 1;
+  // screenSpace.y -= 1;
 
-	float z = 1.0f;
+  float z = 1.0f;
 
-	// Create the vertex array.
-	stTexVertex * pVertices = DEBUG_NEW stTexVertex [4];
-	pVertices[0] = stTexVertex(destLeft, destBottom, z, 0.0f, 1.0f);
-	pVertices[1] = stTexVertex(destLeft, destTop, z, 0.0f, 0.0f);
-	pVertices[2] = stTexVertex(destRight, destBottom, z, 1.0f, 1.0f);
-	pVertices[3] = stTexVertex(destRight, destTop, z, 1.0f, 0.0f);
+  // Create the vertex array.
+  stTexVertex* pVertices = DEBUG_NEW stTexVertex[4];
+  pVertices[0] = stTexVertex(destLeft, destBottom, z, 0.0f, 1.0f);
+  pVertices[1] = stTexVertex(destLeft, destTop, z, 0.0f, 0.0f);
+  pVertices[2] = stTexVertex(destRight, destBottom, z, 1.0f, 1.0f);
+  pVertices[3] = stTexVertex(destRight, destTop, z, 1.0f, 0.0f);
 
-	if (!isZero(m_Rotation))
-	{
-		float centerX = (destLeft + destRight) / 2.0f;
-		float centerY = (destTop + destBottom) / 2.0f;
+  if (!isZero(m_Rotation))
+  {
+    float centerX = (destLeft + destRight) / 2.0f;
+    float centerY = (destTop + destBottom) / 2.0f;
 
-		// translate destination rect to be centered on the origin
-		float originLeft = destLeft - centerX;
-		float originRight = destRight - centerX;
-		float originTop = destTop - centerY;
-		float originBottom = destBottom - centerY;
+    // translate destination rect to be centered on the origin
+    float originLeft = destLeft - centerX;
+    float originRight = destRight - centerX;
+    float originTop = destTop - centerY;
+    float originBottom = destBottom - centerY;
 
-		float cosRotation = cosf(m_Rotation);
-		float sinRotation = sinf(m_Rotation);
+    float cosRotation = cosf(m_Rotation);
+    float sinRotation = sinf(m_Rotation);
 
-		// rotate vertices about the origin
-		pVertices[0].m_fX = originLeft * cosRotation - originBottom * sinRotation;
-		pVertices[0].m_fY = originLeft * sinRotation + originBottom * cosRotation;
+    // rotate vertices about the origin
+    pVertices[0].m_fX = originLeft * cosRotation - originBottom * sinRotation;
+    pVertices[0].m_fY = originLeft * sinRotation + originBottom * cosRotation;
 
-		pVertices[1].m_fX = originLeft * cosRotation - originTop * sinRotation;
-		pVertices[1].m_fY = originLeft * sinRotation + originTop * cosRotation;
+    pVertices[1].m_fX = originLeft * cosRotation - originTop * sinRotation;
+    pVertices[1].m_fY = originLeft * sinRotation + originTop * cosRotation;
 
-		pVertices[2].m_fX = originRight * cosRotation - originBottom * sinRotation;
-		pVertices[2].m_fY = originRight * sinRotation + originBottom * cosRotation;
+    pVertices[2].m_fX = originRight * cosRotation - originBottom * sinRotation;
+    pVertices[2].m_fY = originRight * sinRotation + originBottom * cosRotation;
 
-		pVertices[3].m_fX = originRight * cosRotation -  originTop * sinRotation;
-		pVertices[3].m_fY = originRight * sinRotation +  originTop * cosRotation;
+    pVertices[3].m_fX = originRight * cosRotation - originTop * sinRotation;
+    pVertices[3].m_fY = originRight * sinRotation + originTop * cosRotation;
 
-		// translate vertices to proper position
-		pVertices[0].m_fX += centerX;
-		pVertices[0].m_fY += centerY;
-		pVertices[1].m_fX += centerX;
-		pVertices[1].m_fY += centerY;
-		pVertices[2].m_fX += centerX;
-		pVertices[2].m_fY += centerY;
-		pVertices[3].m_fX += centerX;
-		pVertices[3].m_fY += centerY;
-	}
+    // translate vertices to proper position
+    pVertices[0].m_fX += centerX;
+    pVertices[0].m_fY += centerY;
+    pVertices[1].m_fX += centerX;
+    pVertices[1].m_fY += centerY;
+    pVertices[2].m_fX += centerX;
+    pVertices[2].m_fY += centerY;
+    pVertices[3].m_fX += centerX;
+    pVertices[3].m_fY += centerY;
+  }
 
+  D3D11_MAPPED_SUBRESOURCE mappedResource;
+  HRESULT result =
+      IDXBase::GetInstance()->VGetDeviceContext()->Map(m_pVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+  if (FAILED(result))
+  {
+    SP_ASSERT_ERROR(false)
+    (DXGetErrorString(result))(DXGetErrorDescription(result))
+        .SetCustomMessage("Could not lock the vertex buffer to update with the vertex data");
 
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	HRESULT result = IDXBase::GetInstance()->VGetDeviceContext()->Map(m_pVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(result))
-	{
-		SP_ASSERT_ERROR(false)(DXGetErrorString(result))(DXGetErrorDescription(result)).SetCustomMessage("Could not lock the vertex buffer to update with the vertex data");
+    SafeDeleteArray(&pVertices);
+    return false;
+  }
 
-		SafeDeleteArray(&pVertices);
-		return false;
-	}
+  // Get a pointer to the data in the vertex buffer.
+  stTexVertex* verticesPtr = static_cast<stTexVertex*>(mappedResource.pData);
 
-	// Get a pointer to the data in the vertex buffer.
-	stTexVertex * verticesPtr = static_cast<stTexVertex*>(mappedResource.pData);
+  // Copy the data into the vertex buffer.
+  memcpy(verticesPtr, (void*)pVertices, (sizeof(stTexVertex) * 4));
 
-	// Copy the data into the vertex buffer.
-	memcpy(verticesPtr, (void*)pVertices, (sizeof(stTexVertex) * 4));
+  // Unlock the vertex buffer.
+  IDXBase::GetInstance()->VGetDeviceContext()->Unmap(m_pVertexBuffer, 0);
 
-	// Unlock the vertex buffer.
-	IDXBase::GetInstance()->VGetDeviceContext()->Unmap(m_pVertexBuffer, 0);
-
-	SafeDeleteArray(&pVertices);
-	return true;
+  SafeDeleteArray(&pVertices);
+  return true;
 }
 
 //  *******************************************************************************************************************
 bool cSprite::InitializeShader()
 {
-	m_pShader = shared_ptr<IShader>(IShader::CreateTextureShader());
-	return IShaderManager::GetInstance()->VGetShader(m_pShader, "Texture");
+  m_pShader = shared_ptr<IShader>(IShader::CreateTextureShader());
+  return IShaderManager::GetInstance()->VGetShader(m_pShader, "Texture");
 }
 
 //  *******************************************************************************************************************
-ISprite * ISprite::CreateSprite()
+ISprite* ISprite::CreateSprite()
 {
-	return DEBUG_NEW cSprite();
+  return DEBUG_NEW cSprite();
 }

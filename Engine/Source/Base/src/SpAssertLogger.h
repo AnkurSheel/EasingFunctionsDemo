@@ -25,7 +25,6 @@ namespace Base
   private:
     void VInitialize() OVERRIDE;
     void VLog(const ISpAssertContext* const pContext) OVERRIDE;
-    cString GetAssertLevelAsString(const int level);
 
   private:
     std::unique_ptr<cFileIO> m_pFile;

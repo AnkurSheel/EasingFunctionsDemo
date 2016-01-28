@@ -15,10 +15,11 @@ namespace Base
 {
   namespace TypeRegistar
   {
-    template<typename T> struct TypeRegistar;
+    template <typename T>
+    struct TypeRegistar;
     //  for custom types (to avoid predeclaration here, define type ID in the place of type definition)
 
-    //  for build-in & basic types 
+    //  for build-in & basic types
     template<> struct TypeRegistar<int8> { enum { Id = __LINE__ }; };
     template<> struct TypeRegistar<int16> { enum { Id = __LINE__ }; };
     template<> struct TypeRegistar<int32> { enum { Id = __LINE__ }; };

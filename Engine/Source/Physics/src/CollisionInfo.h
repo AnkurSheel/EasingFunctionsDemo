@@ -10,38 +10,38 @@
 
 namespace Physics
 {
-	class cRigidBody;
+  class cRigidBody;
 }
 
 namespace Physics
 {
-	class cCollisionInfo
-	{
-	public:
-		cCollisionInfo(cRigidBody * const pBodyA , cRigidBody * const pBodyB);
-		~cCollisionInfo();
-		cCollisionInfo(const cCollisionInfo & other);
-		bool GetCollided() const { return m_Collided; }
-		const cRigidBody * const GetBodyA() const { return m_pBodyA; }
-		const cRigidBody * const GetBodyB() const { return m_pBodyB; }
-		void Solve();
-		void ApplyImpulse();
-		void ApplyPositionCorrection();
+  class cCollisionInfo
+  {
+  public:
+    cCollisionInfo(cRigidBody* const pBodyA, cRigidBody* const pBodyB);
+    ~cCollisionInfo();
+    cCollisionInfo(const cCollisionInfo& other);
+    bool GetCollided() const { return m_Collided; }
+    const cRigidBody* const GetBodyA() const { return m_pBodyA; }
+    const cRigidBody* const GetBodyB() const { return m_pBodyB; }
+    void Solve();
+    void ApplyImpulse();
+    void ApplyPositionCorrection();
 
-	private:
-		cCollisionInfo & operator =(const cCollisionInfo & other);
-		void InfiniteMassCorrection();
-		void AABBvsAABB();
-		void CircleVsAABB();
-		void AABBVsCircle();
-		void CircleVsCircle();
+  private:
+    cCollisionInfo& operator=(const cCollisionInfo& other);
+    void InfiniteMassCorrection();
+    void AABBvsAABB();
+    void CircleVsAABB();
+    void AABBVsCircle();
+    void CircleVsCircle();
 
-	private:
-		Base::cVector3 m_Normal;
-		cRigidBody * m_pBodyA;
-		cRigidBody * m_pBodyB;
-		float m_PenetrationDistance;
-		bool m_Collided;
-	};
+  private:
+    Base::cVector3 m_Normal;
+    cRigidBody* m_pBodyA;
+    cRigidBody* m_pBodyB;
+    float m_PenetrationDistance;
+    bool m_Collided;
+  };
 }  // namespace Physics
 #endif  // CollisionInfo_h

@@ -8,22 +8,19 @@
 
 namespace AI
 {
-	template <class PARENT>
-	struct cBTParentMixin
-	{
-	protected:
-		PARENT* m_pParent;
+  template <class PARENT>
+  struct cBTParentMixin
+  {
+  protected:
+    PARENT* m_pParent;
 
-	public:
-		cBTParentMixin<PARENT>()
-		: m_pParent(0)
-		{
-		}
+  public:
+    cBTParentMixin<PARENT>()
+      : m_pParent(0)
+    {
+    }
 
-		PARENT& End()
-		{
-			return *m_pParent;
-		}
-	};
+    PARENT& End() { return *m_pParent; }
+  };
 }  // namespace AI
 #endif  // __BTPARENTMIXIN_H__

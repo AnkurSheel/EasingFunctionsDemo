@@ -11,33 +11,32 @@
 
 namespace Sound
 {
-	class ISoundResHandle;
+  class ISoundResHandle;
 }
 
 namespace Sound
 {
-	class cDirectSoundAudioBuffer
-		: public cAudioBuffer
-	{
-	public:
-		cDirectSoundAudioBuffer(LPDIRECTSOUNDBUFFER pSound, shared_ptr<ISoundResHandle> pResource);
+  class cDirectSoundAudioBuffer : public cAudioBuffer
+  {
+  public:
+    cDirectSoundAudioBuffer(LPDIRECTSOUNDBUFFER pSound, shared_ptr<ISoundResHandle> pResource);
 
-	private:
-		bool VPlay() OVERRIDE;
-		bool VStop() OVERRIDE;
-		bool VResume() OVERRIDE;
-		bool VSetPaused(bool paused) OVERRIDE;
-		bool VPause() OVERRIDE;
-		bool VIsPlaying() OVERRIDE;
-		bool VRestore() OVERRIDE;
-		void VSetVolume(uint16 volume) OVERRIDE;
-		float VGetProgress() OVERRIDE;
-		LPDIRECTSOUNDBUFFER GetSoundBuffer();
-		bool RestoreBuffer();
-		bool FillBufferWithSound();
+  private:
+    bool VPlay() OVERRIDE;
+    bool VStop() OVERRIDE;
+    bool VResume() OVERRIDE;
+    bool VSetPaused(bool paused) OVERRIDE;
+    bool VPause() OVERRIDE;
+    bool VIsPlaying() OVERRIDE;
+    bool VRestore() OVERRIDE;
+    void VSetVolume(uint16 volume) OVERRIDE;
+    float VGetProgress() OVERRIDE;
+    LPDIRECTSOUNDBUFFER GetSoundBuffer();
+    bool RestoreBuffer();
+    bool FillBufferWithSound();
 
-	private:
-		LPDIRECTSOUNDBUFFER m_pSoundBuffer;
-	};
+  private:
+    LPDIRECTSOUNDBUFFER m_pSoundBuffer;
+  };
 }  // namespace Sound
 #endif  // __DIRECTSOUNDAUDIOBUFFER_H__

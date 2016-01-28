@@ -11,24 +11,23 @@
 
 namespace AI
 {
-	class cBTLoopDecoratorNode
-		: public cBTDecoratorNode
-	{
-		DEFINE_NODE_PROPERTY(cBTLoopDecoratorNode, Base::tOptional<int>, Repeats)
+  class cBTLoopDecoratorNode : public cBTDecoratorNode
+  {
+    DEFINE_NODE_PROPERTY(cBTLoopDecoratorNode, Base::tOptional<int>, Repeats)
 
-	public:
-		~cBTLoopDecoratorNode();
+  public:
+    ~cBTLoopDecoratorNode();
 
-	private:
-		AI_API cBTLoopDecoratorNode();
-		void VOnInitialize(void * pOwner) OVERRIDE;
-		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
-		void VReset() OVERRIDE;
+  private:
+    AI_API cBTLoopDecoratorNode();
+    void VOnInitialize(void* pOwner) OVERRIDE;
+    BT_STATUS::Enum VOnUpdate(void* pOwner, float deltaTime) OVERRIDE;
+    void VReset() OVERRIDE;
 
-	private:
-		int m_Count;
+  private:
+    int m_Count;
 
-		friend class cBTNodeFactory;
-	};
+    friend class cBTNodeFactory;
+  };
 }  // namespace AI
 #endif  // __BTREPEATDECORATORNODE_H__

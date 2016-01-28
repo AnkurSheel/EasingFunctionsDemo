@@ -1,0 +1,1 @@
+start /d "..\Debug" Editor.exe ..\Media ..\Media\Assets

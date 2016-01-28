@@ -10,41 +10,39 @@
 
 namespace GameBase
 {
-	class cEventFactory;
+  class cEventFactory;
 }
 
 namespace GameBase
 {
-	class cEventManager
-		: public IEventManager
-		, public Base::cNonCopyable
-	{
-	private:
-		typedef std::list<EventListenerCallBackFn> EventListenerList;
-		typedef std::map<UINT64, EventListenerList> EventListenerMap;
-		typedef std::list<IEventDataPtr> EventQueue;
+  class cEventManager : public IEventManager, public Base::cNonCopyable
+  {
+  private:
+    typedef std::list<EventListenerCallBackFn> EventListenerList;
+    typedef std::map<UINT64, EventListenerList> EventListenerMap;
+    typedef std::list<IEventDataPtr> EventQueue;
 
-	public:
-		~cEventManager();
+  public:
+    ~cEventManager();
 
-	private:
-		cEventManager();
-		void VSetAndInitializeEventFactory(std::unique_ptr<cEventFactory> pEventFactory);
-		void VAddListener(const EventListenerCallBackFn & fnListener, const EventType & eventType) OVERRIDE;
-		void VRemoveListener(const EventListenerCallBackFn & fnListener, const EventType & eventType) OVERRIDE;
-		void VTriggerEvent(const IEventDataPtr& pEvent) OVERRIDE;
-		void VQueueEvent(const IEventDataPtr& pEvent) OVERRIDE;
-		void VAbortEvent(const EventType& type, const bool allEVents) OVERRIDE;
-		void VUpdate() OVERRIDE;
+  private:
+    cEventManager();
+    void VSetAndInitializeEventFactory(std::unique_ptr<cEventFactory> pEventFactory);
+    void VAddListener(const EventListenerCallBackFn& fnListener, const EventType& eventType) OVERRIDE;
+    void VRemoveListener(const EventListenerCallBackFn& fnListener, const EventType& eventType) OVERRIDE;
+    void VTriggerEvent(const IEventDataPtr& pEvent) OVERRIDE;
+    void VQueueEvent(const IEventDataPtr& pEvent) OVERRIDE;
+    void VAbortEvent(const EventType& type, const bool allEVents) OVERRIDE;
+    void VUpdate() OVERRIDE;
 
-	private:
-		std::unique_ptr<cEventFactory> m_pEventFactory;
-		int m_activeQueue;  /// index of actively processing queue; events enque to the opposing queue
-		EventListenerMap m_eventListeners;  /// Stores the list of listeners to be called for each event
-		EventQueue m_queues[2];  /// the active and inactive queues
+  private:
+    std::unique_ptr<cEventFactory> m_pEventFactory;
+    int m_activeQueue;                  /// index of actively processing queue; events enque to the opposing queue
+    EventListenerMap m_eventListeners;  /// Stores the list of listeners to be called for each event
+    EventQueue m_queues[2];             /// the active and inactive queues
 
-	private:
-		friend void IEventManager::CreateAsService();
-	};
+  private:
+    friend void IEventManager::CreateAsService();
+  };
 }  // namespace GameBase
 #endif  // EventManager_h__

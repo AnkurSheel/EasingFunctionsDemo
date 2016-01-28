@@ -11,18 +11,16 @@
 
 namespace Physics
 {
-	class cRectangleShape
-		: public cShape
-	{
-	public:
-		cRectangleShape();
-		~cRectangleShape();
-		void VInitialize(const Base::cVector3 & minBound, const Base::cVector3 & maxBound) OVERRIDE;
-		IShape * VDuplicate() OVERRIDE;
-		const Base::cHashedString& VGetShapeName() const OVERRIDE {return m_Name; }
-
-	public:
-		static Base::cHashedString m_Name;  ///< The shape name
-	};
+  class cRectangleShape : public cShape
+  {
+  public:
+    cRectangleShape();
+    ~cRectangleShape();
+    void VInitialize(const Base::cVector3& minBound, const Base::cVector3& maxBound) OVERRIDE;
+    IShape* VDuplicate() OVERRIDE;
+    const Base::cHashedString& VGetShapeName() const OVERRIDE { return m_Name; }
+  public:
+    static Base::cHashedString m_Name;  ///< The shape name
+  };
 }  // namespace Physics
 #endif  // RectangleShape_hxx

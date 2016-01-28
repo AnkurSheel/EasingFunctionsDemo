@@ -10,27 +10,25 @@
 #include "BTCompositeNode.h"
 namespace AI
 {
-	class cBTNodeFactory;
+  class cBTNodeFactory;
 }
 
 namespace AI
 {
-	class cBTSequenceNode
-		: public cBTCompositeNode
-	{
-	public:
-		~cBTSequenceNode();
-		void VOnInitialize(void * pOwner) OVERRIDE;
-		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
-		int GetActiveChildIndex() const { return m_CurrentChildIndex; }
+  class cBTSequenceNode : public cBTCompositeNode
+  {
+  public:
+    ~cBTSequenceNode();
+    void VOnInitialize(void* pOwner) OVERRIDE;
+    BT_STATUS::Enum VOnUpdate(void* pOwner, float deltaTime) OVERRIDE;
+    int GetActiveChildIndex() const { return m_CurrentChildIndex; }
+  private:
+    AI_API cBTSequenceNode();
 
-	private:
-		AI_API cBTSequenceNode();
+  private:
+    int m_CurrentChildIndex;
 
-	private:
-		int m_CurrentChildIndex;
-
-		friend class cBTNodeFactory;
-	};
+    friend class cBTNodeFactory;
+  };
 }  // namespace AI
 #endif  // __BTSEQUENCENODE_H__

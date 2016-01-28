@@ -10,25 +10,24 @@
 
 namespace AI
 {
-	class cBTCountLimitDecoratorNode
-	: public cBTDecoratorNode
-	{
-		DEFINE_NODE_PROPERTY(cBTCountLimitDecoratorNode, int, Limit)
-		DEFINE_NODE_PROPERTY(cBTCountLimitDecoratorNode, bool, AllowReinitialize)
+  class cBTCountLimitDecoratorNode : public cBTDecoratorNode
+  {
+    DEFINE_NODE_PROPERTY(cBTCountLimitDecoratorNode, int, Limit)
+    DEFINE_NODE_PROPERTY(cBTCountLimitDecoratorNode, bool, AllowReinitialize)
 
-	public:
-		~cBTCountLimitDecoratorNode();
+  public:
+    ~cBTCountLimitDecoratorNode();
 
-	private:
-		AI_API cBTCountLimitDecoratorNode();
-		void VOnInitialize(void * pOwner) OVERRIDE;
-		BT_STATUS::Enum VOnUpdate(void * pOwner, float deltaTime) OVERRIDE;
-		void VReset() OVERRIDE;
+  private:
+    AI_API cBTCountLimitDecoratorNode();
+    void VOnInitialize(void* pOwner) OVERRIDE;
+    BT_STATUS::Enum VOnUpdate(void* pOwner, float deltaTime) OVERRIDE;
+    void VReset() OVERRIDE;
 
-	private:
-		int m_Count;
+  private:
+    int m_Count;
 
-		friend class cBTNodeFactory;
-	};
+    friend class cBTNodeFactory;
+  };
 }  // namespace AI
 #endif  // __BTCOUNTLIMITNODE_H__

@@ -11,41 +11,40 @@
 
 namespace Graphics
 {
-	class ICamera;
+  class ICamera;
 }
 
 namespace GameBase
 {
-	class IEventData;
-	typedef shared_ptr<IEventData> IEventDataPtr;
-	class IEntityManager;
-	class IRenderableComponent;
-	class IBaseEntity;
+  class IEventData;
+  typedef shared_ptr<IEventData> IEventDataPtr;
+  class IEntityManager;
+  class IRenderableComponent;
+  class IBaseEntity;
 }
 
 namespace GameBase
 {
-	class cRenderSystem
-		: public Utilities::cProcess
-	{
-	public:
-		GAMEBASE_API cRenderSystem();
-		GAMEBASE_API ~cRenderSystem();
-		void VInitialize();
-		const Base::cHashedString & VGetType() const { return m_Type; }
-		GAMEBASE_API void Render(const Graphics::ICamera * const pCamera);
-		void ActorMovedListener(IEventDataPtr pEventData);
-		void ActorRotatedListener(IEventDataPtr pEventData);
-		void ActorScaledListener(IEventDataPtr pEventData);
+  class cRenderSystem : public Utilities::cProcess
+  {
+  public:
+    GAMEBASE_API cRenderSystem();
+    GAMEBASE_API ~cRenderSystem();
+    void VInitialize();
+    const Base::cHashedString& VGetType() const { return m_Type; }
+    GAMEBASE_API void Render(const Graphics::ICamera* const pCamera);
+    void ActorMovedListener(IEventDataPtr pEventData);
+    void ActorRotatedListener(IEventDataPtr pEventData);
+    void ActorScaledListener(IEventDataPtr pEventData);
 
-	public:
-		GAMEBASE_API static const Base::cHashedString	m_Type;
+  public:
+    GAMEBASE_API static const Base::cHashedString m_Type;
 
-	private:
-		shared_ptr<IRenderableComponent> const CastToRenderableComponent(shared_ptr<IBaseEntity> const pEntity);
+  private:
+    shared_ptr<IRenderableComponent> const CastToRenderableComponent(shared_ptr<IBaseEntity> const pEntity);
 
-	private:
-		weak_ptr<IEntityManager> m_pEntityManager;
-	};
+  private:
+    weak_ptr<IEntityManager> m_pEntityManager;
+  };
 }  // namespace GameBase
 #endif  // RenderSystem_h__

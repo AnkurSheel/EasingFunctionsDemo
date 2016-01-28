@@ -21,7 +21,7 @@ public:
 
 private:
   void ResizeDIBSection(const int width, const int height);
-  void DrawRectangle(float minX, float maxX, float minY, float maxY);
+  void DrawRectangle(float minX, float maxX, float minY, float maxY, const cColor& color);
 
 private:
   HWND m_windowHandle;
@@ -123,7 +123,8 @@ Base::tOptional<bool> cWin32Renderer::cWin32RendererImpl::OnWindowResized(const 
 //  *******************************************************************************************************************
 void cWin32Renderer::cWin32RendererImpl::BeginRender()
 {
-  DrawRectangle(10.0f, 100.0f, 10.0f, 100.0f);
+  DrawRectangle(0.0f, m_BitmapWidth, 0.0f, m_BitmapHeight, cColor::RED);
+  DrawRectangle(10.0f, 100.0f, 10.0f, 100.0f, cColor::ORANGE);
 }
 
 //  *******************************************************************************************************************
@@ -176,7 +177,8 @@ void cWin32Renderer::cWin32RendererImpl::ResizeDIBSection(const int width, const
 }
 
 //  *******************************************************************************************************************
-void cWin32Renderer::cWin32RendererImpl::DrawRectangle(float realMinX, float realMaxX, float realMinY, float realMaxY)
+void cWin32Renderer::cWin32RendererImpl::DrawRectangle(float realMinX, float realMaxX, float realMinY, float realMaxY,
+                                                       const cColor& color)
 {
   int32 minX = RoundReal32ToInt32(realMinX);
   int32 maxX = RoundReal32ToInt32(realMaxX);
@@ -202,14 +204,14 @@ void cWin32Renderer::cWin32RendererImpl::DrawRectangle(float realMinX, float rea
 
   int pitch = m_BitmapWidth * m_BytesPerPixel;
   uint8* pRow = reinterpret_cast<uint8*>(m_pBackBuffer) + minX * m_BytesPerPixel + minY * pitch;
-  // LittleEndian = BB GG RR XX
-  uint32 color = 0XFFFFFFFF;
+  // LittleEndian = AA RR GG BB
+  uint32 argb = color.GetAsARGB();
   for (int y = minY; y < maxY; ++y)
   {
     uint32* pPixel = reinterpret_cast<uint32*>(pRow);
     for (int x = minX; x < maxX; ++x)
     {
-      *pPixel++ = color;
+      *pPixel++ = argb;
     }
     pRow += pitch;
   }

@@ -12,24 +12,23 @@
 
 namespace GameBase
 {
-	class IBaseComponent;
+  class IBaseComponent;
 }
 
 namespace GameBase
 {
-	class cComponentFactory
-	{
-	public:
-		GAMEBASE_API cComponentFactory();
-		GAMEBASE_API ~cComponentFactory();
-		GAMEBASE_API void VRegisterComponents();
-		shared_ptr<IBaseComponent> CreateComponent(const Base::cHashedString & Type);
-		GAMEBASE_API shared_ptr<IBaseComponent> GetDuplicateComponent(shared_ptr<IBaseComponent> const pComponent);
-		static cComponentFactory * Instance() { return m_pInstance; }
-
-	private:
-		Base::GenericObjectFactory<IBaseComponent, UINT64>	m_RegisteredComponents;
-		GAMEBASE_API static cComponentFactory *				m_pInstance;
-	};
+  class cComponentFactory
+  {
+  public:
+    GAMEBASE_API cComponentFactory();
+    GAMEBASE_API ~cComponentFactory();
+    GAMEBASE_API void VRegisterComponents();
+    shared_ptr<IBaseComponent> CreateComponent(const Base::cHashedString& Type);
+    GAMEBASE_API shared_ptr<IBaseComponent> GetDuplicateComponent(shared_ptr<IBaseComponent> const pComponent);
+    static cComponentFactory* Instance() { return m_pInstance; }
+  private:
+    Base::GenericObjectFactory<IBaseComponent, UINT64> m_RegisteredComponents;
+    GAMEBASE_API static cComponentFactory* m_pInstance;
+  };
 }  // namespace GameBase
 #endif  // ComponentFactory_h__

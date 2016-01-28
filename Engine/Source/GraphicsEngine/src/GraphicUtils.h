@@ -10,37 +10,35 @@
 
 namespace Base
 {
-	class cVector2;
-	class cVector3;
+  class cVector2;
+  class cVector3;
 }
 
 namespace Graphics
 {
-	class ICamera;
+  class ICamera;
 }
 
 namespace Graphics
 {
-	class cGraphicUtils
-		: public IGraphicUtils
-		, public Base::cNonCopyable
-	{
-	private:
-		cGraphicUtils();
-		~cGraphicUtils();
-		Base::cVector3 VScreenToWorldSpace(const Base::cVector2 & vPos, const ICamera * const pCamera) OVERRIDE;
-		void VGetRayFromScreenPosition(const Base::cVector2 & vScreenPos, const ICamera * const pCamera, stRay& ray) OVERRIDE;
+  class cGraphicUtils : public IGraphicUtils, public Base::cNonCopyable
+  {
+  private:
+    cGraphicUtils();
+    ~cGraphicUtils();
+    Base::cVector3 VScreenToWorldSpace(const Base::cVector2& vPos, const ICamera* const pCamera) OVERRIDE;
+    void VGetRayFromScreenPosition(const Base::cVector2& vScreenPos, const ICamera* const pCamera, stRay& ray) OVERRIDE;
 
-		Base::cVector3 Vec3TransformNormal(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
-		Base::cVector3 Vec3Transform(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
-		Base::cVector3 Vec3TransformCoordinate(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
+    Base::cVector3 Vec3TransformNormal(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
+    Base::cVector3 Vec3Transform(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
+    Base::cVector3 Vec3TransformCoordinate(const Base::cVector3& inVector, const XMMATRIX& inMatrix);
 
-	private:
-		static IGraphicUtils* s_pGraphicUtils;	  /// static object of this class */
+  private:
+    static IGraphicUtils* s_pGraphicUtils;  /// static object of this class */
 
-	private:
-		friend static IGraphicUtils * IGraphicUtils::GetInstance();
-		friend static void IGraphicUtils::Destroy();
-	};
+  private:
+    friend static IGraphicUtils* IGraphicUtils::GetInstance();
+    friend static void IGraphicUtils::Destroy();
+  };
 }  // namespace Graphics
 #endif  // GRAPHICUTILS_H__

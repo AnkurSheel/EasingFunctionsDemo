@@ -10,18 +10,18 @@
 
 namespace GameBase
 {
-	class IKeyboardController
-	{
-	public:
-		virtual void VOnKeyDown(const unsigned int CharID) = 0;
-		virtual void VOnKeyUp(const unsigned int CharID) = 0;
-		virtual void VLockKey(const unsigned int CharID) = 0;
-		virtual void VUnlockKey(const unsigned int CharID) = 0;
-		virtual bool VIsKeyPressed(const unsigned int CharID) const = 0;
-		virtual bool VIsKeyLocked(const unsigned int CharID) const = 0;
+  class IKeyboardController
+  {
+  public:
+    virtual void VOnKeyDown(const unsigned int CharID) = 0;
+    virtual void VOnKeyUp(const unsigned int CharID) = 0;
+    virtual void VLockKey(const unsigned int CharID) = 0;
+    virtual void VUnlockKey(const unsigned int CharID) = 0;
+    virtual bool VIsKeyPressed(const unsigned int CharID) const = 0;
+    virtual bool VIsKeyLocked(const unsigned int CharID) const = 0;
 
-		GAMEBASE_API static IKeyboardController * Instance();
-		static void Destroy();
-	};
-}
+    GAMEBASE_API static IKeyboardController* Instance();
+    static void Destroy();
+  };
+}  // namespace GameBase
 #endif  // KeyboardController_hxx__

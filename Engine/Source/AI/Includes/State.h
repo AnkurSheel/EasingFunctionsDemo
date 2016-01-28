@@ -10,32 +10,31 @@
 
 namespace AI
 {
-	struct Telegram;
-	class cStateImpl;
+  struct Telegram;
+  class cStateImpl;
 }
 
 namespace AI
 {
-	template <class entity_type>
-	class cState
-		: public Base::cNonCopyable
-	{
-	public:
-		cState();
-		virtual ~cState(){}
-		virtual void VOnEnter(entity_type * pType);
-		virtual void VOnUpdate(const TICK currentTick, const float deltaTime) = 0;
-		virtual void VOnExit() = 0;
-		virtual bool VOnMessage(const AI::Telegram & msg) = 0;
-		virtual void VOnPause();
-		virtual void VOnResume();
-		Base::cString GetName() const;
-		bool IsPaused() const;
+  template <class entity_type>
+  class cState : public Base::cNonCopyable
+  {
+  public:
+    cState();
+    virtual ~cState() {}
+    virtual void VOnEnter(entity_type* pType);
+    virtual void VOnUpdate(const TICK currentTick, const float deltaTime) = 0;
+    virtual void VOnExit() = 0;
+    virtual bool VOnMessage(const AI::Telegram& msg) = 0;
+    virtual void VOnPause();
+    virtual void VOnResume();
+    Base::cString GetName() const;
+    bool IsPaused() const;
 
-	protected:
-		bool	m_IsPaused;
-		entity_type *	m_pOwner;
-	};
+  protected:
+    bool m_IsPaused;
+    entity_type* m_pOwner;
+  };
 
 #include "State.inl"
 

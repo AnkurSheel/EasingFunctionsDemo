@@ -31,7 +31,7 @@ void cSpAssertLogger::VLog(const ISpAssertContext* const pContext)
   if (pContext != NULL && m_pFile != NULL)
   {
     cString strChooseMsg;
-    strChooseMsg = GetAssertLevelAsString(pContext->VGetDebugLevel());
+    strChooseMsg = pContext->VGetAssertLevelAsString();
     strChooseMsg += " [ " + pContext->VGetExpression();
     strChooseMsg += "] \nin : \nfile: " + pContext->VGetFileName();
     strChooseMsg += cStringUtilities::MakeFormatted(" : line: %d\n", pContext->VGetLineNumber());
@@ -53,26 +53,4 @@ void cSpAssertLogger::VLog(const ISpAssertContext* const pContext)
     m_pFile->WriteLine(strChooseMsg);
     m_pFile->Flush();
   }
-}
-
-//  ********************************************************************************************************************
-cString cSpAssertLogger::GetAssertLevelAsString(const int level)
-{
-  switch (level)
-  {
-    case AssertLevels::LEVEL_WARNING:
-      return "Warning";
-
-    case AssertLevels::LEVEL_DEBUG:
-      return "Assertion failed";
-
-    case AssertLevels::LEVEL_ERROR:
-      return "Assertion failed (Error)";
-
-    case AssertLevels::LEVEL_FATAL:
-      return "Assertion failed (FATAL)";
-
-    default:
-      return cStringUtilities::MakeFormatted("Assertion failed (level = %d)", level);
-  };
 }

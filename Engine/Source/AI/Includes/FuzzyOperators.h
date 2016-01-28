@@ -17,7 +17,7 @@ class cFuzzyOperatorVery :
 {
 public:
 	virtual ~cFuzzyOperatorVery();
-	cFuzzyOperatorVery(const cFuzzySetProxy& set);
+	explicit cFuzzyOperatorVery(const cFuzzySetProxy& set);
 	cFuzzyTerm* Clone();
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// Returns the DOM of the term
@@ -42,7 +42,7 @@ class cFuzzyOperatorFairly :
 {
 public:
 	virtual ~cFuzzyOperatorFairly();
-	cFuzzyOperatorFairly(cFuzzySetProxy& set);
+	explicit cFuzzyOperatorFairly(cFuzzySetProxy& set);
 	cFuzzyTerm * Clone();
 	float GetDOM();
 	void ClearDOM();

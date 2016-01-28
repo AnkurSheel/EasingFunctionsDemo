@@ -8,5 +8,4 @@
 #include "Includes.h"
 #include "Logger.hxx"
 #include "Messages.h"
-
-#define AUTOMATIC
+// #define AUTOMATIC

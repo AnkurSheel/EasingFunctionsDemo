@@ -10,25 +10,24 @@
 
 namespace Graphics
 {
-	class cAABB
-		: public IAABB
-	{
-	public:
-		cAABB(const Base::cVector3 & vMin, const Base::cVector3 & vMax);
-		~cAABB();
-		cAABB(const cAABB & other);
-		cAABB & operator =(const cAABB & other);
+  class cAABB : public IAABB
+  {
+  public:
+    cAABB(const Base::cVector3& vMin, const Base::cVector3& vMax);
+    ~cAABB();
+    cAABB(const cAABB& other);
+    cAABB& operator=(const cAABB& other);
 
-		Base::cVector3 VGetCenter() const;
-		Base::cVector3 VGetHalfExtents() const;
-		void Calculate(const Base::cVector3 & vMin, const Base::cVector3 & vMax);
+    Base::cVector3 VGetCenter() const;
+    Base::cVector3 VGetHalfExtents() const;
+    void Calculate(const Base::cVector3& vMin, const Base::cVector3& vMax);
 
-	private:
-		void VTransalate(const Base::cVector3 & vDeltaPos);
+  private:
+    void VTransalate(const Base::cVector3& vDeltaPos);
 
-	private:
-		Base::cVector3	m_vCenter;
-		Base::cVector3	m_vHalfExtents;
-	};
+  private:
+    Base::cVector3 m_vCenter;
+    Base::cVector3 m_vHalfExtents;
+  };
 }  // namespace Graphics
 #endif  // AABB_h__

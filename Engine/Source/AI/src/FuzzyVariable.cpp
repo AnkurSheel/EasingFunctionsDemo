@@ -4,172 +4,175 @@
 #include "FuzzySetTypes.h"
 #include "FuzzySetProxy.h"
 
-#pragma warning(disable:4150)
+#pragma warning(disable : 4150)
 using namespace Base;
 
 //  *******************************************************************************************************************
 cFuzzyVariable::cFuzzyVariable()
-	: m_fMinRange(0)
-	, m_fMaxRange(0)
+  : m_fMinRange(0)
+  , m_fMaxRange(0)
 {
 }
 
 //  *******************************************************************************************************************
 cFuzzyVariable::~cFuzzyVariable()
 {
-	for(auto it = m_MemberSets.begin(); it!= m_MemberSets.end(); it++)
-	{
-		SafeDelete(&(it->second));
-	}
+  for (auto it = m_MemberSets.begin(); it != m_MemberSets.end(); it++)
+  {
+    SafeDelete(&(it->second));
+  }
 }
 
 //  *******************************************************************************************************************
 cFuzzyVariable& cFuzzyVariable::operator=(const cFuzzyVariable& var)
 {
-	this->m_fMaxRange = var.m_fMaxRange;
-	this->m_fMinRange = var.m_fMinRange;
-	this->m_MemberSets = var.m_MemberSets;
-	return(*this);
+  this->m_fMaxRange = var.m_fMaxRange;
+  this->m_fMinRange = var.m_fMinRange;
+  this->m_MemberSets = var.m_MemberSets;
+  return (*this);
 }
 
 //  *******************************************************************************************************************
 void cFuzzyVariable::AdjustRangeToFit(const float min, const float max)
 {
-	if (min < m_fMinRange)
-	{
-		m_fMinRange = min;
-	}
+  if (min < m_fMinRange)
+  {
+    m_fMinRange = min;
+  }
 
-	if (max > m_fMaxRange)
-	{
-		m_fMaxRange = max;
-	}
+  if (max > m_fMaxRange)
+  {
+    m_fMaxRange = max;
+  }
 }
 
 //  *******************************************************************************************************************
-cFuzzySetProxy* cFuzzyVariable::AddLeftShoulderSet(const cString & name , const float minBound, const float peak , const float maxBound)
+cFuzzySetProxy* cFuzzyVariable::AddLeftShoulderSet(const cString& name, const float minBound, const float peak,
+                                                   const float maxBound)
 {
-	m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetLtShoulder(peak, peak-minBound, maxBound- peak);
+  m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetLtShoulder(peak, peak - minBound, maxBound - peak);
 
-	// adjust range if req
-	AdjustRangeToFit(minBound, maxBound);
+  // adjust range if req
+  AdjustRangeToFit(minBound, maxBound);
 
-	// It is the Callee's responsibility to free it
-	cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
+  // It is the Callee's responsibility to free it
+  cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
 
-	// return  m_MemberSets[name];
+  // return  m_MemberSets[name];
 
-	return tmp;
+  return tmp;
 }
 
 //  *******************************************************************************************************************
-cFuzzySetProxy* cFuzzyVariable::AddRightShoulderSet(const cString & name, const float minBound, const float peak, const float maxBound)
+cFuzzySetProxy* cFuzzyVariable::AddRightShoulderSet(const cString& name, const float minBound, const float peak,
+                                                    const float maxBound)
 {
-	m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetRtShoulder(peak, peak-minBound, maxBound- peak);
+  m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetRtShoulder(peak, peak - minBound, maxBound - peak);
 
-	// adjust range if req
-	AdjustRangeToFit(minBound, maxBound);
+  // adjust range if req
+  AdjustRangeToFit(minBound, maxBound);
 
-	cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
+  cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
 
-	// return  m_MemberSets[name];
+  // return  m_MemberSets[name];
 
-	return tmp;
+  return tmp;
 }
 
 //  *******************************************************************************************************************
-cFuzzySetProxy* cFuzzyVariable::AddangleSet(const cString & name, const float minBound, const float peak, const float maxBound)
+cFuzzySetProxy* cFuzzyVariable::AddangleSet(const cString& name, const float minBound, const float peak,
+                                            const float maxBound)
 {
-	m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetangle(peak, peak-minBound, maxBound- peak);
+  m_MemberSets[name.GetData()] = DEBUG_NEW cFuzzySetangle(peak, peak - minBound, maxBound - peak);
 
-	// adjust range if req
-	AdjustRangeToFit(minBound, maxBound);
+  // adjust range if req
+  AdjustRangeToFit(minBound, maxBound);
 
-	cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
+  cFuzzySetProxy* tmp = DEBUG_NEW cFuzzySetProxy(*m_MemberSets[name.GetData()]);
 
-	return tmp;
+  return tmp;
 }
 
 //  *******************************************************************************************************************
 void cFuzzyVariable::Fuzzify(const float val)
 {
-	// make sure the value is within the bounds of this variable
-	_ASSERT((val >= m_fMinRange) && (val <= m_fMaxRange));
+  // make sure the value is within the bounds of this variable
+  _ASSERT((val >= m_fMinRange) && (val <= m_fMaxRange));
 
-	// for each set in the flv calculate the DOM for the given value
-	for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); ++curSet)
-	{
-		curSet->second->SetDOM(curSet->second->CalculateDOM(val));
-	}
+  // for each set in the flv calculate the DOM for the given value
+  for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); ++curSet)
+  {
+    curSet->second->SetDOM(curSet->second->CalculateDOM(val));
+  }
 }
 
 //  *******************************************************************************************************************
 float cFuzzyVariable::DeFuzzifyMaxAv()
 {
-	float fBottom = 0.0f;
-	float fTop    = 0.0f;
+  float fBottom = 0.0f;
+  float fTop = 0.0f;
 
-	for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); ++curSet)
-	{
-		fBottom += curSet->second->GetDOM();
+  for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); ++curSet)
+  {
+    fBottom += curSet->second->GetDOM();
 
-		fTop += curSet->second->GetRepresentativeValue() * curSet->second->GetDOM();
-	}
+    fTop += curSet->second->GetRepresentativeValue() * curSet->second->GetDOM();
+  }
 
-	// make sure bottom is not equal to zero
-	if (fBottom == 0.0f)
-	{
-		return 0.0;
-	}
+  // make sure bottom is not equal to zero
+  if (fBottom == 0.0f)
+  {
+    return 0.0;
+  }
 
-	return (fTop / fBottom);
+  return (fTop / fBottom);
 }
 
 //  *******************************************************************************************************************
 float cFuzzyVariable::DeFuzzifyCentroid(const int iNumSamples)
 {
-	// calculate the step size
-	float fStepSize = (m_fMaxRange - m_fMinRange) / iNumSamples;
+  // calculate the step size
+  float fStepSize = (m_fMaxRange - m_fMinRange) / iNumSamples;
 
-	float fTotalArea    = 0.0;
-	float fSumOfMoments = 0.0;
+  float fTotalArea = 0.0;
+  float fSumOfMoments = 0.0;
 
-	// step through the range of this variable in increments equal to StepSize
-	// adding up the conbution for each subset.
-	//
-	// in addition the moment of each slice is calculated and summed. Dividing
-	// the total area by the sum of the moments gives the centroid.
+  // step through the range of this variable in increments equal to StepSize
+  // adding up the conbution for each subset.
+  //
+  // in addition the moment of each slice is calculated and summed. Dividing
+  // the total area by the sum of the moments gives the centroid.
 
-	for (int iSamp = 1; iSamp <= iNumSamples; ++iSamp)
-	{
-		// for each set get the conbution to the area. This is the lower of the
-		// value returned from CalculateDOM or the actual DOM of the fuzzified
-		// value itself
+  for (int iSamp = 1; iSamp <= iNumSamples; ++iSamp)
+  {
+    // for each set get the conbution to the area. This is the lower of the
+    // value returned from CalculateDOM or the actual DOM of the fuzzified
+    // value itself
 
-		float conbution;
-		for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); curSet++)
-		{
-			float fSetCalcDomVal = curSet->second->CalculateDOM(m_fMinRange+iSamp*fStepSize);
-			float fGetDomVal= curSet->second->GetDOM();
-			if ( fSetCalcDomVal < fGetDomVal)
-			{
-				conbution = fSetCalcDomVal;
-			}
-			else
-			{
-				conbution = fGetDomVal;
-			}
-			fTotalArea += conbution;
+    float conbution;
+    for (auto curSet = m_MemberSets.begin(); curSet != m_MemberSets.end(); curSet++)
+    {
+      float fSetCalcDomVal = curSet->second->CalculateDOM(m_fMinRange + iSamp * fStepSize);
+      float fGetDomVal = curSet->second->GetDOM();
+      if (fSetCalcDomVal < fGetDomVal)
+      {
+        conbution = fSetCalcDomVal;
+      }
+      else
+      {
+        conbution = fGetDomVal;
+      }
+      fTotalArea += conbution;
 
-			fSumOfMoments += (m_fMinRange + iSamp * fStepSize)  * conbution;
-		}
-	}
+      fSumOfMoments += (m_fMinRange + iSamp * fStepSize) * conbution;
+    }
+  }
 
-	// make sure total area is not equal to zero
-	if (fTotalArea == 0.0f)
-	{
-		return 0.0;
-	}
+  // make sure total area is not equal to zero
+  if (fTotalArea == 0.0f)
+  {
+    return 0.0;
+  }
 
-	return (fSumOfMoments / fTotalArea);
+  return (fSumOfMoments / fTotalArea);
 }

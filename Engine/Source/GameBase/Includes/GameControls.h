@@ -10,47 +10,46 @@
 
 namespace GameBase
 {
-	struct stGameControl
-	{
-		unsigned int	m_KeyCode;
-		Base::cString	m_DisplayName;
+  struct stGameControl
+  {
+    unsigned int m_KeyCode;
+    Base::cString m_DisplayName;
 
-		stGameControl()
-			: m_KeyCode(0)
-		{
-		}
+    stGameControl()
+      : m_KeyCode(0)
+    {
+    }
 
-		stGameControl(const Base::cString & inDisplayName,	const unsigned int inKeyCode)
-			: m_DisplayName(inDisplayName)
-			, m_KeyCode(inKeyCode)
-		{
-		}
-	};
+    stGameControl(const Base::cString& inDisplayName, const unsigned int inKeyCode)
+      : m_DisplayName(inDisplayName)
+      , m_KeyCode(inKeyCode)
+    {
+    }
+  };
 
-	class cGameControls
-		: public Base::cNonCopyable
-	{
-	public:
-		typedef std::unordered_map<unsigned int, stGameControl> KeyMapping;
+  class cGameControls : public Base::cNonCopyable
+  {
+  public:
+    typedef std::unordered_map<unsigned int, stGameControl> KeyMapping;
 
-		GAMEBASE_API cGameControls(const Base::cString & inFileName);
-		GAMEBASE_API virtual ~cGameControls();
+    GAMEBASE_API cGameControls(const Base::cString& inFileName);
+    GAMEBASE_API virtual ~cGameControls();
 
-		virtual void VSetDefaults() = 0;
+    virtual void VSetDefaults() = 0;
 
-		GAMEBASE_API void Save();
-		GAMEBASE_API void Load();
-		GAMEBASE_API Base::cString GetKeyName(const unsigned int inKey) const;
-		GAMEBASE_API void SetKey(const int inKeyIndex, const unsigned int inKey);
+    GAMEBASE_API void Save();
+    GAMEBASE_API void Load();
+    GAMEBASE_API Base::cString GetKeyName(const unsigned int inKey) const;
+    GAMEBASE_API void SetKey(const int inKeyIndex, const unsigned int inKey);
 
-		GAMEBASE_API KeyMapping GetKeyMap() const { return m_KeyMap; }
-		GAMEBASE_API unsigned int GetKeyCode(const unsigned int index) const;
+    GAMEBASE_API KeyMapping GetKeyMap() const { return m_KeyMap; }
+    GAMEBASE_API unsigned int GetKeyCode(const unsigned int index) const;
 
-	protected:
-		KeyMapping	m_KeyMap;
+  protected:
+    KeyMapping m_KeyMap;
 
-	private:
-		Base::cString	m_KeysFile;
-	};
+  private:
+    Base::cString m_KeysFile;
+  };
 }  // namespace GameBase
 #endif  // GameControls_h__

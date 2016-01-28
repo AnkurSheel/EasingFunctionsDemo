@@ -10,42 +10,41 @@
 
 namespace Base
 {
-	template<class BaseType, class SubType>
-	shared_ptr<BaseType> GenericObjectCreationFunction();
+  template <class BaseType, class SubType>
+  shared_ptr<BaseType> GenericObjectCreationFunction();
 }
 
 namespace Graphics
 {
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// @brief Class Declaration for \c CheckBox UI Control
-	///
-	///
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	class cCheckBoxControl
-		: public cBaseControl
-	{
-	public:
-		static Base::cHashedString	GetName()  {return m_Name; }
-		~cCheckBoxControl();
+  ///
+  ///
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  class cCheckBoxControl : public cBaseControl
+  {
+  public:
+    static Base::cHashedString GetName() { return m_Name; }
+    ~cCheckBoxControl();
 
-	private:
-		cCheckBoxControl();
-		void VInitialize(const shared_ptr<Utilities::IXMLNode const> pXMLNode);
-		shared_ptr<IBaseControl> VDuplicate();
-		void VRender(const ICamera * const pCamera);
-		bool VOnLeftMouseButtonDown(const int X, const int Y);
-		void VSetAbsolutePosition();
+  private:
+    cCheckBoxControl();
+    void VInitialize(const shared_ptr<Utilities::IXMLNode const> pXMLNode);
+    shared_ptr<IBaseControl> VDuplicate();
+    void VRender(const ICamera* const pCamera);
+    bool VOnLeftMouseButtonDown(const int X, const int Y);
+    void VSetAbsolutePosition();
 
-	private:
-		bool m_Checked;  /// True if The checkbox is checked. False otherwise.
-		shared_ptr<IBaseControl>  m_pTickBox;  /// The check box. This is a button UI control.
-		static Base::cHashedString m_Name;  ///< The control name
+  private:
+    bool m_Checked;                       /// True if The checkbox is checked. False otherwise.
+    shared_ptr<IBaseControl> m_pTickBox;  /// The check box. This is a button UI control.
+    static Base::cHashedString m_Name;    ///< The control name
 
-	private:
-		template<class BaseType, class SubType>
-		friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
+  private:
+    template <class BaseType, class SubType>
+    friend shared_ptr<BaseType> Base::GenericObjectCreationFunction();
 
-		friend class IBaseControl;
-	};
+    friend class IBaseControl;
+  };
 }  // namespace Graphics
 #endif  // CheckBoxControl_h__

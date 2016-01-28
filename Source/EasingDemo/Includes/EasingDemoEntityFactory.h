@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  EasingDemoEntityFactory version: 1.0 Ankur Sheel  date: 2015/02/03
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef EasingDemoEntityFactory_H__
 #define EasingDemoEntityFactory_H__
@@ -11,16 +11,15 @@
 
 namespace GameBase
 {
-	class IBaseEntity;
+  class IBaseEntity;
 }
 
-class cEasingDemoEntityFactory
-	: public GameBase::cEntityFactory
+class cEasingDemoEntityFactory : public GameBase::cEntityFactory
 {
 public:
-	BREAKOUT_API cEasingDemoEntityFactory();
-	BREAKOUT_API ~cEasingDemoEntityFactory();
-	void VRegisterEntities();
+  BREAKOUT_API cEasingDemoEntityFactory();
+  BREAKOUT_API ~cEasingDemoEntityFactory();
+  void VRegisterEntities();
 };
 
-#endif // EasingDemoEntityFactory_H__
+#endif  // EasingDemoEntityFactory_H__

@@ -11,29 +11,22 @@
 
 namespace GameBase
 {
-	class cEntityRotatedEventData
-		: public cBaseEventData
-	{
-	public:
-		cEntityRotatedEventData();
-		cEntityRotatedEventData(const Base::cVector3 & eulerAngles, const int actorID);
-		~cEntityRotatedEventData();
-		UINT64 VGetHashedID() const OVERRIDE { return m_Name.GetHash(); }
-		virtual Base::cString VGetName() const OVERRIDE { return m_Name.GetString(); }
-		int GetActorID() const { return m_ActorID; }
-		Base::cVector3 GetRotation() const { return m_Rotation; }
+  class cEntityRotatedEventData : public cBaseEventData
+  {
+  public:
+    cEntityRotatedEventData();
+    cEntityRotatedEventData(const Base::cVector3& eulerAngles, const int actorID);
+    ~cEntityRotatedEventData();
+    UINT64 VGetHashedID() const OVERRIDE { return m_Name.GetHash(); }
+    virtual Base::cString VGetName() const OVERRIDE { return m_Name.GetString(); }
+    int GetActorID() const { return m_ActorID; }
+    Base::cVector3 GetRotation() const { return m_Rotation; }
+  public:
+    static Base::cHashedString m_Name;
 
-	public:
-		static Base::cHashedString m_Name;
-
-	private:
-		Base::cVector3 m_Rotation;
-		int m_ActorID;
-	};
+  private:
+    Base::cVector3 m_Rotation;
+    int m_ActorID;
+  };
 }  // namespace GameBase
 #endif  // ENTITYROTATEDEVENTDATA_H__
-
-
-
-
-

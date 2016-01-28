@@ -10,19 +10,19 @@
 
 namespace Graphics
 {
-	class cUiControlFactory;
-	class IBaseControl;
+  class cUiControlFactory;
+  class IBaseControl;
 }
 
 namespace Graphics
 {
-	class IUiManager
-	{
-	public:
-		virtual ~IUiManager(){}
-		virtual const shared_ptr<IBaseControl> VCreateUI(const Base::cString& fileName) = 0;
-		GRAPHIC_API static void CreateAsService();
-	};
+  class IUiManager
+  {
+  public:
+    virtual ~IUiManager() {}
+    virtual const shared_ptr<IBaseControl> VCreateUI(const Base::cString& fileName) = 0;
+    GRAPHIC_API static void CreateAsService();
+  };
 }
 
 #endif  // UiManager_hxx__

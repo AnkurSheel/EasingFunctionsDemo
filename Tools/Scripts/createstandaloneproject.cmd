@@ -1,0 +1,1 @@
+../Premake/premake4 --project_name=$1 --no_engine_project --no_editor $2 $3

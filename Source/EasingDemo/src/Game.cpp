@@ -20,7 +20,6 @@
 #include "Config.h"
 #include "KeyboardController.hxx"
 #include "Ball.h"
-#include "TweenManager.h"
 
 using namespace Graphics;
 using namespace Base;
@@ -54,8 +53,6 @@ void cGame::VOnInitialization(const HINSTANCE& hInstance, const int CmdShow, con
   m_pConfig->VInitialize("GameConfig");
 
   VGetProcessManager()->VAttachProcess(shared_ptr<cProcess>(DEBUG_NEW cRenderSystem()));
-  VGetProcessManager()->VAttachProcess(
-      MakeStrongPtr<cTweenManager>(cServiceLocator::GetInstance()->GetService<cTweenManager>()));
 
   m_pEntityManager = (MakeStrongPtr<IEntityManager>(cServiceLocator::GetInstance()->GetService<IEntityManager>()));
   if (m_pEntityManager != NULL)

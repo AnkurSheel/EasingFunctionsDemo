@@ -41,26 +41,24 @@
 
 namespace Utilities
 {
-	class cRandomGenerator
-		: public IRandomGenerator
-	{
-	public:
-		cRandomGenerator();
-		int VRandomRange(const int start, const int end) OVERRIDE;
-		float VRandom() OVERRIDE;
-		void VSetRandomSeed(const unsigned int seed) OVERRIDE;
-		unsigned int VGetRandomSeed() OVERRIDE { return m_Seed; }
+  class cRandomGenerator : public IRandomGenerator
+  {
+  public:
+    cRandomGenerator();
+    int VRandomRange(const int start, const int end) OVERRIDE;
+    float VRandom() OVERRIDE;
+    void VSetRandomSeed(const unsigned int seed) OVERRIDE;
+    unsigned int VGetRandomSeed() OVERRIDE { return m_Seed; }
+  private:
+    unsigned int GetNextRandomNumber();
 
-	private:
-		unsigned int GetNextRandomNumber();
+  private:
+    static const int SeedCount = 8;
 
-	private:
-		static const int SeedCount = 8;
-
-		unsigned int m_Seed;
-		unsigned int _q[SeedCount];
-		unsigned int _c;
-		unsigned int _i;
-	};
+    unsigned int m_Seed;
+    unsigned int _q[SeedCount];
+    unsigned int _c;
+    unsigned int _i;
+  };
 }  // namespace Utilities
 #endif  // RandomGenerator_h__

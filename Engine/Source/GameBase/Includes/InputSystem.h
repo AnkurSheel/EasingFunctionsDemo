@@ -11,22 +11,20 @@
 
 namespace Graphics
 {
-	class ICamera;
+  class ICamera;
 }
 
 namespace GameBase
 {
-	class cInputSystem
-		: public Utilities::cProcess
-	{
-	public:
-		GAMEBASE_API cInputSystem();
-		GAMEBASE_API ~cInputSystem();
-		void VUpdate(const float deltaTime);
-		const Base::cHashedString & VGetType() const { return m_Type; }
-
-	public:
-		GAMEBASE_API static const Base::cHashedString	m_Type;
-	};
+  class cInputSystem : public Utilities::cProcess
+  {
+  public:
+    GAMEBASE_API cInputSystem();
+    GAMEBASE_API ~cInputSystem();
+    void VUpdate(const float deltaTime);
+    const Base::cHashedString& VGetType() const { return m_Type; }
+  public:
+    GAMEBASE_API static const Base::cHashedString m_Type;
+  };
 }  // namespace GameBase
 #endif  // InputSystem_h__

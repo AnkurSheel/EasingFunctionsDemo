@@ -1,7 +1,7 @@
 // *****************************************************************************
 //  BreakOutEntityFactory   version:  1.0   Ankur Sheel  date: 2013/05/06
 // *****************************************************************************
-//  purpose:	
+//  purpose:
 // *****************************************************************************
 
 #include "StdAfx.h"
@@ -30,5 +30,5 @@ cEasingDemoEntityFactory::~cEasingDemoEntityFactory()
 // *****************************************************************************
 void cEasingDemoEntityFactory::VRegisterEntities()
 {
-	m_RegisteredEntities.Register<cBall>(cBall::m_EntityType.GetHash());
+  m_RegisteredEntities.Register<cBall>(cBall::m_EntityType.GetHash());
 }

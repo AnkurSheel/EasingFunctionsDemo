@@ -183,7 +183,7 @@ void cLogger::VLog(const ISpAssertContext* const pContext)
 
     strChooseMsg = cStringUtilities::CalendarTimeToString(currentTime);
 
-    strChooseMsg += GetAssertLevelAsString(pContext->VGetDebugLevel());
+    strChooseMsg += GetAssertLevelAsString(pContext->VGetAssertLevel());
     strChooseMsg += " : [ " + pContext->VGetExpression();
     strChooseMsg += "] \nin : \nfile: " + pContext->VGetFileName();
     strChooseMsg += cStringUtilities::MakeFormatted(" : line: %d\n", pContext->VGetLineNumber());
@@ -207,7 +207,7 @@ void cLogger::VLog(const ISpAssertContext* const pContext)
 
     if (m_hStdOut)
     {
-      SetConsoleTextColor(pContext->VGetDebugLevel());
+      SetConsoleTextColor(pContext->VGetAssertLevel());
       cout << strChooseMsg;
     }
 

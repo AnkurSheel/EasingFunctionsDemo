@@ -8,62 +8,39 @@ using namespace std;
 
 //  ********************************************************************************************************************
 cSpAssertSettings::cSpAssertSettings()
-: m_bIgnoreAll(false)
-, m_pLogger(nullptr)
+  : m_bIgnoreAll(false)
+  , m_pLogger(nullptr)
 {
-	SetDefaultLogger();
+  SetDefaultLogger();
 }
 
 //  ********************************************************************************************************************
 cSpAssertSettings::~cSpAssertSettings()
 {
-	m_handlers.clear();
 }
 
 //  ********************************************************************************************************************
-cSpAssertHandlerStrongPtr cSpAssertSettings::VGetHandler(int level) const
+void cSpAssertSettings::VAddToIgnoreList(const ISpAssertContext* const pContext)
 {
-	auto findIt = m_handlers.find(level);
-	if (findIt != m_handlers.end())
-	{
-		return findIt->second;
-	}
-	return NULL;
+  m_IgnoredAsserts.insert(*(static_cast<const cSpAssertContext* const>(pContext)));
 }
 
 //  ********************************************************************************************************************
-void cSpAssertSettings::VSetHandler(int level, cSpAssertHandlerStrongPtr handler)
+bool cSpAssertSettings::VIsIgnored(const ISpAssertContext* const pContext) const
 {
-	auto findIt = m_handlers.find(level);
-	if (findIt != m_handlers.end())
-	{
-		m_handlers[level].reset();
-	}
-
-	m_handlers[level] = handler;
-}
-
-//  ********************************************************************************************************************
-void cSpAssertSettings::VAddToIgnoreList(const ISpAssertContext * const pContext)
-{
-	m_IgnoredAsserts.insert(*(static_cast<const cSpAssertContext * const>(pContext)));
-}
-
-//  ********************************************************************************************************************
-bool cSpAssertSettings::VIsIgnored(const ISpAssertContext * const pContext) const
-{
-	return m_IgnoredAsserts.find(*(static_cast<const cSpAssertContext *>(pContext))) != m_IgnoredAsserts.end();
+  return m_IgnoredAsserts.find(*(static_cast<const cSpAssertContext*>(pContext))) != m_IgnoredAsserts.end();
 }
 
 //  ********************************************************************************************************************
 void cSpAssertSettings::SetDefaultLogger()
 {
-	m_pLogger = unique_ptr<ISpAssertLogger>(DEBUG_NEW cSpAssertLogger());
-	m_pLogger->VInitialize();
+  m_pLogger = unique_ptr<ISpAssertLogger>(DEBUG_NEW cSpAssertLogger());
+  m_pLogger->VInitialize();
 }
 
 //  ********************************************************************************************************************
 void ISpAssertSettings::CreateAsService()
 {
-	cServiceLocator::GetInstance()->Register<ISpAssertSettings>(shared_ptr<ISpAssertSettings>(DEBUG_NEW cSpAssertSettings()));
+  cServiceLocator::GetInstance()->Register<ISpAssertSettings>(
+      shared_ptr<ISpAssertSettings>(DEBUG_NEW cSpAssertSettings()));
 }

@@ -7,42 +7,41 @@
 #ifndef Config_h__
 #define Config_h__
 
-#include "GenericObjectCreation.h"
 #include "GameBaseDefines.h"
+#include "GenericObjectCreation.h"
 
 namespace GameBase
 {
-	class cEntityDef;
-	class IBaseComponent;
+  class cEntityDef;
+  class IBaseComponent;
 }
 
 namespace Utilities
 {
-	class IXMLNode;
+  class IXMLNode;
 }
 
 namespace GameBase
 {
-	class cConfig
-		: public Base::cNonCopyable
-	{
-	public:
-		GAMEBASE_API cConfig();
-		GAMEBASE_API virtual ~cConfig();
-		GAMEBASE_API virtual void VInitialize(const Base::cString & FileName);
-		GAMEBASE_API static const cEntityDef * const GetEntityDef(const Base::cHashedString & EntityType);
+  class cConfig : public Base::cNonCopyable
+  {
+  public:
+    GAMEBASE_API cConfig();
+    GAMEBASE_API virtual ~cConfig();
+    GAMEBASE_API virtual void VInitialize(const Base::cString& FileName);
+    GAMEBASE_API static const cEntityDef* const GetEntityDef(const Base::cHashedString& EntityType);
 
-	private:
-		void LoadEntities(const Base::cString & EntitiesFileName);
-		void Cleanup();
+  private:
+    void LoadEntities(const Base::cString& EntitiesFileName);
+    void Cleanup();
 
-	protected:
-		shared_ptr<Utilities::IXMLNode>	m_pRoot;
+  protected:
+    shared_ptr<Utilities::IXMLNode> m_pRoot;
 
-	private:
-		typedef std::map<UINT64, const cEntityDef *> EnitityDefMap;
-		EnitityDefMap	m_EntityDefs;
-		static cConfig *	m_pInstance;
-	};
+  private:
+    typedef std::map<UINT64, const cEntityDef*> EnitityDefMap;
+    EnitityDefMap m_EntityDefs;
+    static cConfig* m_pInstance;
+  };
 }  // namespace GameBase
 #endif  // Config_h__

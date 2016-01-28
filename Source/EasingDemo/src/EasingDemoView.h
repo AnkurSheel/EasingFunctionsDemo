@@ -1,7 +1,7 @@
 //  *******************************************************************************************************************
 //  BreakoutView   version:  1.0   Ankur Sheel  date: 2013/04/02
 //  *******************************************************************************************************************
-//  purpose:	
+//  purpose:
 //  *******************************************************************************************************************
 #ifndef BreakoutView_h__
 #define BreakoutView_h__
@@ -12,18 +12,17 @@ class cGame;
 
 namespace GameBase
 {
-	class IBaseApp;
+  class IBaseApp;
 }
 
-class cEasingDemoView 
-	: public GameBase::cHumanView
+class cEasingDemoView : public GameBase::cHumanView
 {
 public:
-	cEasingDemoView();
-	~cEasingDemoView();
-	void VOnCreateDevice(GameBase::IBaseApp * pBaseApp) OVERRIDE;
-	void VOnUpdate(const TICK tickCurrent, const float fElapsedTime) OVERRIDE;
-	void VRenderPrivate() OVERRIDE;
-	bool VOnMsgProc(const Base::AppMsg & msg ) OVERRIDE;
+  cEasingDemoView();
+  ~cEasingDemoView();
+  void VOnCreateDevice(GameBase::IBaseApp* pBaseApp) OVERRIDE;
+  void VOnUpdate(const TICK tickCurrent, const float fElapsedTime) OVERRIDE;
+  void VRenderPrivate() OVERRIDE;
+  bool VOnMsgProc(const Base::AppMsg& msg) OVERRIDE;
 };
-#endif // BreakoutView_h__
+#endif  // BreakoutView_h__

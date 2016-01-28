@@ -10,24 +10,23 @@
 
 namespace Sound
 {
-	class ISoundResHandle;
+  class ISoundResHandle;
 }
 
 namespace Sound
 {
-	class cAudioBuffer
-		: public IAudioBuffer
-	{
-	public:
-		~cAudioBuffer();
+  class cAudioBuffer : public IAudioBuffer
+  {
+  public:
+    ~cAudioBuffer();
 
-	protected:
-		explicit cAudioBuffer(shared_ptr<ISoundResHandle> pResource);
+  protected:
+    explicit cAudioBuffer(shared_ptr<ISoundResHandle> pResource);
 
-	protected:
-		shared_ptr<ISoundResHandle> m_pResource;
-		uint32 m_Volume;
-		bool m_Paused;
-	};
+  protected:
+    shared_ptr<ISoundResHandle> m_pResource;
+    uint32 m_Volume;
+    bool m_Paused;
+  };
 }  // namespace Sound
 #endif  // AudioBuffer_h__
